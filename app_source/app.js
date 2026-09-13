@@ -117,8 +117,10 @@ function stopAutoConnect() {
     }
 }
 
+let isScanningForDevice = false;
 async function scanForDevice() {
-    if (connectedSerialPort) return;
+    if (connectedSerialPort || isScanningForDevice) return;
+    isScanningForDevice = true;
     
     try {
         const ports = await navigator.serial.getPorts();
@@ -128,19 +130,17 @@ async function scanForDevice() {
             if (connectedSerialPort) break; // Already connected
             
             try {
-                // Port zaten açık mı kontrol et
+                // Port zaten acik mi kontrol et
                 if (port.readable) {
-                    // Port açık ama biz bağlı değiliz - kapat ve yeniden aç
                     try {
                         await port.close();
                         await new Promise(r => setTimeout(r, 100));
                     } catch (e) {
-                        console.warn('[AutoConnect] Could not close existing port:', e.message);
                         continue; // Bu portu atla
                     }
                 }
                 
-                // Port'u aç
+                // Port'u ac
                 await port.open({ baudRate: 115200 });
                 
                 // Wait for boot
@@ -171,7 +171,7 @@ async function scanForDevice() {
                     // Start weather auto-refresh
                     startWeatherAutoRefresh();
                     
-                    // ESP hazır, bekleyen komutları gönder
+                    // ESP hazir, bekleyen komutlari gonder
                     isEspReady = true;
                     flushPendingCommands();
                     
@@ -189,6 +189,8 @@ async function scanForDevice() {
         }
     } catch (e) {
         console.warn('[AutoConnect] Scan error:', e.message);
+    } finally {
+        isScanningForDevice = false;
     }
 }
 
@@ -2419,6 +2421,20 @@ function handleSerialMessage(line) {
         const remSec = parseInt(parts[4]);
         handlePcTimer(pIdx, bIdx, state, remSec);
     }
+    else if (line.startsWith('TIMER_DONE')) {
+        try {
+            AudioHaptic.click();
+            if (window.electronAPI && window.electronAPI.invoke) {
+                window.electronAPI.invoke('app:showNotification', {
+                    title: 'SmartDeck Studio - Timer',
+                    body: 'Czas sesji minął! Odliczanie zakończone.'
+                });
+            }
+            showToast('⏱️ Timer zakończony!', 'success');
+        } catch (e) {
+            console.error('Error handling TIMER_DONE:', e);
+        }
+    }
     // --- 4. COUNTER UPDATE ---
     else if (line.startsWith('COUNTER_UPDATE:')) {
         const parts = line.split(':');
@@ -3498,16 +3514,8 @@ function convertToJpgBlob(iconUrl, btnData = {}, exportSize, overrideBgColor = n
         ctx.fillStyle = bgColor;
         ctx.fillRect(0, 0, exportSize, exportSize);
 
-        // 1b. Specular glass sheen highlight (arc/gradient)
-        const glassGrad = ctx.createLinearGradient(0, 0, 0, Math.round(exportSize * 0.45));
-        glassGrad.addColorStop(0, 'rgba(255, 255, 255, 0.22)');
-        glassGrad.addColorStop(0.15, 'rgba(255, 255, 255, 0.08)');
-        glassGrad.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
-        ctx.fillStyle = glassGrad;
-        ctx.fillRect(0, 0, exportSize, Math.round(exportSize * 0.45));
-
-        // Subtle inner 1px bevel border
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)';
+        // 1b. Clean, matte border without overexposed specular glare
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
         ctx.lineWidth = 1;
         ctx.strokeRect(0.5, 0.5, exportSize - 1, exportSize - 1);
 
@@ -4271,26 +4279,95 @@ async function updateHeaderWeather(force = false) {
     }
 }
 
-function initHeaderWeatherWidget() {
-    const widget = el('#headerWeatherWidget');
-    if (!widget) return;
+// ============================================================================
+// SYSTEM TELEMETRY & HARDWARE SIMULATOR CONTROLS
+// ============================================================================
+window._lastCpuVal = 0;
+window._lastRamVal = 0;
 
-    widget.onclick = () => {
-        updateHeaderWeather(true);
-    };
+function initSystemTelemetry() {
+    const cpuEl = el('#telemetryCpuVal');
+    const ramEl = el('#telemetryRamVal');
 
-    updateHeaderWeather();
+    async function pollStats() {
+        try {
+            if (window.electronAPI && window.electronAPI.invoke) {
+                const stats = await window.electronAPI.invoke('app:getSystemStats');
+                if (stats) {
+                    window._lastCpuVal = stats.cpu;
+                    window._lastRamVal = stats.ram;
+                    if (cpuEl) cpuEl.textContent = `${stats.cpu}%`;
+                    if (ramEl) ramEl.textContent = `${stats.ram}%`;
 
-    setInterval(() => {
-        updateHeaderWeather();
-    }, 15 * 60 * 1000);
+                    // Send to CYD hardware if connected
+                    if (connectedSerialPort && isEspReady) {
+                        sendSerialCommand(`SYS_STATS:${stats.cpu}:${stats.ram}`);
+                    }
+                }
+            }
+        } catch (err) {
+            // Silently handle
+        }
+    }
+
+    pollStats();
+    setInterval(pollStats, 2000);
+
+    // Sync system time every 60s
+    function syncTime() {
+        if (connectedSerialPort && isEspReady) {
+            const now = new Date();
+            const hh = String(now.getHours()).padStart(2, '0');
+            const mm = String(now.getMinutes()).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
+            const mo = String(now.getMonth() + 1).padStart(2, '0');
+            const yyyy = now.getFullYear();
+            sendSerialCommand(`SET_TIME:${hh}:${mm}:${dd}.${mo}.${yyyy}`);
+        }
+    }
+    setTimeout(syncTime, 3000);
+    setInterval(syncTime, 60000);
 }
 
-// ============================================
-// END WEATHER AUTO-REFRESH
-// ============================================
+function initSimulatorHeaderControls() {
+    const prevBtn = el('#simPrevPageBtn');
+    const nextBtn = el('#simNextPageBtn');
+    const timerBtn = el('#simTimerBtn');
 
-// END WEATHER API FUNCTIONS
+    if (prevBtn) {
+        prevBtn.onclick = (e) => {
+            e.stopPropagation();
+            AudioHaptic.click();
+            const total = cfg.pageCount || 1;
+            let target = deviceCurrentPage > 0 ? deviceCurrentPage - 1 : total - 1;
+            deviceCurrentPage = target;
+            drawGrid();
+            renderPageBar();
+            if (connectedSerialPort) sendSerialCommand(`SET_PAGE:${target}`);
+        };
+    }
+
+    if (nextBtn) {
+        nextBtn.onclick = (e) => {
+            e.stopPropagation();
+            AudioHaptic.click();
+            const total = cfg.pageCount || 1;
+            let target = (deviceCurrentPage < total - 1) ? deviceCurrentPage + 1 : 0;
+            deviceCurrentPage = target;
+            drawGrid();
+            renderPageBar();
+            if (connectedSerialPort) sendSerialCommand(`SET_PAGE:${target}`);
+        };
+    }
+
+    if (timerBtn) {
+        timerBtn.onclick = (e) => {
+            e.stopPropagation();
+            AudioHaptic.click();
+            showToast('CYD: Dotknij środkowego przycisku na ekranie urządzenia, aby włączyć Timer / Stoper na pełnym ekranie!', 'info');
+        };
+    }
+}
 
 // Kuyruğu işleyen asenkron fonksiyon
 async function processSerialQueue() {
@@ -8892,17 +8969,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 4b. Start Active Window Monitoring (for automatic app profile switching)
     startActiveWindowMonitoring();
 
-    // 4c. Init Header Weather Widget (after config is fully loaded)
-    initHeaderWeatherWidget();
+    // 4c. Init System Telemetry & Simulator Controls
+    initSystemTelemetry();
+    initSimulatorHeaderControls();
     
     // 5. Start Auto-Connect
     if (navigator.serial) {
         // USB event listeners
+        let usbConnectDebounce = null;
         navigator.serial.addEventListener('connect', (event) => {
             console.log('[Serial] USB device connected event');
-            // Bağlı değilsek tarama yap
             if (!connectedSerialPort) {
-                setTimeout(() => scanForDevice(), 500); // Küçük gecikme
+                if (usbConnectDebounce) clearTimeout(usbConnectDebounce);
+                usbConnectDebounce = setTimeout(() => scanForDevice(), 800);
             }
         });
         

@@ -1,29 +1,29 @@
-/* style.css - AAA COMMERCIAL FLAGSHIP DESIGN SYSTEM */
+/* style.css - SMARTDECK STUDIO CLEAN MATTE DESIGN SYSTEM */
 :root {
   color-scheme: dark;
-  --bg: #07090E;
-  --bg-gradient: radial-gradient(circle at 50% -10%, #172033 0%, #07090E 75%);
-  --panel: #0E131F;
-  --surface-card: rgba(14, 19, 31, 0.75);
-  --surface-elevated: #151D2C;
-  --surface-hover: #1D263B;
+  --bg: #090B0E;
+  --bg-gradient: none;
+  --panel: #11141A;
+  --surface-card: #11141A;
+  --surface-elevated: #161A22;
+  --surface-hover: #1C212B;
   --border: rgba(255, 255, 255, 0.08);
-  --border-focus: #3B82F6;
-  --accent: #3B82F6;
-  --accent-bright: #60A5FA;
-  --accent-glow: rgba(59, 130, 246, 0.35);
+  --border-focus: #5E6AD2;
+  --accent: #5E6AD2;
+  --accent-bright: #7C88EA;
+  --accent-glow: rgba(94, 106, 210, 0.2);
   --danger: #EF4444;
-  --danger-glow: rgba(239, 68, 68, 0.35);
+  --danger-glow: rgba(239, 68, 68, 0.2);
   --warning: #F59E0B;
   --success: #10B981;
-  --success-glow: rgba(16, 185, 129, 0.35);
+  --success-glow: rgba(16, 185, 129, 0.2);
   --text: #F8FAFC;
   --muted: #94A3B8;
-  --btn-radius: 14px;
-  --c-bg: #0D111A;
-  --c-btn: #161D2B;
+  --btn-radius: 10px;
+  --c-bg: #0C0E12;
+  --c-btn: #161A22;
   --c-text: #FFFFFF;
-  --c-stroke: #2D3748;
+  --c-stroke: #262C36;
   --c-shadow: #000000;
 
   --cols: 4;
@@ -368,36 +368,73 @@ body {
   width: var(--dev-w);
   height: var(--dev-h);
   background-color: var(--c-bg);
-  background-image: radial-gradient(circle at 50% 10%, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.45) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
   overflow: hidden;
   flex-shrink: 0;
   transform-origin: top center;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s;
-  box-shadow:
-    0 0 0 10px #121722,
-    0 0 0 11px rgba(255, 255, 255, 0.12),
-    0 0 0 13px #0B0E14,
-    0 30px 80px -10px rgba(0, 0, 0, 0.9),
-    inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  transition: transform 0.08s ease-out;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65);
   margin-bottom: 12px;
 }
 
 .device-frame::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 35%, transparent 60%);
-  pointer-events: none;
-  z-index: 5;
-  border-radius: 21px;
+  display: none !important;
+}
+
+/* Simulator 3-Button Top Bar */
+.sim-header-bar {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  height: 38px;
+  padding: 4px 8px;
+  background: #11141A;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.sim-header-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94A3B8;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.08s ease-out;
+  outline: none;
+}
+
+.sim-header-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.sim-header-btn:active {
+  transform: scale(0.96);
+}
+
+.sim-header-btn.sim-timer-btn {
+  flex: 1;
+  margin: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(94, 106, 210, 0.08);
+  border-color: rgba(94, 106, 210, 0.25);
+  color: #A5B4FC;
+}
+
+.sim-header-btn.sim-timer-btn:hover {
+  background: rgba(94, 106, 210, 0.16);
+  border-color: rgba(94, 106, 210, 0.4);
 }
 
 /* 2. Remove Grid's own borders and background */
@@ -4505,83 +4542,37 @@ img.icon-img {
   right: 2px;
 }
 
-/* --- Live Weather Badge (Obsidian Frosted Glass) --- */
-.header-weather-badge {
+/* --- Live System Telemetry Badge (CPU & RAM) --- */
+.header-telemetry-badge {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: rgba(14, 19, 31, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(59, 130, 246, 0.25);
-  border-radius: 12px;
-  padding: 6px 14px;
-  margin-left: 18px;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
-}
-
-.header-weather-badge:hover {
-  background: rgba(22, 31, 51, 0.85);
-  border-color: rgba(59, 130, 246, 0.55);
-  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.25);
-  transform: translateY(-1px);
-}
-
-.header-weather-badge:active {
-  transform: translateY(1px);
-}
-
-.header-weather-badge .weather-icon {
-  font-size: 20px;
-  line-height: 1;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
-}
-
-.header-weather-badge .weather-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.header-weather-badge .weather-top-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.header-weather-badge .weather-city {
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 5px 12px;
+  margin-left: 14px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
   color: #94A3B8;
+  user-select: none;
+  transition: all 0.08s ease-out;
 }
 
-.header-weather-badge .weather-temp {
-  font-size: 13px;
-  font-weight: 800;
-  color: #F8FAFC;
-  font-feature-settings: "tnum";
+.header-telemetry-badge:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.header-weather-badge .weather-desc {
-  font-size: 11px;
-  color: #38BDF8;
-  font-weight: 500;
-  white-space: nowrap;
+.telemetry-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
-.header-weather-badge.refreshing .weather-icon {
-  animation: spinWeather 0.8s ease-in-out;
-}
-
-@keyframes spinWeather {
-  from { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(180deg) scale(1.2); }
-  to { transform: rotate(360deg) scale(1); }
+.telemetry-val {
+  color: #F1F5F9;
+  font-weight: 700;
 }
 
 /* --- Folder Button Indicator in Grid --- */

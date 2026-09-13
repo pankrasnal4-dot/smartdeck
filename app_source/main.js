@@ -22,6 +22,20 @@ const { productName } = require('./package.json');
 const fs = require('fs');
 const { spawn } = require('child_process');
 
+function debugLog(msg) {
+  try {
+    const logFile = path.join(app.getPath('userData'), 'smartdeck_runtime.log');
+    fs.appendFileSync(logFile, `[${new Date().toISOString()}] ${msg}\n`);
+  } catch (e) {}
+}
+
+process.on('uncaughtException', (err) => {
+  debugLog('CRASH uncaughtException: ' + (err?.stack || err?.message || err));
+});
+process.on('unhandledRejection', (reason) => {
+  debugLog('CRASH unhandledRejection: ' + (reason?.stack || reason?.message || reason));
+});
+
 // Active window detection
 let activeWin = null;
 try {
@@ -139,13 +153,6 @@ let isQuitting = false;
 let originalBounds = null;
 let startMinimized = false;
 
-function debugLog(msg) {
-  try {
-    const logFile = path.join(app.getPath('userData'), 'smartdeck_runtime.log');
-    fs.appendFileSync(logFile, `[${new Date().toISOString()}] ${msg}\n`);
-  } catch (e) {}
-}
-
 const gotTheLock = app.requestSingleInstanceLock();
 
 if (!gotTheLock) {
@@ -197,6 +204,15 @@ function createWindow() {
 
   mainWindow.webContents.on('console-message', (e, level, message, line, sourceId) => {
     debugLog(`[Renderer Console] [lvl ${level}] ${message} (${sourceId}:${line})`);
+  });
+
+  mainWindow.webContents.on('render-process-gone', (e, details) => {
+    debugLog('mainWindow render-process-gone: ' + JSON.stringify(details));
+  });
+
+  mainWindow.on('closed', () => {
+    debugLog('mainWindow closed event fired');
+    mainWindow = null;
   });
 
   // --- GÜNCELLEME OLAYLARI ---
@@ -963,9 +979,12 @@ if (!gotTheLock) return;
     }
   });
 
-  ipcMain.handle('app:showNotification', (event, title, body) => {
+  ipcMain.handle('app:showNotification', (event, arg1, arg2) => {
+    const title = typeof arg1 === 'object' && arg1 !== null ? (arg1.title || 'SmartDeck Studio') : (arg1 || 'SmartDeck Studio');
+    const body = typeof arg1 === 'object' && arg1 !== null ? (arg1.body || '') : (arg2 || '');
+    const silent = typeof arg1 === 'object' && arg1 !== null && typeof arg1.silent === 'boolean' ? arg1.silent : false;
     if (Notification.isSupported()) {
-      const notification = new Notification({ title: title, body: body, icon: iconPath, silent: true });
+      const notification = new Notification({ title: title, body: body, icon: iconPath, silent: silent });
       notification.on('click', () => {
         if (mainWindow) {
           if (mainWindow.isMinimized()) mainWindow.restore();
@@ -974,11 +993,6 @@ if (!gotTheLock) return;
         }
       });
       notification.show();
-      if (mainWindow) {
-        if (mainWindow.isMinimized()) mainWindow.restore();
-        mainWindow.show();
-        mainWindow.focus();
-      }
       return { success: true };
     }
     return { success: false, error: 'Notifications not supported' };
@@ -1076,4 +1090,39 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+});
+
+// ============================================================================
+// SYSTEM TELEMETRY & NOTIFICATIONS
+// ============================================================================
+let _prevCpuTimes = null;
+
+ipcMain.handle('app:getSystemStats', () => {
+  const os = require('os');
+  const cpus = os.cpus();
+  let idle = 0;
+  let total = 0;
+
+  for (const cpu of cpus) {
+    for (const type in cpu.times) {
+      total += cpu.times[type];
+    }
+    idle += cpu.times.idle;
+  }
+
+  let cpuPercent = 12;
+  if (_prevCpuTimes) {
+    const idleDiff = idle - _prevCpuTimes.idle;
+    const totalDiff = total - _prevCpuTimes.total;
+    if (totalDiff > 0) {
+      cpuPercent = Math.min(100, Math.max(0, Math.round(100 - (100 * idleDiff / totalDiff))));
+    }
+  }
+  _prevCpuTimes = { idle, total };
+
+  const totalMem = os.totalmem();
+  const freeMem = os.freemem();
+  const ramPercent = Math.round(((totalMem - freeMem) / totalMem) * 100);
+
+  return { cpu: cpuPercent, ram: ramPercent };
 });

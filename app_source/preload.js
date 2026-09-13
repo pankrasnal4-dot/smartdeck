@@ -103,7 +103,10 @@ try {
       exitCaptureMode: () => ipcRenderer.invoke('robot:exitCaptureMode')
     },
 
-    showNotification: (title, body) => ipcRenderer.invoke('app:showNotification', title, body)
+    // General IPC invoke and system stats
+    invoke: (channel, ...args) => ipcRenderer.invoke(channel, ...args),
+    getSystemStats: () => ipcRenderer.invoke('app:getSystemStats'),
+    showNotification: (title, body) => ipcRenderer.invoke('app:showNotification', { title, body })
   });
 
   console.log('Preload script loaded successfully!');

@@ -24,28 +24,29 @@
     <header class="main-header">
       <div class="brand-cluster">
         <div class="brand-logo-badge">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <rect x="2" y="2" width="9" height="9" rx="2.5" fill="#3B82F6"/>
-            <rect x="13" y="2" width="9" height="9" rx="2.5" fill="#3B82F6" fill-opacity="0.4"/>
-            <rect x="2" y="13" width="9" height="9" rx="2.5" fill="#3B82F6" fill-opacity="0.4"/>
-            <rect x="13" y="13" width="9" height="9" rx="2.5" fill="#3B82F6"/>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="3" width="8" height="8" rx="2" fill="#5E6AD2"/>
+            <rect x="13" y="3" width="8" height="8" rx="2" fill="#5E6AD2" fill-opacity="0.4"/>
+            <rect x="3" y="13" width="8" height="8" rx="2" fill="#5E6AD2" fill-opacity="0.4"/>
+            <rect x="13" y="13" width="8" height="8" rx="2" fill="#5E6AD2"/>
           </svg>
         </div>
         <div class="brand-title-group">
-          <h1 data-i18n="header.title" class="brand-title">SmartDeck</h1>
-          <span class="brand-edition-tag">STUDIO PRO</span>
+          <h1 class="brand-title">SmartDeck</h1>
+          <span class="brand-edition-tag">STUDIO</span>
         </div>
       </div>
 
-      <!-- Live Weather Capsule for Łódź -->
-      <div id="headerWeatherWidget" class="header-weather-badge" title="Kliknij, aby odświeżyć pogodę dla Łodzi">
-        <span id="headerWeatherIcon" class="weather-icon">⛅</span>
-        <div class="weather-meta">
-          <div class="weather-top-row">
-            <span id="headerWeatherCity" class="weather-city">Łódź</span>
-            <span id="headerWeatherTemp" class="weather-temp">--°C</span>
-          </div>
-          <span id="headerWeatherDesc" class="weather-desc">Pobieranie...</span>
+      <!-- Live PC System Telemetry -->
+      <div id="headerTelemetryBadge" class="header-telemetry-badge" title="Live PC Telemetry">
+        <div class="telemetry-item">
+          <span>CPU</span>
+          <span id="telemetryCpuVal" class="telemetry-val">--%</span>
+        </div>
+        <span style="opacity: 0.3;">|</span>
+        <div class="telemetry-item">
+          <span>RAM</span>
+          <span id="telemetryRamVal" class="telemetry-val">--%</span>
         </div>
       </div>
 
@@ -113,8 +114,10 @@
 
             <div class="device-frame">
               <span class="hardware-bezel-badge" id="hardwareBezelBadge">CYD 2.8" // 320x240</span>
-              <div id="web-title-bar" class="web-device-bar">
-                <span id="web-title-text">Device Name</span>
+              <div id="web-title-bar" class="web-device-bar sim-header-bar">
+                <button type="button" class="sim-header-btn" id="simPrevPageBtn" title="Poprzednia strona (CYD Top Bar)">◀</button>
+                <button type="button" class="sim-header-btn sim-timer-btn" id="simTimerBtn" title="Timer / Stoper (CYD Top Bar)">⏱️ <span id="simTimerText">TIMER</span></button>
+                <button type="button" class="sim-header-btn" id="simNextPageBtn" title="Następna strona (CYD Top Bar)">▶</button>
               </div>
               <div id="grid" class="grid" aria-label="custom grid"></div>
               <div id="web-footer-bar" class="web-device-bar">
@@ -168,6 +171,8 @@
                     <div class="action-chip" draggable="true" data-action="script"><span class="action-chip-icon">📜</span> Shell Script</div>
                     <div class="action-chip" draggable="true" data-action="website"><span class="action-chip-icon">🌐</span> Open Website</div>
                     <div class="action-chip" draggable="true" data-action="mouse"><span class="action-chip-icon">🖱️</span> Mouse Action</div>
+                    <div class="action-chip" draggable="true" data-action="cpu"><span class="action-chip-icon">📊</span> CPU % Live</div>
+                    <div class="action-chip" draggable="true" data-action="ram"><span class="action-chip-icon">📈</span> RAM % Live</div>
                   </div>
                 </div>
               </div>

@@ -225,10 +225,37 @@ typedef struct {
 JpegDrawInfo jpegInfo;
 
 
+// --- ADVANCED TIMER, STOPWATCH & TELEMETRY SYSTEM ---
+enum ActiveScreenMode {
+  MODE_GRID,
+  MODE_TIMER_MENU,
+  MODE_FULLSCREEN_TIMER
+};
+ActiveScreenMode current_active_mode = MODE_GRID;
+
+bool active_timer_running = false;
+bool active_timer_is_stopwatch = false;
+int active_timer_duration = 0;
+unsigned long active_timer_start_time = 0;
+unsigned long stopwatch_start_time = 0;
+unsigned long stopwatch_elapsed_sec = 0;
+
+int sys_cpu_percent = 0;
+int sys_ram_percent = 0;
+int last_valid_touch_x = -1;
+int last_valid_touch_y = -1;
+
+char current_clock_time[16] = "--:--";
+char current_clock_date[20] = "";
+
 // --- FUNCTION PROTOTYPES (Prevents compiler errors) ---
 void draw_page(int page_index);
 void draw_single_button(int btn_index);
 void checkActiveTimers();
+void draw_header_bar();
+void draw_timer_preset_menu();
+void draw_fullscreen_timer(bool full_redraw);
+
 
 
 // *** NEW: Send Command to PC/Dongle Function (State Supported) ***
@@ -1136,6 +1163,32 @@ void checkAllRunningTimers() {
 void checkActiveTimers() {
   unsigned long now = millis();
 
+  // --- CHECK GLOBAL ACTIVE TIMER / STOPWATCH ---
+  static unsigned long last_global_timer_tick = 0;
+  if (active_timer_running && (now - last_global_timer_tick >= 1000)) {
+    last_global_timer_tick = now;
+    if (!active_timer_is_stopwatch) {
+      long remaining = active_timer_duration - (now - active_timer_start_time) / 1000;
+      if (remaining <= 0) {
+        active_timer_running = false;
+        Serial.println("TIMER_DONE:0:0");
+#if defined(ESP32_2432S028)
+        for (int k = 0; k < 3; k++) {
+          digitalWrite(16, LOW);
+          delay(80);
+          digitalWrite(16, HIGH);
+          delay(80);
+        }
+#endif
+      }
+    }
+    if (current_active_mode == MODE_FULLSCREEN_TIMER) {
+      draw_fullscreen_timer(false);
+    } else if (current_active_mode == MODE_GRID) {
+      draw_header_bar();
+    }
+  }
+
   for (int i = 0; i < current_timers.size(); i++) {
     TimerInfo& timer = current_timers[i];
     // If INACTIVE, skip to next button
@@ -1273,9 +1326,197 @@ void checkActiveTimers() {
   }
 }
 
+// ============================================================================
+// TOP BAR & HEADER BUTTONS (Previous Page, Timer/Clock, Next Page)
+// ============================================================================
+void draw_header_bar() {
+  if (current_active_mode != MODE_GRID) return;
+  
+  // Clear header area (height 48px)
+  gfx->fillRect(0, 0, screenWidth, 48, theme_bg_color_rgb565);
+  
+  uint16_t btn_bg = theme_btn_color_rgb565;
+  uint16_t stroke_col = theme_stroke_color_rgb565;
+  uint16_t text_col = theme_text_color_rgb565;
+
+  // 1. Left Button: [ < ] Previous Page
+  gfx->fillRoundRect(6, 6, 48, 36, 6, btn_bg);
+  gfx->drawRoundRect(6, 6, 48, 36, 6, stroke_col);
+  gfx->setTextSize(2);
+  gfx->setTextColor(text_col);
+  gfx->setCursor(22, 16);
+  gfx->print("<");
+
+  // 2. Middle Button: [ Timer / Stopwatch / Clock Status ]
+  int mid_x = 60;
+  int mid_w = screenWidth - 120;
+  gfx->fillRoundRect(mid_x, 6, mid_w, 36, 6, btn_bg);
+  gfx->drawRoundRect(mid_x, 6, mid_w, 36, 6, stroke_col);
+
+  char mid_text[32];
+  if (active_timer_running) {
+    if (active_timer_is_stopwatch) {
+      unsigned long elapsed = stopwatch_elapsed_sec + (millis() - stopwatch_start_time) / 1000;
+      snprintf(mid_text, sizeof(mid_text), "STP %02lu:%02lu", elapsed / 60, elapsed % 60);
+    } else {
+      long rem = active_timer_duration - (millis() - active_timer_start_time) / 1000;
+      if (rem < 0) rem = 0;
+      snprintf(mid_text, sizeof(mid_text), "TIM %02ld:%02ld", rem / 60, rem % 60);
+    }
+  } else {
+    snprintf(mid_text, sizeof(mid_text), "P%d * TIMER", current_page + 1);
+  }
+
+  int16_t mx, my;
+  uint16_t mw, mh;
+  gfx->setTextSize(2);
+  gfx->getTextBounds(mid_text, 0, 0, &mx, &my, &mw, &mh);
+  gfx->setCursor(mid_x + (mid_w - mw) / 2, 6 + (36 - mh) / 2);
+  gfx->print(mid_text);
+
+  // 3. Right Button: [ > ] Next Page
+  int right_x = screenWidth - 54;
+  gfx->fillRoundRect(right_x, 6, 48, 36, 6, btn_bg);
+  gfx->drawRoundRect(right_x, 6, 48, 36, 6, stroke_col);
+  gfx->setCursor(right_x + 18, 16);
+  gfx->print(">");
+
+  // Subtle separator line
+  gfx->drawFastHLine(0, 48, screenWidth, 0x2965);
+}
+
+// ============================================================================
+// TIMER PRESET MENU (Touch Screen Selection on CYD)
+// ============================================================================
+void draw_timer_preset_menu() {
+  current_active_mode = MODE_TIMER_MENU;
+  gfx->fillScreen(theme_bg_color_rgb565);
+
+  // Header Title
+  gfx->setTextSize(2);
+  gfx->setTextColor(0xFFFF);
+  const char* title = "USTAW TIMER / STOPER";
+  int16_t tx, ty;
+  uint16_t tw, th;
+  gfx->getTextBounds(title, 0, 0, &tx, &ty, &tw, &th);
+  gfx->setCursor((screenWidth - tw) / 2, 10);
+  gfx->print(title);
+  gfx->drawFastHLine(10, 32, screenWidth - 20, 0x39E7);
+
+  // Row 1 (y=40, h=68): [ 1m ] [ 3m ] [ 5m ] [ 10m ]
+  const char* r1_labels[] = {"1 min", "3 min", "5 min", "10 min"};
+  for (int i = 0; i < 4; i++) {
+    int bx = 6 + i * 78;
+    gfx->fillRoundRect(bx, 40, 72, 68, 6, theme_btn_color_rgb565);
+    gfx->drawRoundRect(bx, 40, 72, 68, 6, theme_stroke_color_rgb565);
+    gfx->setTextSize(2);
+    gfx->setTextColor(theme_text_color_rgb565);
+    int16_t lx, ly;
+    uint16_t lw, lh;
+    gfx->getTextBounds(r1_labels[i], 0, 0, &lx, &ly, &lw, &lh);
+    gfx->setCursor(bx + (72 - lw) / 2, 40 + (68 - lh) / 2);
+    gfx->print(r1_labels[i]);
+  }
+
+  // Row 2 (y=116, h=68): [ 15m ] [ 25m Focus ] [ STOPER ] [ ANULUJ ]
+  const char* r2_labels[] = {"15 min", "25m", "STOPER", "ANULUJ"};
+  uint16_t r2_colors[] = {theme_btn_color_rgb565, 0x1C82, 0x03E0, 0x8000};
+  for (int i = 0; i < 4; i++) {
+    int bx = 6 + i * 78;
+    gfx->fillRoundRect(bx, 116, 72, 68, 6, r2_colors[i]);
+    gfx->drawRoundRect(bx, 116, 72, 68, 6, theme_stroke_color_rgb565);
+    gfx->setTextSize(2);
+    gfx->setTextColor(0xFFFF);
+    int16_t lx, ly;
+    uint16_t lw, lh;
+    gfx->getTextBounds(r2_labels[i], 0, 0, &lx, &ly, &lw, &lh);
+    gfx->setCursor(bx + (72 - lw) / 2, 116 + (68 - lh) / 2);
+    gfx->print(r2_labels[i]);
+  }
+}
+
+// ============================================================================
+// FULLSCREEN TIMER & STOPWATCH CLOCK (320x240 Big Digits)
+// ============================================================================
+void draw_fullscreen_timer(bool full_redraw) {
+  current_active_mode = MODE_FULLSCREEN_TIMER;
+  if (full_redraw) {
+    gfx->fillScreen(0x0841); // Deep slate background
+
+    // Top Mode Indicator
+    gfx->setTextSize(2);
+    gfx->setTextColor(0x9CD3);
+    const char* header = active_timer_is_stopwatch ? "TRYB: STOPER" : "TRYB: TIMER FOCUS";
+    gfx->setCursor(20, 14);
+    gfx->print(header);
+
+    // Bottom Controls (y = 175, h = 48)
+    // 1. [ PAUZA / START ]
+    gfx->fillRoundRect(15, 175, 90, 48, 8, 0x2124);
+    gfx->drawRoundRect(15, 175, 90, 48, 8, 0x4208);
+    gfx->setTextSize(2);
+    gfx->setTextColor(0xFFFF);
+    gfx->setCursor(20, 190);
+    gfx->print(active_timer_running ? "PAUZA" : "START");
+
+    // 2. [ RESET ]
+    gfx->fillRoundRect(115, 175, 90, 48, 8, 0x2124);
+    gfx->drawRoundRect(115, 175, 90, 48, 8, 0x4208);
+    gfx->setCursor(125, 190);
+    gfx->print("RESET");
+
+    // 3. [ WROC ]
+    gfx->fillRoundRect(215, 175, 90, 48, 8, 0x1A49);
+    gfx->drawRoundRect(215, 175, 90, 48, 8, 0x33B7);
+    gfx->setCursor(232, 190);
+    gfx->print("WROC");
+  }
+
+  // Calculate formatted time
+  char time_buf[16];
+  float progress = 1.0f;
+  if (active_timer_is_stopwatch) {
+    unsigned long elapsed = stopwatch_elapsed_sec;
+    if (active_timer_running) {
+      elapsed += (millis() - stopwatch_start_time) / 1000;
+    }
+    snprintf(time_buf, sizeof(time_buf), "%02lu:%02lu", elapsed / 60, elapsed % 60);
+    progress = (float)(elapsed % 60) / 60.0f;
+  } else {
+    long remaining = active_timer_duration;
+    if (active_timer_running) {
+      unsigned long passed = (millis() - active_timer_start_time) / 1000;
+      remaining = active_timer_duration - passed;
+      if (remaining < 0) remaining = 0;
+    }
+    snprintf(time_buf, sizeof(time_buf), "%02ld:%02ld", remaining / 60, remaining % 60);
+    if (active_timer_duration > 0) {
+      progress = (float)remaining / (float)active_timer_duration;
+    }
+  }
+
+  // Clear & draw big central time display
+  gfx->fillRect(10, 52, screenWidth - 20, 75, 0x0841);
+  gfx->setTextSize(5);
+  gfx->setTextColor(0xFFFF);
+  int16_t tx, ty;
+  uint16_t tw, th;
+  gfx->getTextBounds(time_buf, 0, 0, &tx, &ty, &tw, &th);
+  gfx->setCursor((screenWidth - tw) / 2, 62);
+  gfx->print(time_buf);
+
+  // Horizontal progress bar
+  int bar_x = 20, bar_y = 142, bar_w = screenWidth - 40, bar_h = 8;
+  gfx->fillRoundRect(bar_x, bar_y, bar_w, bar_h, 4, 0x2124);
+  int filled_w = (int)(bar_w * progress);
+  if (filled_w > 0) {
+    uint16_t prog_color = active_timer_is_stopwatch ? 0x05BF : 0x07E0;
+    if (progress < 0.2f && !active_timer_is_stopwatch) prog_color = 0xF800;
+    gfx->fillRoundRect(bar_x, bar_y, filled_w, bar_h, 4, prog_color);
+  }
+}
+
 // Render button element
-
-
 
 void draw_single_button(int btn_index) {
   int COLS = doc["grid"]["cols"] | 3;
@@ -1435,6 +1676,12 @@ void draw_single_button(int btn_index) {
     long val = current_counters[btn_index].currentValue;
     sprintf(counter_str, "%ld", val);
     label_text = counter_str;
+  } else if (btn_info.action == "cpu") {
+    sprintf(counter_str, "CPU %d%%", sys_cpu_percent);
+    label_text = counter_str;
+  } else if (btn_info.action == "ram") {
+    sprintf(counter_str, "RAM %d%%", sys_ram_percent);
+    label_text = counter_str;
   } else {
     label_text = NULL;
   }
@@ -1443,6 +1690,8 @@ void draw_single_button(int btn_index) {
     int final_font_size = mapFontSize(label_size_px);
     if ((btn_info.action == "timer" || btn_info.action == "counter")) {
       final_font_size = 3;
+    } else if (btn_info.action == "cpu" || btn_info.action == "ram") {
+      final_font_size = 2;
     }
 
     gfx->setTextSize(final_font_size);
@@ -1466,11 +1715,12 @@ void draw_single_button(int btn_index) {
 
 
 void draw_page(int page_index) {
+  current_active_mode = MODE_GRID;
   current_buttons.clear();
   current_timers.clear();
 
-  // Clear screen
-  gfx->fillScreen(theme_bg_color_rgb565);
+  // Draw snappy top header bar (replaces slow fillScreen for flicker-free transitions)
+  draw_header_bar();
 
   int COLS = doc["grid"]["cols"] | 3;
   int ROWS = doc["grid"]["rows"] | 3;
@@ -1488,11 +1738,7 @@ void draw_page(int page_index) {
     return;
   }
 
-  // --- FRAME DRAWING REMOVED ---
-
-
   // --- 2. POSITION CALCULATIONS (App.js Compatible) ---
-
   int gridAvailableHeight = screenHeight - 90;
   int start_y_offset = 50;  // Header space
 
@@ -1524,29 +1770,13 @@ void draw_page(int page_index) {
   int padX_left = (totalPaddingSpaceX - shadow_offset_x) / 2;
   if (padX_left < 0) padX_left = 0;
 
-  // ---------------------------------------------------------
-
-  // Device Title (Center Header)
-  const char* title_text = doc["title"] | "Stream Deck";
-  gfx->setTextSize(2);
-  gfx->setTextColor(theme_text_color_rgb565);
-  int16_t tx, ty;
-  uint16_t tw, th;
-  gfx->getTextBounds(title_text, 0, 0, &tx, &ty, &tw, &th);
-
-  // Center title vertically (within 50px header area)
-  int header_center_y = (50 / 2) - 15;
-  gfx->setCursor((screenWidth - tw) / 2, header_center_y + (th / 2));
-  gfx->print(title_text);
-
-  // NOTE: The line between (drawFastHLine) was removed from here.
-
   // Calculate and Draw Buttons
   JsonArray page_data = pages_array[page_index]["buttons"];
   int btn_index = 0;
 
   TJpgDec.setJpgScale(1);
   TJpgDec.setCallback(tft_output);
+
 
   for (int r = 0; r < ROWS; r++) {
     for (int c = 0; c < COLS; c++) {
@@ -1570,8 +1800,8 @@ void draw_page(int page_index) {
         // Save to vector even for null buttons
         current_buttons[current_button_vector_index] = btn_info;
 
-        // Draw empty cell (will do nothing since defined=false)
-        draw_single_button(current_button_vector_index);
+        // Clean up empty slot on screen so previous page buttons don't linger
+        gfx->fillRect(x_pos - 1, y_pos - 1, CELL_W + 8, CELL_H + 8, theme_bg_color_rgb565);
       } else {
         JsonObject button_cfg = page_data[btn_index];
         btn_info.defined = true;
@@ -1597,6 +1827,8 @@ void draw_page(int page_index) {
         } else if (btn_info.action == "http") {
           btn_info.value = button_cfg["http"]["url"] | "";
         } else if (btn_info.action == "sound") {
+          btn_info.value = "";
+        } else if (btn_info.action == "cpu" || btn_info.action == "ram") {
           btn_info.value = "";
         }
 
@@ -2628,6 +2860,39 @@ void loop() {
       }
     }
 
+    // --- NEW: SYS_STATS - Receive CPU & RAM Telemetry from PC ---
+    // Format: SYS_STATS:cpuPercent:ramPercent
+    if (command.startsWith("SYS_STATS:")) {
+      int first = command.indexOf(':');
+      int second = command.indexOf(':', first + 1);
+      if (first > 0 && second > 0) {
+        sys_cpu_percent = command.substring(first + 1, second).toInt();
+        sys_ram_percent = command.substring(second + 1).toInt();
+        if (current_active_mode == MODE_GRID) {
+          for (int b = 0; b < (int)current_buttons.size(); b++) {
+            if (current_buttons[b].action == "cpu" || current_buttons[b].action == "ram") {
+              draw_single_button(b);
+            }
+          }
+        }
+      }
+    }
+
+    // --- NEW: SET_TIME - Receive real system time from PC ---
+    // Format: SET_TIME:HH:MM:DD.MM.YYYY
+    if (command.startsWith("SET_TIME:")) {
+      int first = command.indexOf(':');
+      int second = command.indexOf(':', first + 1);
+      if (first > 0) {
+        if (second > 0) {
+          strncpy(current_clock_time, command.substring(first + 1, second).c_str(), sizeof(current_clock_time) - 1);
+          strncpy(current_clock_date, command.substring(second + 1).c_str(), sizeof(current_clock_date) - 1);
+        } else {
+          strncpy(current_clock_time, command.substring(first + 1).c_str(), sizeof(current_clock_time) - 1);
+        }
+      }
+    }
+
 
     // --- NEW: SET_KNOB_ACTION - Set per-page knob actions ---
     // Format: SET_KNOB_ACTION:page:cwAction:ccwAction
@@ -2845,6 +3110,10 @@ void loop() {
       touch_x = tp.points[0].x;
       touch_y = tp.points[0].y;
 #endif
+    if (touch_x >= 0 && touch_y >= 0) {
+      last_valid_touch_x = touch_x;
+      last_valid_touch_y = touch_y;
+    }
 
       for (int i = 0; i < current_buttons.size(); ++i) {
         const auto& btn = current_buttons[i];
@@ -2923,6 +3192,107 @@ void loop() {
 #if defined(ESP32_2432S028)
       digitalWrite(16, HIGH); // Turn off onboard Green LED on release
 #endif
+
+      // 1. Check if in Timer Menu
+      if (current_active_mode == MODE_TIMER_MENU) {
+        int tx = last_valid_touch_x;
+        int ty = last_valid_touch_y;
+        if (ty >= 36 && ty <= 112) {
+          int col = (tx - 6) / 78;
+          if (col == 0) { active_timer_duration = 60; active_timer_start_time = millis(); active_timer_running = true; active_timer_is_stopwatch = false; draw_fullscreen_timer(true); }
+          else if (col == 1) { active_timer_duration = 180; active_timer_start_time = millis(); active_timer_running = true; active_timer_is_stopwatch = false; draw_fullscreen_timer(true); }
+          else if (col == 2) { active_timer_duration = 300; active_timer_start_time = millis(); active_timer_running = true; active_timer_is_stopwatch = false; draw_fullscreen_timer(true); }
+          else if (col == 3) { active_timer_duration = 600; active_timer_start_time = millis(); active_timer_running = true; active_timer_is_stopwatch = false; draw_fullscreen_timer(true); }
+        } else if (ty >= 114 && ty <= 190) {
+          int col = (tx - 6) / 78;
+          if (col == 0) { active_timer_duration = 900; active_timer_start_time = millis(); active_timer_running = true; active_timer_is_stopwatch = false; draw_fullscreen_timer(true); }
+          else if (col == 1) { active_timer_duration = 1500; active_timer_start_time = millis(); active_timer_running = true; active_timer_is_stopwatch = false; draw_fullscreen_timer(true); }
+          else if (col == 2) { active_timer_is_stopwatch = true; stopwatch_start_time = millis(); stopwatch_elapsed_sec = 0; active_timer_running = true; draw_fullscreen_timer(true); }
+          else if (col == 3) { current_active_mode = MODE_GRID; draw_page(current_page); }
+        }
+        last_touched_button_index = -1;
+        was_touched = false;
+        return;
+      }
+
+      // 2. Check if in Fullscreen Timer
+      if (current_active_mode == MODE_FULLSCREEN_TIMER) {
+        int tx = last_valid_touch_x;
+        int ty = last_valid_touch_y;
+        if (ty >= 165) {
+          if (tx < 110) {
+            // Pauza / Start
+            if (active_timer_is_stopwatch) {
+              if (active_timer_running) {
+                stopwatch_elapsed_sec += (millis() - stopwatch_start_time) / 1000;
+                active_timer_running = false;
+              } else {
+                stopwatch_start_time = millis();
+                active_timer_running = true;
+              }
+            } else {
+              if (active_timer_running) {
+                unsigned long passed = (millis() - active_timer_start_time) / 1000;
+                active_timer_duration = (active_timer_duration > passed) ? (active_timer_duration - passed) : 0;
+                active_timer_running = false;
+              } else {
+                active_timer_start_time = millis();
+                active_timer_running = true;
+              }
+            }
+            draw_fullscreen_timer(true);
+          } else if (tx < 210) {
+            // Reset
+            if (active_timer_is_stopwatch) {
+              stopwatch_elapsed_sec = 0;
+              stopwatch_start_time = millis();
+            } else {
+              active_timer_duration = 0;
+              active_timer_running = false;
+            }
+            draw_fullscreen_timer(true);
+          } else {
+            // Wroc do siatki
+            current_active_mode = MODE_GRID;
+            draw_page(current_page);
+          }
+        }
+        last_touched_button_index = -1;
+        was_touched = false;
+        return;
+      }
+
+      // 3. Top Bar Touches in Grid Mode (y < 50)
+      if (last_valid_touch_y >= 0 && last_valid_touch_y < 50) {
+        int tx = last_valid_touch_x;
+        int total_pages = doc["pages"].size();
+        if (tx <= 60) {
+          // Left: Previous Page
+          if (total_pages > 1) {
+            current_page = (current_page > 0) ? (current_page - 1) : (total_pages - 1);
+            draw_page(current_page);
+            Serial.printf("PAGE_CHANGED:%d\n", current_page);
+          }
+        } else if (tx >= ((int)screenWidth - 60)) {
+          // Right: Next Page
+          if (total_pages > 1) {
+            current_page = (current_page < total_pages - 1) ? (current_page + 1) : 0;
+            draw_page(current_page);
+            Serial.printf("PAGE_CHANGED:%d\n", current_page);
+          }
+        } else {
+          // Center: Timer / Stopwatch Shortcut
+          if (active_timer_running || active_timer_duration > 0 || stopwatch_elapsed_sec > 0) {
+            draw_fullscreen_timer(true);
+          } else {
+            draw_timer_preset_menu();
+          }
+        }
+        last_touched_button_index = -1;
+        was_touched = false;
+        return;
+      }
+
       if (last_touched_button_index != -1) {
         const auto& released_btn = current_buttons[last_touched_button_index];
 
@@ -2941,34 +3311,15 @@ void loop() {
               return;  // Exit loop iteration
             }
           } else if (released_btn.action == "timer") {
-            TimerInfo& timer = current_timers[last_touched_button_index];
-            int timerKey = current_page * 100 + last_touched_button_index;
-
-            if (timer.state == TIMER_INACTIVE) {
-              timer.state = TIMER_RUNNING;
-              unsigned long time_already_passed_ms = 0;
-              if (timer.lastSeconds > 0 && timer.lastSeconds < timer.duration) {
-                time_already_passed_ms = (timer.duration - timer.lastSeconds) * 1000;
-              }
-              timer.startTime = millis() - time_already_passed_ms;
-
-              // Add to global running timers
-              running_timers[timerKey] = timer;
-
-              int currentDisplaySec = (timer.lastSeconds > 0) ? timer.lastSeconds : timer.duration;
-              Serial.printf("TIMER_UPDATE:%d:%d:1:%d\n", current_page, last_touched_button_index, currentDisplaySec);
+            if (active_timer_running || active_timer_duration > 0 || stopwatch_elapsed_sec > 0) {
+              draw_fullscreen_timer(true);
             } else {
-              timer.state = TIMER_INACTIVE;
-              unsigned long elapsed_sec = (millis() - timer.startTime) / 1000;
-              timer.lastSeconds = timer.duration - elapsed_sec;
-              if (timer.lastSeconds < 0) timer.lastSeconds = 0;
-
-              // Remove from global running timers
-              running_timers.erase(timerKey);
-
-              draw_single_button(last_touched_button_index);
-              Serial.printf("TIMER_UPDATE:%d:%d:0:%d\n", current_page, last_touched_button_index, timer.lastSeconds);
+              draw_timer_preset_menu();
             }
+            last_touched_button_index = -1;
+            was_touched = false;
+            return;
+          }
           } else if (released_btn.action == "key" || released_btn.action == "text" || released_btn.action == "app" || released_btn.action == "script" || released_btn.action == "website" || released_btn.action == "media" || released_btn.action == "mouse" || released_btn.action == "sound" || released_btn.action == "multi") {
             send_pc_command(current_page, last_touched_button_index);
           } else if (released_btn.action == "toggle") {
