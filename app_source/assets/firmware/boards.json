@@ -1,20 +1,46 @@
 [
   {
-    "id": "JC8048W550",
-    "name": "5.0 Inch (800x480) - JC8048W550 (GUITION Capatitive Touch)",
-    "folder": "JC8048W550",
-    "chip": "esp32s3",
-    "flash_mode": "dio",
-    "flash_freq": "80m",
-    "boot_addr": "0x0"
-  },
-  {
     "id": "ESP32_2432S028R",
-    "name": "2.8 Inch (320x240) - ESP32 CYD (ESP32-2432S028R)",
+    "name": "⚡ ESP32 CYD 2.8\" (320x240) - v2.6.0 [Najnowsza: Timer, Stoper, 3 Przyciski]",
     "folder": "ESP32_2432S028R",
     "chip": "esp32",
     "flash_mode": "dio",
     "flash_freq": "40m",
-    "boot_addr": "0x1000"
+    "boot_addr": "0x1000",
+    "version": "2.6.0",
+    "is_latest": true
+  },
+  {
+    "id": "ESP32_2432S028R_v2.5.0",
+    "name": "📦 ESP32 CYD 2.8\" (320x240) - v2.5.0 [Wersja klasyczna]",
+    "folder": "ESP32_2432S028R_v2.5.0",
+    "chip": "esp32",
+    "flash_mode": "dio",
+    "flash_freq": "40m",
+    "boot_addr": "0x1000",
+    "version": "2.5.0",
+    "is_latest": false
+  },
+  {
+    "id": "JC8048W550",
+    "name": "⚡ 5.0 Inch (800x480) - JC8048W550 - v2.6.0 [Najnowsza]",
+    "folder": "JC8048W550",
+    "chip": "esp32s3",
+    "flash_mode": "dio",
+    "flash_freq": "80m",
+    "boot_addr": "0x0",
+    "version": "2.6.0",
+    "is_latest": true
+  },
+  {
+    "id": "JC8048W550_v2.5.0",
+    "name": "📦 5.0 Inch (800x480) - JC8048W550 - v2.5.0 [Wersja klasyczna]",
+    "folder": "JC8048W550_v2.5.0",
+    "chip": "esp32s3",
+    "flash_mode": "dio",
+    "flash_freq": "80m",
+    "boot_addr": "0x0",
+    "version": "2.5.0",
+    "is_latest": false
   }
 ]

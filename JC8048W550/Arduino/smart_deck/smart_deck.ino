@@ -1966,6 +1966,8 @@ void draw_page(int page_index) {
 
   gfx->setTextSize(2);
   gfx->setTextColor(theme_text_color_rgb565);
+  int16_t tx, ty;
+  uint16_t tw, th;
   gfx->getTextBounds(page_name_text, 0, 0, &tx, &ty, &tw, &th);
   gfx->setCursor((screenWidth - tw) / 2, footer_y);
   gfx->print(page_name_text);
@@ -3319,7 +3321,6 @@ void loop() {
             last_touched_button_index = -1;
             was_touched = false;
             return;
-          }
           } else if (released_btn.action == "key" || released_btn.action == "text" || released_btn.action == "app" || released_btn.action == "script" || released_btn.action == "website" || released_btn.action == "media" || released_btn.action == "mouse" || released_btn.action == "sound" || released_btn.action == "multi") {
             send_pc_command(current_page, last_touched_button_index);
           } else if (released_btn.action == "toggle") {

@@ -8860,7 +8860,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     initCropSystem();
     initActionPalette();
     // DOMContentLoaded içinde uygun bir yere ekle:
-    el('#openFlasherBtn').addEventListener('click', openFirmwareDialog);
+    el('#openFlasherBtn')?.addEventListener('click', openFirmwareDialog);
+    el('#topFlashFirmwareBtn')?.addEventListener('click', openFirmwareDialog);
     // 1. Learn Asset Path
     if (window.electronAPI && window.electronAPI.app) {
         ASSETS_PATH = await window.electronAPI.app.getAssetsPath();
@@ -10127,6 +10128,25 @@ function openFirmwareDialog() {
                         opt.textContent = board.name; // User will see name
                         modelSelect.appendChild(opt);
                     });
+
+                    const updateFwDetails = () => {
+                        const detailsEl = el('#fwVersionDetails');
+                        if (!detailsEl) return;
+                        const val = modelSelect.value;
+                        if (val === 'ESP32_2432S028R') {
+                            detailsEl.innerHTML = `<strong>⚡ Wydanie v2.6.0 (Najnowsze):</strong><br>• Pełnoekranowy Stoper i Timer (320x240) z pauzą, resetem i minimalizacją.<br>• 3 dotykowe przyciski w górnej belce CYD: [◀ Poprzednia], [⏱️ Stoper/Timer], [▶ Następna].<br>• Telemetria PC Live (CPU % i RAM % na żywo).<br>• Płynne, natychmiastowe zmiany stron (zero migotania SPI).`;
+                        } else if (val === 'ESP32_2432S028R_v2.5.0') {
+                            detailsEl.innerHTML = `<strong>📦 Wydanie v2.5.0 (Klasyczne):</strong><br>• Stabilna wersja z klasycznym nagłówkiem 'Stream Deck' i tradycyjną siatką makr.`;
+                        } else if (val === 'JC8048W550') {
+                            detailsEl.innerHTML = `<strong>⚡ Wydanie v2.6.0 (Najnowsze - 5.0" 800x480):</strong><br>• Nowy silnik telemetrii PC i zoptymalizowana obsługa dotyku pojemnościowego GT911.`;
+                        } else if (val === 'JC8048W550_v2.5.0') {
+                            detailsEl.innerHTML = `<strong>📦 Wydanie v2.5.0 (Klasyczne - 5.0" 800x480):</strong><br>• Poprzednie stabilne wydanie dla ekranów 5.0" JC8048W550.`;
+                        } else {
+                            detailsEl.textContent = 'Wybierz model i wersję oprogramowania.';
+                        }
+                    };
+                    modelSelect.onchange = updateFwDetails;
+                    updateFwDetails();
                 }
             } catch (e) {
                 console.error("Failed to load firmware list:", e);

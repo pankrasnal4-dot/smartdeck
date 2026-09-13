@@ -53,6 +53,9 @@
       <div class="spacer"></div>
       <div class="header-actions">
         <div class="header-button-group">
+          <button id="topFlashFirmwareBtn" class="primary" style="background: var(--accent); color: #fff; font-weight: 600; border-radius: 8px; padding: 6px 14px;" title="Wgraj / Zaaktualizuj oprogramowanie na CYD">⚡ Wgraj Firmware</button>
+        </div>
+        <div class="header-button-group">
           <button id="presetsBtn" class="ghost" data-i18n="header.buttons.presets"
             data-i18n-title="header.buttons.presetsTooltip" title="Shortcut Presets">⚡ Presets</button>
           <button id="themesBtn" class="ghost" data-i18n="header.buttons.themes"
@@ -113,7 +116,6 @@
             </div>
 
             <div class="device-frame">
-              <span class="hardware-bezel-badge" id="hardwareBezelBadge">CYD 2.8" // 320x240</span>
               <div id="web-title-bar" class="web-device-bar sim-header-bar">
                 <button type="button" class="sim-header-btn" id="simPrevPageBtn" title="Poprzednia strona (CYD Top Bar)">◀</button>
                 <button type="button" class="sim-header-btn sim-timer-btn" id="simTimerBtn" title="Timer / Stoper (CYD Top Bar)">⏱️ <span id="simTimerText">TIMER</span></button>
@@ -124,59 +126,6 @@
                 <span id="web-page-name">Page 1</span>
               </div>
             </div>
-
-            <!-- DRAGGABLE ACTION LIBRARY PALETTE -->
-            <aside class="action-palette-panel" id="actionPalettePanel">
-              <div class="action-palette-header">
-                <div class="action-palette-title">
-                  <span>⚡ Actions</span>
-                </div>
-                <button type="button" class="action-palette-collapse-btn" id="collapsePaletteBtn" title="Toggle Palette">◀</button>
-              </div>
-              <div class="action-palette-scroll">
-                <div class="action-palette-category">
-                  <div class="action-palette-category-title">⌨️ Shortcuts</div>
-                  <div class="action-palette-chips">
-                    <div class="action-chip" draggable="true" data-action="key"><span class="action-chip-icon">⌨️</span> HotKey</div>
-                    <div class="action-chip" draggable="true" data-action="multi"><span class="action-chip-icon">🔀</span> Multi-Action</div>
-                    <div class="action-chip" draggable="true" data-action="text"><span class="action-chip-icon">📝</span> Text Macro</div>
-                  </div>
-                </div>
-                <div class="action-palette-category">
-                  <div class="action-palette-category-title">📁 Navigation</div>
-                  <div class="action-palette-chips">
-                    <div class="action-chip" draggable="true" data-action="folder"><span class="action-chip-icon">📁</span> Folder</div>
-                    <div class="action-chip" draggable="true" data-action="goto"><span class="action-chip-icon">📄</span> Page Jump</div>
-                  </div>
-                </div>
-                <div class="action-palette-category">
-                  <div class="action-palette-category-title">🎛️ Controls</div>
-                  <div class="action-palette-chips">
-                    <div class="action-chip" draggable="true" data-action="toggle"><span class="action-chip-icon">🔘</span> Toggle Switch</div>
-                    <div class="action-chip" draggable="true" data-action="counter"><span class="action-chip-icon">🔢</span> Counter</div>
-                    <div class="action-chip" draggable="true" data-action="timer"><span class="action-chip-icon">⏱️</span> Timer</div>
-                  </div>
-                </div>
-                <div class="action-palette-category">
-                  <div class="action-palette-category-title">🎵 Media & Audio</div>
-                  <div class="action-palette-chips">
-                    <div class="action-chip" draggable="true" data-action="media"><span class="action-chip-icon">⏯️</span> Media Keys</div>
-                    <div class="action-chip" draggable="true" data-action="sound"><span class="action-chip-icon">🔊</span> Sound Board</div>
-                  </div>
-                </div>
-                <div class="action-palette-category">
-                  <div class="action-palette-category-title">🚀 Apps & System</div>
-                  <div class="action-palette-chips">
-                    <div class="action-chip" draggable="true" data-action="app"><span class="action-chip-icon">🚀</span> Launch App</div>
-                    <div class="action-chip" draggable="true" data-action="script"><span class="action-chip-icon">📜</span> Shell Script</div>
-                    <div class="action-chip" draggable="true" data-action="website"><span class="action-chip-icon">🌐</span> Open Website</div>
-                    <div class="action-chip" draggable="true" data-action="mouse"><span class="action-chip-icon">🖱️</span> Mouse Action</div>
-                    <div class="action-chip" draggable="true" data-action="cpu"><span class="action-chip-icon">📊</span> CPU % Live</div>
-                    <div class="action-chip" draggable="true" data-action="ram"><span class="action-chip-icon">📈</span> RAM % Live</div>
-                  </div>
-                </div>
-              </div>
-            </aside>
           </div>
         </div>
         <!-- End of device-panel -->
@@ -577,10 +526,13 @@
 
         <div class="row">
           <label style="color: var(--muted); font-size: 12px; font-weight: 600; margin-bottom: 5px;"
-            data-i18n="firmware.selectModel">1. Select Screen Model</label>
+            data-i18n="firmware.selectModel">1. Select Screen Model & Version</label>
           <select id="fwModelSelect" class="text" style="width: 100%;">
             <option value="" disabled selected>Loading models...</option>
           </select>
+          <div id="fwVersionDetails" style="margin-top: 10px; padding: 12px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; font-size: 11px; color: #94A3B8; line-height: 1.5;">
+            Wybierz model i wersję oprogramowania, aby zobaczyć opis zmian.
+          </div>
         </div>
 
         <div class="row" style="margin-top: 15px;">
