@@ -1755,6 +1755,11 @@ void setup() {
   strip.show();              // Tüm pikselleri 'kapalı' duruma getir (başlangıç temizliği)
   strip.setBrightness(255);  // Set brightness (0-255)
 
+#if defined(ESP32_2432S028)
+  pinMode(16, OUTPUT);
+  digitalWrite(16, HIGH);    // CYD Onboard Green LED initially OFF (active-low)
+#endif
+
   // --- CONDITIONAL ESP-NOW INITIALIZATION ---
 #if DONGLE_MODE == 1
   WiFi.mode(WIFI_STA);
@@ -2867,10 +2872,15 @@ void loop() {
           gfx->drawRoundRect(old_btn.x, old_btn.y, old_btn.w, old_btn.h, radius, theme_stroke_color_rgb565);
           gfx->drawRoundRect(old_btn.x + 1, old_btn.y + 1, old_btn.w - 2, old_btn.h - 2, radius > 0 ? radius - 1 : 0, theme_stroke_color_rgb565);
         }
-        // Draw new button with pressed effect
+        // Draw new button with high-intensity illuminated pressed effect
         const auto& current_btn = current_buttons[current_touched_button_index];
-        gfx->drawRoundRect(current_btn.x, current_btn.y, current_btn.w, current_btn.h, radius, theme_click_stroke_color_rgb565);
+        gfx->drawRoundRect(current_btn.x, current_btn.y, current_btn.w, current_btn.h, radius, 0xFFFF);
         gfx->drawRoundRect(current_btn.x + 1, current_btn.y + 1, current_btn.w - 2, current_btn.h - 2, radius > 0 ? radius - 1 : 0, theme_click_stroke_color_rgb565);
+        gfx->drawRoundRect(current_btn.x + 2, current_btn.y + 2, current_btn.w - 4, current_btn.h - 4, radius > 1 ? radius - 2 : 0, theme_click_stroke_color_rgb565);
+
+#if defined(ESP32_2432S028)
+        digitalWrite(16, LOW); // Turn on onboard Green LED on touch (active-low)
+#endif
       }
       last_touched_button_index = current_touched_button_index;
     }
@@ -2910,6 +2920,9 @@ void loop() {
     // --- C. BIRAKMA ANI (Release) ---
     // Burası artık parmak gerçekten 50ms boyunca çekildikten sonra çalışır
     else if (!is_touched_now && was_touched) {
+#if defined(ESP32_2432S028)
+      digitalWrite(16, HIGH); // Turn off onboard Green LED on release
+#endif
       if (last_touched_button_index != -1) {
         const auto& released_btn = current_buttons[last_touched_button_index];
 

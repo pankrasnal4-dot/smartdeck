@@ -1084,14 +1084,143 @@ function openEditor(idx, btn) {
     const combo = el('#combo');
     combo.value = tmp.combo || '';
     combo.readOnly = false;
-    const addKeyToCombo = (key) => { const cv = combo.value.trim(); if (cv.length === 0) { combo.value = key; } else if (cv.endsWith('+')) { combo.value += key; } else { combo.value += '+' + key; } combo.focus(); };
+
+    const pillsContainer = el('#hotkeyPillsContainer');
+    const updateHotkeyPills = (comboStr) => {
+        if (!pillsContainer) return;
+        pillsContainer.innerHTML = '';
+        if (!comboStr || comboStr.trim().length === 0) {
+            pillsContainer.innerHTML = '<span class="muted" style="font-size: 11px;">Kliknij "Nagraj skrót" i wciśnij klawisze...</span>';
+            return;
+        }
+        const parts = comboStr.split('+').map(s => s.trim()).filter(Boolean);
+        parts.forEach((p, idx) => {
+            const span = document.createElement('span');
+            span.className = 'key-pill-badge';
+            span.textContent = p;
+            pillsContainer.appendChild(span);
+            if (idx < parts.length - 1) {
+                const plus = document.createElement('span');
+                plus.style.color = 'var(--muted)';
+                plus.style.fontWeight = 'bold';
+                plus.textContent = '+';
+                pillsContainer.appendChild(plus);
+            }
+        });
+    };
+
+    updateHotkeyPills(tmp.combo || '');
+
+    const clearShortcutBtn = el('#clearShortcutBtn');
+    if (clearShortcutBtn) {
+        clearShortcutBtn.onclick = () => {
+            tmp.combo = '';
+            combo.value = '';
+            updateHotkeyPills('');
+            updatePreviewEl(tmp);
+        };
+    }
+
+    const addKeyToCombo = (key) => {
+        const cv = combo.value.trim();
+        if (cv.length === 0) {
+            combo.value = key;
+        } else if (cv.endsWith('+')) {
+            combo.value += key;
+        } else {
+            combo.value += '+' + key;
+        }
+        tmp.combo = combo.value;
+        updateHotkeyPills(combo.value);
+        combo.focus();
+    };
+
     document.querySelectorAll('#rowKeyMods .mod[data-mod]').forEach(b => { b.onclick = () => addKeyToCombo(b.dataset.mod); });
     document.querySelectorAll('#rowKeyMods .mod[data-key]').forEach(b => { b.onclick = () => addKeyToCombo(b.dataset.key); });
     el('#addEnterKey').onclick = () => addKeyToCombo('ENTER');
 
+    const recordShortcutBtn = el('#recordShortcutBtn');
+    let isSmartRecording = false;
+
+    function stopSmartRecording() {
+        if (!isSmartRecording) return;
+        isSmartRecording = false;
+        if (recordShortcutBtn) {
+            recordShortcutBtn.classList.remove('recording');
+            const label = el('#recordShortcutLabel');
+            const dot = el('#recordShortcutDot');
+            if (label) label.textContent = 'Nagraj skrót / Record';
+            if (dot) dot.textContent = '🔴';
+        }
+        window.removeEventListener('keydown', onSmartKeydown, true);
+    }
+
+    function onSmartKeydown(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const mods = [];
+        if (e.ctrlKey) mods.push('CTRL');
+        if (e.altKey) mods.push('ALT');
+        if (e.shiftKey) mods.push('SHIFT');
+        if (e.metaKey) mods.push('GUI');
+
+        let key = e.key ? e.key.toUpperCase() : '';
+        if (['CONTROL', 'ALT', 'SHIFT', 'META', 'OS'].includes(key)) {
+            if (mods.length > 0) updateHotkeyPills(mods.join('+'));
+            return;
+        }
+
+        const specialMap = {
+            ' ': 'SPACE',
+            'ARROWUP': 'ARROW_UP',
+            'ARROWDOWN': 'ARROW_DOWN',
+            'ARROWLEFT': 'ARROW_LEFT',
+            'ARROWRIGHT': 'ARROW_RIGHT',
+            'PAGEUP': 'PAGE_UP',
+            'PAGEDOWN': 'PAGE_DOWN',
+            'ESCAPE': 'ESCAPE',
+            'ENTER': 'ENTER',
+            'TAB': 'TAB',
+            'BACKSPACE': 'BACKSPACE',
+            'DELETE': 'DELETE',
+            'INSERT': 'INSERT',
+            'HOME': 'HOME',
+            'END': 'END',
+            'CAPSLOCK': 'CAPSLOCK'
+        };
+        if (specialMap[key]) key = specialMap[key];
+
+        const fullCombo = [...mods, key].join('+');
+        tmp.combo = fullCombo;
+        combo.value = fullCombo;
+        updateHotkeyPills(fullCombo);
+        updatePreviewEl(tmp);
+        stopSmartRecording();
+    }
+
+    if (recordShortcutBtn) {
+        recordShortcutBtn.onclick = () => {
+            if (isSmartRecording) {
+                stopSmartRecording();
+            } else {
+                isSmartRecording = true;
+                recordShortcutBtn.classList.add('recording');
+                const label = el('#recordShortcutLabel');
+                const dot = el('#recordShortcutDot');
+                if (label) label.textContent = 'Wciśnij klawisze...';
+                if (dot) dot.textContent = '⏹️';
+                if (pillsContainer) {
+                    pillsContainer.innerHTML = '<span style="color:#60A5FA; font-weight:600; font-size:12px;">Nasłuchiwanie...</span>';
+                }
+                window.addEventListener('keydown', onSmartKeydown, true);
+            }
+        };
+    }
+
     let isCapturing = false;
     const captureBtn = el('#captureToggle');
-    captureBtn.style.display = 'inline-block';
+    captureBtn.style.display = 'none';
 
     function stopCapture() {
         if (!isCapturing) return;
@@ -1333,6 +1462,8 @@ function openEditor(idx, btn) {
         if (selectedCombo) {
             combo.value = selectedCombo;
             tmp.combo = selectedCombo;
+            updateHotkeyPills(selectedCombo);
+            updatePreviewEl(tmp);
             presetActionsSelect.selectedIndex = 0;
         }
     };
@@ -1344,12 +1475,13 @@ function openEditor(idx, btn) {
             if (qCombo) {
                 combo.value = qCombo;
                 tmp.combo = qCombo;
+                updateHotkeyPills(qCombo);
                 const labelInput = el('#labelText');
                 if (labelInput && (!labelInput.value || labelInput.value === 'Sample text' || labelInput.value.trim() === '')) {
                     labelInput.value = qLabel || qCombo;
                     tmp.label = qLabel || qCombo;
-                    updatePreviewEl(tmp);
                 }
+                updatePreviewEl(tmp);
             }
         };
     });
@@ -1588,6 +1720,7 @@ function openEditor(idx, btn) {
     hiddenAppInput.onchange = (e) => { const file = e.target.files[0]; if (file && file.path) { tmp.appPath = file.path; appPathInput.value = file.path; appQuickSelect.value = ""; } };
 
     const closeEditor = () => {
+        stopSmartRecording();
         stopCapture();
         stopToggleCapture();
         clearInterval(mousePosInterval);
@@ -1719,6 +1852,48 @@ function openEditor(idx, btn) {
         closeEditor();
         saveConfig();
     };
+
+    // Setup 2-Column Inspector Tabs
+    const navTabs = document.querySelectorAll('.editor-nav-tab-btn');
+    const tabSections = {
+        action: el('#tabSectionAction'),
+        style: el('#tabSectionStyle'),
+        advanced: el('#tabSectionAdvanced')
+    };
+    navTabs.forEach(tabBtn => {
+        tabBtn.onclick = () => {
+            navTabs.forEach(b => b.classList.remove('active'));
+            tabBtn.classList.add('active');
+            const target = tabBtn.dataset.editorTab;
+            Object.entries(tabSections).forEach(([k, section]) => {
+                if (section) section.style.display = (k === target) ? 'flex' : 'none';
+            });
+        };
+    });
+    navTabs.forEach(b => b.classList.toggle('active', b.dataset.editorTab === 'action'));
+    if (tabSections.action) tabSections.action.style.display = 'flex';
+    if (tabSections.style) tabSections.style.display = 'none';
+    if (tabSections.advanced) tabSections.advanced.style.display = 'none';
+
+    // Setup Quick Theme Color Swatches
+    document.querySelectorAll('.color-swatch-dot').forEach(dot => {
+        dot.onclick = () => {
+            const color = dot.dataset.color;
+            if (!color) return;
+            tmp.btnBgColor = color;
+            const bgInput = el('#btnBgColor');
+            if (bgInput) {
+                bgInput.value = color;
+                bgInput.classList.remove('unset');
+            }
+            updatePreviewEl(tmp);
+        };
+    });
+
+    const actionTag = el('#editorActionTag');
+    if (actionTag) {
+        actionTag.textContent = (tmp.type || 'KEY').toUpperCase();
+    }
 
     updatePreviewEl(tmp);
     editorDialog.showModal();
@@ -3323,6 +3498,19 @@ function convertToJpgBlob(iconUrl, btnData = {}, exportSize, overrideBgColor = n
         ctx.fillStyle = bgColor;
         ctx.fillRect(0, 0, exportSize, exportSize);
 
+        // 1b. Specular glass sheen highlight (arc/gradient)
+        const glassGrad = ctx.createLinearGradient(0, 0, 0, Math.round(exportSize * 0.45));
+        glassGrad.addColorStop(0, 'rgba(255, 255, 255, 0.22)');
+        glassGrad.addColorStop(0.15, 'rgba(255, 255, 255, 0.08)');
+        glassGrad.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
+        ctx.fillStyle = glassGrad;
+        ctx.fillRect(0, 0, exportSize, Math.round(exportSize * 0.45));
+
+        // Subtle inner 1px bevel border
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(0.5, 0.5, exportSize - 1, exportSize - 1);
+
         const hasIcon = Boolean(iconUrl && iconUrl.length > 0);
         const hasLabel = Boolean(btnData && btnData.label && btnData.label.trim().length > 0 && btnData.type !== 'counter');
 
@@ -3429,6 +3617,44 @@ function convertToJpgBlob(iconUrl, btnData = {}, exportSize, overrideBgColor = n
                     const lineY = Math.round(y + (k * lineHeight));
                     ctx.fillText(lines[k].trim(), centerX, lineY);
                 }
+            }
+
+            // Draw folder indicator badge directly on hardware canvas
+            if (btnData.type === 'folder') {
+                const tabW = Math.round(exportSize * 0.28);
+                const tabH = Math.round(exportSize * 0.16);
+                const rX = exportSize - tabW - 3;
+                const rY = 3;
+                ctx.fillStyle = 'rgba(59, 130, 246, 0.9)';
+                ctx.beginPath();
+                if (ctx.roundRect) ctx.roundRect(rX, rY, tabW, tabH, 3);
+                else ctx.rect(rX, rY, tabW, tabH);
+                ctx.fill();
+                ctx.fillStyle = '#FFFFFF';
+                ctx.font = `bold ${Math.round(exportSize * 0.085)}px sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('DIR', rX + tabW / 2, rY + tabH / 2);
+            }
+
+            // Draw toggle status LED indicator directly on hardware canvas
+            if (btnData.type === 'toggle') {
+                const ledR = Math.max(3, Math.round(exportSize * 0.045));
+                const ledX = exportSize - ledR - 6;
+                const ledY = ledR + 6;
+                const isStateOn = Boolean(btnData.toggleState);
+                ctx.beginPath();
+                ctx.arc(ledX, ledY, ledR * 1.8, 0, Math.PI * 2);
+                ctx.fillStyle = isStateOn ? 'rgba(34, 197, 94, 0.4)' : 'rgba(239, 68, 68, 0.25)';
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(ledX, ledY, ledR, 0, Math.PI * 2);
+                ctx.fillStyle = isStateOn ? '#22c55e' : '#64748b';
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(ledX - ledR * 0.3, ledY - ledR * 0.3, ledR * 0.35, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                ctx.fill();
             }
 
             canvas.toBlob((blob) => {
@@ -5595,6 +5821,66 @@ function isFilled(btn) {
 
     return false; // Everything else is empty
 }
+
+// --- SYNTHESIZED MECHANICAL HAPTIC SOUND (Web Audio API) ---
+const AudioHaptic = {
+    ctx: null,
+    enabled: true,
+    init() {
+        if (!this.ctx) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (AudioContext) this.ctx = new AudioContext();
+        }
+    },
+    playClick() {
+        if (!this.enabled) return;
+        try {
+            this.init();
+            if (!this.ctx) return;
+            if (this.ctx.state === 'suspended') {
+                this.ctx.resume();
+            }
+            const now = this.ctx.currentTime;
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(1350, now);
+            osc.frequency.exponentialRampToValueAtTime(110, now + 0.024);
+            gain.gain.setValueAtTime(0.16, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.024);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.025);
+        } catch(e) {}
+    }
+};
+
+function initActionPalette() {
+    const collapseBtn = el('#collapsePaletteBtn');
+    const panel = el('#actionPalettePanel');
+    if (collapseBtn && panel) {
+        collapseBtn.onclick = () => {
+            panel.classList.toggle('collapsed');
+            collapseBtn.textContent = panel.classList.contains('collapsed') ? '▶' : '◀';
+        };
+    }
+
+    document.querySelectorAll('.action-chip[data-action]').forEach(chip => {
+        chip.addEventListener('dragstart', e => {
+            e.dataTransfer.setData('text/plain', 'action-palette:' + chip.dataset.action);
+            e.dataTransfer.effectAllowed = 'copy';
+        });
+    });
+
+    const soundToggle = el('#mechanicalSoundToggle');
+    if (soundToggle) {
+        soundToggle.onchange = () => {
+            AudioHaptic.enabled = soundToggle.checked;
+        };
+    }
+}
+
 function cellTemplate(i, incomingBtnData) {
     const div = document.createElement('div');
     div.className = 'cell';
@@ -5618,17 +5904,35 @@ function cellTemplate(i, incomingBtnData) {
 
     div.addEventListener('dragenter', e => {
         document.querySelectorAll('.cell.dragover').forEach(c => c.classList.remove('dragover'));
-        if (e.dataTransfer.types.includes('application/json')) { div.classList.add('dragover'); }
+        if (e.dataTransfer.types.includes('application/json') || e.dataTransfer.types.includes('text/plain')) {
+            div.classList.add('dragover');
+        }
     });
 
     div.addEventListener('dragover', e => {
-        if (e.dataTransfer.types.includes('application/json')) { e.preventDefault(); }
+        if (e.dataTransfer.types.includes('application/json') || e.dataTransfer.types.includes('text/plain')) {
+            e.preventDefault();
+        }
     });
 
     div.addEventListener('drop', e => {
         e.preventDefault();
         e.stopPropagation();
         div.classList.remove('dragover');
+
+        // Check for Action Palette drag
+        const textPayload = e.dataTransfer.getData('text/plain');
+        if (textPayload && textPayload.startsWith('action-palette:')) {
+            const actionType = textPayload.replace('action-palette:', '');
+            AudioHaptic.playClick();
+            const existingBtn = Object.assign({}, emptyBtn(), cfg.pages[currentPage]?.[i]);
+            existingBtn.type = actionType;
+            if (!existingBtn.label || existingBtn.label.trim() === '') {
+                existingBtn.label = actionType.charAt(0).toUpperCase() + actionType.slice(1);
+            }
+            openEditor(i, existingBtn);
+            return;
+        }
 
         const dragDataRaw = e.dataTransfer.getData('application/json');
         if (!dragDataRaw) return;
@@ -5844,7 +6148,10 @@ function cellTemplate(i, incomingBtnData) {
             b.classList.add('is-folder');
         }
 
-        b.onclick = () => openEditor(i, currentBtn);
+        b.onclick = () => {
+            AudioHaptic.playClick();
+            openEditor(i, currentBtn);
+        };
 
         if (currentBtn.type === 'goto' || currentBtn.type === 'folder') {
             b.ondblclick = (e) => {
@@ -5872,7 +6179,10 @@ function cellTemplate(i, incomingBtnData) {
         const plus = document.createElement('button');
         plus.className = 'plus';
         plus.textContent = '+';
-        plus.onclick = () => openEditor(i, emptyBtn());
+        plus.onclick = () => {
+            AudioHaptic.playClick();
+            openEditor(i, emptyBtn());
+        };
 
         plus.addEventListener('contextmenu', (e) => {
             e.preventDefault();
@@ -6298,6 +6608,212 @@ function updatePreviewEl(tmp) {
     const previewBtn = el('#editor .previewBtn');
     if (previewBtn) {
         previewBtn.style.backgroundColor = tmp.btnBgColor || '';
+    }
+
+    // Live 1:1 Hardware LCD Simulation Render
+    renderEditorLiveHardware(tmp);
+}
+
+function renderEditorLiveHardware(tmp) {
+    const canvas = el('#editorLiveHardwareCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const size = canvas.width || 128;
+    ctx.clearRect(0, 0, size, size);
+
+    // 1. Background
+    let bgColor = '#' + (cfg.theme.btn || '161D2B');
+    if (tmp && tmp.btnBgColor) {
+        bgColor = tmp.btnBgColor;
+    }
+    if (tmp.type === 'toggle' && tmp.toggleState === true && tmp.toggleData?.onColor) {
+        bgColor = tmp.toggleData.onColor;
+    }
+
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, size, size);
+
+    // 2. Specular glass sheen highlight
+    const glassGrad = ctx.createLinearGradient(0, 0, 0, Math.round(size * 0.45));
+    glassGrad.addColorStop(0, 'rgba(255, 255, 255, 0.22)');
+    glassGrad.addColorStop(0.15, 'rgba(255, 255, 255, 0.08)');
+    glassGrad.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
+    ctx.fillStyle = glassGrad;
+    ctx.fillRect(0, 0, size, Math.round(size * 0.45));
+
+    // Inner bevel border
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(0.5, 0.5, size - 1, size - 1);
+
+    const hasIcon = Boolean(tmp.icon && tmp.icon.length > 0);
+    const hasLabel = Boolean(tmp.label && tmp.label.trim().length > 0 && tmp.type !== 'counter');
+
+    const drawTextAndBadges = () => {
+        if (hasLabel) {
+            const text = tmp.label.trim();
+            const padding = Math.max(3, Math.round(size * 0.05));
+            const maxWidth = (size * 0.92) - (padding * 2);
+            let fontPx = safeFont(size, tmp.labelSize);
+
+            const words = text.split(/\s+/);
+            for (let testSize = fontPx; testSize >= 8; testSize--) {
+                ctx.font = `700 ${testSize}px ui-sans-serif, system-ui, -apple-system, sans-serif`;
+                let allWordsFit = true;
+                for (const w of words) {
+                    if (ctx.measureText(w).width > maxWidth) {
+                        allWordsFit = false;
+                        break;
+                    }
+                }
+                fontPx = testSize;
+                if (allWordsFit) break;
+            }
+
+            ctx.font = `700 ${fontPx}px ui-sans-serif, system-ui, -apple-system, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            const lineHeight = Math.round(fontPx * 1.18);
+
+            let lines = [];
+            let currentLine = '';
+            for (let i = 0; i < words.length; i++) {
+                const w = words[i];
+                const testLine = currentLine ? (currentLine + ' ' + w) : w;
+                if (ctx.measureText(testLine).width <= maxWidth) {
+                    currentLine = testLine;
+                } else {
+                    if (currentLine) lines.push(currentLine);
+                    currentLine = w;
+                }
+            }
+            if (currentLine) lines.push(currentLine);
+            if (lines.length > 2) lines = lines.slice(0, 2);
+
+            const totalTextHeight = lines.length * lineHeight;
+            let y;
+            const vPos = tmp.labelV || (hasIcon ? 'bottom' : 'middle');
+            if (vPos === 'top') {
+                y = padding + (lineHeight / 2);
+            } else if (vPos === 'bottom') {
+                y = (size - padding) - totalTextHeight + (lineHeight / 2);
+            } else {
+                y = (size - totalTextHeight) / 2 + (lineHeight / 2);
+            }
+
+            const centerX = size / 2;
+            ctx.lineJoin = 'round';
+            ctx.miterLimit = 2;
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.95)';
+            ctx.lineWidth = Math.max(2, Math.round(fontPx * 0.22));
+
+            for (let k = 0; k < lines.length; k++) {
+                const lineY = Math.round(y + (k * lineHeight));
+                ctx.strokeText(lines[k].trim(), centerX, lineY);
+            }
+
+            ctx.fillStyle = tmp.labelColor || '#FFFFFF';
+            for (let k = 0; k < lines.length; k++) {
+                const lineY = Math.round(y + (k * lineHeight));
+                ctx.fillText(lines[k].trim(), centerX, lineY);
+            }
+        }
+
+        // Folder badge
+        if (tmp.type === 'folder') {
+            const tabW = Math.round(size * 0.28);
+            const tabH = Math.round(size * 0.16);
+            const rX = size - tabW - 3;
+            const rY = 3;
+            ctx.fillStyle = 'rgba(59, 130, 246, 0.9)';
+            ctx.beginPath();
+            if (ctx.roundRect) ctx.roundRect(rX, rY, tabW, tabH, 3);
+            else ctx.rect(rX, rY, tabW, tabH);
+            ctx.fill();
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = `bold ${Math.round(size * 0.085)}px sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('DIR', rX + tabW / 2, rY + tabH / 2);
+        }
+
+        // Toggle LED
+        if (tmp.type === 'toggle') {
+            const ledR = Math.max(3, Math.round(size * 0.045));
+            const ledX = size - ledR - 6;
+            const ledY = ledR + 6;
+            const isStateOn = Boolean(tmp.toggleState);
+            ctx.beginPath();
+            ctx.arc(ledX, ledY, ledR * 1.8, 0, Math.PI * 2);
+            ctx.fillStyle = isStateOn ? 'rgba(34, 197, 94, 0.4)' : 'rgba(239, 68, 68, 0.25)';
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(ledX, ledY, ledR, 0, Math.PI * 2);
+            ctx.fillStyle = isStateOn ? '#22c55e' : '#64748b';
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(ledX - ledR * 0.3, ledY - ledR * 0.3, ledR * 0.35, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fill();
+        }
+    };
+
+    if (hasIcon) {
+        const iconUrl = getIconUrl(tmp.icon);
+        const img = new Image();
+        if (/^https?:\/\//i.test(iconUrl)) img.crossOrigin = 'anonymous';
+        img.onload = () => {
+            try {
+                const scalePercent = (tmp.iconScale || 0);
+                const scaleValue = 1 + (scalePercent / 100.0);
+                const finalScale = Math.max(0.1, scaleValue);
+                let iconAreaRatio = 0.65;
+                let yOffset = 0;
+                if (hasLabel) {
+                    const vPos = tmp.labelV || 'bottom';
+                    if (vPos === 'bottom') {
+                        iconAreaRatio = 0.60;
+                        yOffset = -Math.round(size * 0.12);
+                    } else if (vPos === 'top') {
+                        iconAreaRatio = 0.60;
+                        yOffset = Math.round(size * 0.12);
+                    }
+                }
+                const imgW = img.naturalWidth || img.width || size;
+                const imgH = img.naturalHeight || img.height || size;
+                const maxBox = size * iconAreaRatio * finalScale;
+                let sW = (imgW > imgH) ? maxBox : (imgW / imgH) * maxBox;
+                let sH = (imgW > imgH) ? (imgH / imgW) * maxBox : maxBox;
+                const dX = Math.round((size - sW) / 2);
+                const dY = Math.round((size - sH) / 2 + yOffset);
+
+                let effectiveIconColor = tmp.iconColor;
+                if (!effectiveIconColor && (iconUrl.includes('iconify.design') || iconUrl.includes('simplesvg.com') || iconUrl.includes('unisvg.com'))) {
+                    effectiveIconColor = '#ffffff';
+                }
+
+                if (effectiveIconColor) {
+                    const tintCanvas = document.createElement('canvas');
+                    tintCanvas.width = size;
+                    tintCanvas.height = size;
+                    const tintCtx = tintCanvas.getContext('2d');
+                    tintCtx.drawImage(img, dX, dY, sW, sH);
+                    tintCtx.globalCompositeOperation = 'source-in';
+                    tintCtx.fillStyle = effectiveIconColor;
+                    tintCtx.fillRect(0, 0, size, size);
+                    ctx.drawImage(tintCanvas, 0, 0);
+                } else {
+                    ctx.drawImage(img, dX, dY, sW, sH);
+                }
+                drawTextAndBadges();
+            } catch(e) {
+                drawTextAndBadges();
+            }
+        };
+        img.onerror = () => drawTextAndBadges();
+        img.src = iconUrl;
+    } else {
+        drawTextAndBadges();
     }
 }
 
@@ -8265,6 +8781,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     initCropSystem();
+    initActionPalette();
     // DOMContentLoaded içinde uygun bir yere ekle:
     el('#openFlasherBtn').addEventListener('click', openFirmwareDialog);
     // 1. Learn Asset Path

@@ -112,6 +112,7 @@
             </div>
 
             <div class="device-frame">
+              <span class="hardware-bezel-badge" id="hardwareBezelBadge">CYD 2.8" // 320x240</span>
               <div id="web-title-bar" class="web-device-bar">
                 <span id="web-title-text">Device Name</span>
               </div>
@@ -120,6 +121,57 @@
                 <span id="web-page-name">Page 1</span>
               </div>
             </div>
+
+            <!-- DRAGGABLE ACTION LIBRARY PALETTE -->
+            <aside class="action-palette-panel" id="actionPalettePanel">
+              <div class="action-palette-header">
+                <div class="action-palette-title">
+                  <span>⚡ Actions</span>
+                </div>
+                <button type="button" class="action-palette-collapse-btn" id="collapsePaletteBtn" title="Toggle Palette">◀</button>
+              </div>
+              <div class="action-palette-scroll">
+                <div class="action-palette-category">
+                  <div class="action-palette-category-title">⌨️ Shortcuts</div>
+                  <div class="action-palette-chips">
+                    <div class="action-chip" draggable="true" data-action="key"><span class="action-chip-icon">⌨️</span> HotKey</div>
+                    <div class="action-chip" draggable="true" data-action="multi"><span class="action-chip-icon">🔀</span> Multi-Action</div>
+                    <div class="action-chip" draggable="true" data-action="text"><span class="action-chip-icon">📝</span> Text Macro</div>
+                  </div>
+                </div>
+                <div class="action-palette-category">
+                  <div class="action-palette-category-title">📁 Navigation</div>
+                  <div class="action-palette-chips">
+                    <div class="action-chip" draggable="true" data-action="folder"><span class="action-chip-icon">📁</span> Folder</div>
+                    <div class="action-chip" draggable="true" data-action="goto"><span class="action-chip-icon">📄</span> Page Jump</div>
+                  </div>
+                </div>
+                <div class="action-palette-category">
+                  <div class="action-palette-category-title">🎛️ Controls</div>
+                  <div class="action-palette-chips">
+                    <div class="action-chip" draggable="true" data-action="toggle"><span class="action-chip-icon">🔘</span> Toggle Switch</div>
+                    <div class="action-chip" draggable="true" data-action="counter"><span class="action-chip-icon">🔢</span> Counter</div>
+                    <div class="action-chip" draggable="true" data-action="timer"><span class="action-chip-icon">⏱️</span> Timer</div>
+                  </div>
+                </div>
+                <div class="action-palette-category">
+                  <div class="action-palette-category-title">🎵 Media & Audio</div>
+                  <div class="action-palette-chips">
+                    <div class="action-chip" draggable="true" data-action="media"><span class="action-chip-icon">⏯️</span> Media Keys</div>
+                    <div class="action-chip" draggable="true" data-action="sound"><span class="action-chip-icon">🔊</span> Sound Board</div>
+                  </div>
+                </div>
+                <div class="action-palette-category">
+                  <div class="action-palette-category-title">🚀 Apps & System</div>
+                  <div class="action-palette-chips">
+                    <div class="action-chip" draggable="true" data-action="app"><span class="action-chip-icon">🚀</span> Launch App</div>
+                    <div class="action-chip" draggable="true" data-action="script"><span class="action-chip-icon">📜</span> Shell Script</div>
+                    <div class="action-chip" draggable="true" data-action="website"><span class="action-chip-icon">🌐</span> Open Website</div>
+                    <div class="action-chip" draggable="true" data-action="mouse"><span class="action-chip-icon">🖱️</span> Mouse Action</div>
+                  </div>
+                </div>
+              </div>
+            </aside>
           </div>
         </div>
         <!-- End of device-panel -->
@@ -564,18 +616,62 @@
 
   <dialog id="editor">
     <form method="dialog" class="editor">
-      <button type="button" class="dialog-close-btn" id="editorCloseBtn">×</button>
-      <h3 id="editorTitle">Button</h3>
-
-      <div class="row">
-        <label data-i18n="editor.previewTitle">Preview (110×110)</label>
-        <div class="previewBtn btn" style="position: relative; overflow: hidden;">
-          <i id="previewIcon" class="icon-img"></i>
-          <img id="previewImgRaw" class="icon-img" src="#"
-            style="display: none; object-fit: contain; width: 100%; height: 100%;" />
-          <div id="previewLabel" class="label">Sample text</div>
+      <!-- HEADER BAR -->
+      <div class="editor-header-bar">
+        <div class="editor-header-title-wrap">
+          <h3 id="editorTitle" style="margin: 0;">Button</h3>
+          <span class="editor-header-tag" id="editorActionTag">CONFIG</span>
         </div>
+        <button type="button" class="dialog-close-btn" id="editorCloseBtn" style="position: static;">×</button>
       </div>
+
+      <!-- 2-COLUMN BODY -->
+      <div class="editor-body-layout">
+        <!-- LEFT COLUMN: LIVE HARDWARE PREVIEW & SWATCHES -->
+        <div class="editor-preview-column">
+          <div class="editor-preview-heading">Hardware TFT 1:1 Live</div>
+          
+          <div class="live-hardware-canvas-box">
+            <canvas id="editorLiveHardwareCanvas" width="128" height="128"></canvas>
+          </div>
+
+          <!-- Hidden legacy preview so all JS functions updatePreviewEl work seamlessly -->
+          <div class="previewBtn btn" style="display: none; position: relative; overflow: hidden;">
+            <i id="previewIcon" class="icon-img"></i>
+            <img id="previewImgRaw" class="icon-img" src="#"
+              style="display: none; object-fit: contain; width: 100%; height: 100%;" />
+            <div id="previewLabel" class="label">Sample text</div>
+          </div>
+
+          <span class="live-preview-badge">CYD 2.8" LCD 1:1</span>
+
+          <!-- Curated Color Swatches -->
+          <div class="color-swatch-wrap">
+            <label style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em;">Themes & Colors</label>
+            <div class="color-swatch-grid">
+              <div class="color-swatch-dot" data-color="#0F172A" style="background: #0F172A;" title="Obsidian Slate"></div>
+              <div class="color-swatch-dot" data-color="#1E3A8A" style="background: #1E3A8A;" title="Deep Sapphire"></div>
+              <div class="color-swatch-dot" data-color="#065F46" style="background: #065F46;" title="Emerald Matrix"></div>
+              <div class="color-swatch-dot" data-color="#881337" style="background: #881337;" title="Crimson Ruby"></div>
+              <div class="color-swatch-dot" data-color="#0284C7" style="background: #0284C7;" title="Cyan Neon"></div>
+              <div class="color-swatch-dot" data-color="#581C87" style="background: #581C87;" title="Royal Amethyst"></div>
+              <div class="color-swatch-dot" data-color="#78350F" style="background: #78350F;" title="Amber Gold"></div>
+              <div class="color-swatch-dot" data-color="#18181B" style="background: #18181B;" title="Carbon Stealth"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: TABBED CONTROLS -->
+        <div class="editor-tabs-column">
+          <!-- Segmented Tab Header -->
+          <div class="editor-nav-tabs">
+            <button type="button" class="editor-nav-tab-btn active" data-editor-tab="action">⚡ Action</button>
+            <button type="button" class="editor-nav-tab-btn" data-editor-tab="style">🎨 Style & Icon</button>
+            <button type="button" class="editor-nav-tab-btn" data-editor-tab="advanced">⚙️ Advanced</button>
+          </div>
+
+          <!-- TAB 2: STYLE & ICON CONTAINER (Starts here) -->
+          <div class="editor-tab-section" id="tabSectionStyle" style="display: none;">
 
 
       <div class="group-box">
@@ -678,7 +774,10 @@
             </div>
           </div>
         </div>
-      </div>
+          </div><!-- End #tabSectionStyle -->
+
+          <!-- TAB 1: ACTION TYPE & CONFIGURATION -->
+          <div class="editor-tab-section" id="tabSectionAction">
 
       <div class="group-box">
         <div class="row">
@@ -1086,6 +1185,17 @@
             <button type="button" class="quick-chip-btn game-chip" data-quick-combo="GUI+SHIFT+S" data-quick-label="Snip" title="Windows: Snip & Sketch Screenshot">✂️ Screenshot</button>
           </div>
 
+          <!-- Smart Live HotKey Recorder -->
+          <div class="hotkey-recorder-box">
+            <button type="button" class="record-hotkey-btn" id="recordShortcutBtn">
+              <span id="recordShortcutDot">🔴</span> <span id="recordShortcutLabel">Nagraj skrót / Record</span>
+            </button>
+            <div class="hotkey-display-keys" id="hotkeyPillsContainer">
+              <span class="muted" style="font-size: 11px;">Kliknij "Nagraj skrót" i wciśnij klawisze...</span>
+            </div>
+            <button type="button" class="hotkey-clear-btn" id="clearShortcutBtn" title="Wyczyść skrót">×</button>
+          </div>
+
           <div class="combo-row" style="margin-top: 8px;">
             <input id="combo" class="text" data-i18n-placeholder="editor.key.placeholder"
               placeholder="e.g. CTRL+ALT+DELETE" readonly />
@@ -1171,17 +1281,42 @@
           </small>
         </div>
 
-        <div class="actions-box">
-          <div class="row actions">
-            <button id="clearBtn" class="danger" type="button" data-i18n="editor.clear">Clear</button>
-            <button id="copyBtn" class="ghost" type="button" data-i18n="editor.copy">Copy</button>
-            <button id="pasteBtn" class="ghost" type="button" data-i18n-title="editor.paste" title="Paste saved button"
-              data-i18n="editor.paste">Paste</button>
-            <div class="spacer"></div>
-            <button id="cancel" type="reset" class="danger" data-i18n="editor.cancel">Cancel</button>
-            <button id="apply" class="primary" type="submit" data-i18n="editor.apply">Apply</button>
+          </div><!-- End #tabSectionAction -->
+
+          <!-- TAB 3: ADVANCED -->
+          <div class="editor-tab-section" id="tabSectionAdvanced" style="display: none;">
+            <div class="group-box">
+              <label>Haptic & Sound Feedback</label>
+              <div class="hstack" style="justify-content: space-between; align-items: center; margin-top: 10px;">
+                <div>
+                  <span style="font-size: 13px; font-weight: 600; color: var(--text);">Mechanical Switch Sound</span>
+                  <div class="muted" style="font-size: 11px; margin-top: 2px;">Synthesizes tactile click sound on PC preview</div>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="mechanicalSoundToggle" checked>
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div class="group-box">
+              <label>CYD Display Engine</label>
+              <div style="font-size: 12px; color: var(--muted); line-height: 1.5; margin-top: 6px;">
+                Automatic dual-stroke high-contrast typography, folder tab badges, and 3D specular glass highlights are rendered onto all hardware TFT buttons.
+              </div>
+            </div>
           </div>
-        </div>
+        </div><!-- End .editor-tabs-column -->
+      </div><!-- End .editor-body-layout -->
+
+      <div class="editor-actions-footer">
+        <button id="clearBtn" class="danger" type="button" data-i18n="editor.clear">Clear</button>
+        <button id="copyBtn" class="ghost" type="button" data-i18n="editor.copy">Copy</button>
+        <button id="pasteBtn" class="ghost" type="button" data-i18n-title="editor.paste" title="Paste saved button"
+          data-i18n="editor.paste">Paste</button>
+        <div class="spacer"></div>
+        <button id="cancel" type="reset" class="danger" data-i18n="editor.cancel">Cancel</button>
+        <button id="apply" class="primary" type="submit" data-i18n="editor.apply" style="padding: 9px 24px; font-weight: 700; box-shadow: 0 4px 14px var(--accent-glow);">Apply</button>
+      </div>
     </form>
   </dialog>
 
