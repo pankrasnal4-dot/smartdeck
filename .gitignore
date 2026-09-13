@@ -1,0 +1,17 @@
+﻿# Node & Electron
+node_modules/
+dist/
+*.log
+
+# PlatformIO & Arduino builds
+.pio/
+.vscode/
+
+# Installers and build binaries
+Smart.Deck.Setup.*.exe
+*.exe~
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store

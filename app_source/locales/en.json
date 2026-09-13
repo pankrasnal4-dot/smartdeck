@@ -1,0 +1,567 @@
+{
+  "header": {
+    "title": "SmartDeck",
+    "buttons": {
+      "reset": "Reset",
+      "import": "Import",
+      "export": "Export App Settings",
+      "exportTooltip": "Export application settings as JSON file (for backup/transfer)",
+      "presets": "Presets",
+      "presetsTooltip": "Browse and apply shortcut presets",
+      "themes": "🎨 Themes",
+      "themesTooltip": "Browse and apply color themes",
+      "undo": "Undo",
+      "redo": "Redo",
+      "settings": "⚙️"
+    }
+  },
+  "themes": {
+    "title": "Color Themes",
+    "apply": "Apply",
+    "cancel": "Cancel",
+    "saveCurrent": "Save Current",
+    "import": "Import",
+    "export": "Export",
+    "delete": "Delete",
+    "enterName": "Enter theme name:",
+    "saveTitle": "Save Theme",
+    "applied": "Theme applied:",
+    "saved": "Theme saved:",
+    "deleted": "deleted",
+    "exported": "Theme exported!",
+    "imported": "Theme imported:",
+    "invalidFile": "Invalid theme file",
+    "importFailed": "Failed to import theme"
+  },
+  "contextMenu": {
+    "copy": "Copy",
+    "paste": "Paste",
+    "delete": "Delete",
+    "copied": "Button copied",
+    "pasted": "Button pasted",
+    "deleted": "Button deleted",
+    "preview": "Preview/Test",
+    "previewExecuted": "Action executed",
+    "createFolder": "Create Folder",
+    "openFolder": "Open Folder in Editor",
+    "groupInFolder": "Group into New Folder"
+  },
+  "device": {
+    "frame": {
+      "title": "Device Name",
+      "page": "Page {pageNum}"
+    },
+    "hint": "Drag cells to reorder or move between pages • Click to edit",
+    "settings": {
+      "resolution": "Device Resolution",
+      "grid": "Grid (Max)",
+      "deviceName": "Device Name",
+      "background": "Background",
+      "button": "Button",
+      "text": "Text",
+      "stroke": "Stroke",
+      "shadow": "Shadow",
+      "led": "LED"
+    },
+    "buttons": {
+      "exportLocal": "📂 Export to SD Card",
+      "exportLocalTooltip": "Export config.json and images to your SD card folder",
+      "upload": "Upload Settings"
+    }
+  },
+  "plugins": {
+    "title": "Plugins",
+    "buttons": {
+      "openFolder_title": "Open Plugins Folder",
+      "reload_title": "Reload Plugins"
+    },
+    "loading": "Loading plugins...",
+    "none": "No plugins found in /plugins folder.",
+    "api_not_ready": "API not ready.",
+    "button": "Run Plugin",
+    "unknown": "Unknown plugin"
+  },
+  "presets": {
+    "title": "Presets",
+    "loading": "Loading presets...",
+    "none": "No presets found in /presets folder.",
+    "openFolder": "Open Presets Folder",
+    "refresh": "Refresh",
+    "button": "Apply Preset",
+    "selectPreset": "Select a preset",
+    "unknown": "Unknown preset"
+  },
+  "connection": {
+    "connected": "Connected: {deviceName}",
+    "disconnected": "Disconnected",
+    "searching": "Searching...",
+    "buttons": {
+      "refresh_title": "Refresh"
+    },
+    "accessDenied": "Access Denied",
+    "connect": "Connect",
+    "connecting": "Connecting...",
+    "identifying": "Identifying device...",
+    "notFound": "Device not found",
+    "portBusy": "Port is busy",
+    "selectPort": "Select Port"
+  },
+  "editor": {
+    "title": "Button – Cell {cellNum}",
+    "previewTitle": "Preview (110×110)",
+    "iconLabel": "Icon (PNG/JPG/SVG/WebP)",
+    "iconPlaceholder": "Type to search online icons...",
+    "iconBrowse": "📁 Local File",
+    "cropTitle": "Crop & Scale Image",
+    "zoom": "Zoom",
+    "useIcon": "Use Icon",
+    "iconHint": "If no icon is selected, only text will be shown.",
+    "textLabel": "Text Title",
+    "textPlaceholder": "Button Title",
+    "positionLabel": "Position",
+    "posTop": "Top",
+    "posMid": "Mid",
+    "posBot": "Bot",
+    "labelColor": "Label Color",
+    "iconColor": "Icon Color",
+    "buttonColor": "Button Color",
+    "textSize": "Text Size",
+    "iconScale": "Icon Scale",
+    "reset": "Reset",
+    "actionTypeLabel": "Action Type",
+    "action": {
+      "key": "HotKey",
+      "goto": "Page",
+      "toggle": "Toggle",
+      "text": "Text",
+      "app": "Open",
+      "timer": "Timer",
+      "script": "Script",
+      "website": "Website",
+      "media": "Media",
+      "mouse": "Mouse",
+      "counter": "Counter",
+      "sound": "Sound",
+      "multi": "Multi"
+    },
+    "multi": {
+      "title": "Multi-Action Builder",
+      "actions": "Actions",
+      "actionSequence": "Action Sequence",
+      "emptyHint": "Drag actions here to build your sequence",
+      "settings": "Action Settings",
+      "deleteAction": "Delete this action",
+      "delay": "Delay",
+      "delayMs": "Delay (ms)",
+      "hotkey": "HotKey",
+      "text": "Text",
+      "openApp": "Open App",
+      "website": "Website",
+      "script": "Script",
+      "media": "Media",
+      "sound": "Sound",
+      "mouse": "Mouse",
+      "gotoPage": "Go to Page"
+    },
+    "toggle": {
+      "stateA": "State A (OFF)",
+      "stateADesc": "Default State",
+      "stateB": "State B (ON)",
+      "stateBDesc": "Active State",
+      "preset": "Presets...",
+      "shortcutPlaceholder": "Shortcut or Script...",
+      "capture": "Capture",
+      "clear": "Clear",
+      "visuals": "Active Visuals (State B Only)",
+      "bgColor": "BG Color",
+      "iconColor": "Icon Color",
+      "activeIcon": "Active Icon (Optional)",
+      "searchIcon": "Search icon...",
+      "playSound": "Play Switch Sound",
+      "playSoundDesc": "You can change the toggle sound in Settings."
+    },
+    "media": {
+      "label": "Media Action",
+      "play": "Play/Pause",
+      "mute": "Mute",
+      "vol_up": "Vol Up",
+      "prev": "Prev",
+      "next": "Next",
+      "vol_down": "Vol Down"
+    },
+    "sound": {
+      "file": "Audio File",
+      "placeholder": "Select an audio file...",
+      "browse": "Browse",
+      "volume": "Volume ({percent}%)"
+    },
+    "counter": {
+      "start": "Start Value",
+      "action": "Action",
+      "inc": "Increment (+)",
+      "dec": "Decrement (-)",
+      "hint": "Long press on the device will reset the counter to the Start Value."
+    },
+    "mouse": {
+      "event": "Event",
+      "events": {
+        "click": "Mouse Click",
+        "double_click": "Mouse Double Click",
+        "move": "Mouse Move",
+        "drag": "Drag and Drop"
+      },
+      "button": "Button",
+      "buttons": {
+        "left": "Left Click",
+        "right": "Right Click",
+        "middle": "Middle Click"
+      },
+      "posMove": "Position (Move To)",
+      "posDragStart": "Drag from (Start)",
+      "posDragEnd": "Drag to (End)",
+      "xaxis": "X-axis",
+      "yaxis": "Y-axis",
+      "capture": "Capture",
+      "captureStart": "Capture Start",
+      "captureEnd": "Capture End",
+      "realtime": "Current: X: {x}, Y: {y}"
+    },
+    "website": {
+      "label": "Website URL",
+      "placeholder": "https://www.google.com"
+    },
+    "app": {
+      "label": "Application",
+      "select": "Select app...",
+      "browse": "Browse",
+      "hint": "Select from list above OR browse manually.",
+      "loading": "Loading apps...",
+      "loadError": "Error loading apps"
+    },
+    "key": {
+      "label": "Shortcut Combination",
+      "win": "WIN",
+      "enter": "ENTER",
+      "capture": "Capture",
+      "placeholder": "e.g. CTRL+ALT+DELETE"
+    },
+    "goto": {
+      "label": "Target Page"
+    },
+    "textMacro": {
+      "label": "Text to Type",
+      "hint": "Press 'Enter' in box for new line (sends 'Enter' key)",
+      "placeholder": "Type your text macro here...",
+      "simulate": "Simulate Typing",
+      "simulateHint": "Enabling this sends the macro as a series of individual key presses instead of using the clipboard. Useful for applications that block copy/paste."
+    },
+    "timer": {
+      "label": "Timer Duration",
+      "minutes": "Minutes",
+      "seconds": "Seconds"
+    },
+    "script": {
+      "label": "Custom Script (Command Line)",
+      "hint": "Runs in Windows shell (cmd)",
+      "placeholder": "e.g., taskkill /f /im chrome.exe\ncalc",
+      "hintNircmd": "*Audio presets require ",
+      "hintNircmdLink": " to be in your system's PATH.",
+      "selectPreset": "--- Select Preset Script ---"
+    },
+    "picker": {
+      "title": "Select Icon (Online)",
+      "placeholder": "Search 100,000+ icons (e.g., home, settings)...",
+      "status": "Type above to search Iconify...",
+      "close": "Close",
+      "error": "Error searching icons.",
+      "minChars": "Type at least 2 characters",
+      "noResults": "No results found",
+      "searching": "Searching..."
+    },
+    "clear": "Clear",
+    "copy": "Copy",
+    "paste": "Paste",
+    "cancel": "Cancel",
+    "apply": "Apply",
+    "capture": {
+      "listening": "Listening...",
+      "pressKeys": "Press keys...",
+      "start": "Capture"
+    }
+  },
+  "alerts": {
+    "reset": {
+      "title": "Reset All Settings",
+      "message": "WARNING: This will delete all your pages, buttons, and settings, reverting everything to default.\n\nAre you sure? Make sure you have backed up your settings."
+    },
+    "pageFull": {
+      "title": "Drop Failed",
+      "message": "Page is full. Drop on an existing button to swap, or drop on an empty cell."
+    },
+    "deletePage": {
+      "title": "Delete Page",
+      "message": "Are you sure you want to delete '{pageName}'?\nAll buttons on this page will be lost.",
+      "error_min_pages": "You must have at least one page."
+    },
+    "deviceNotConnected": "Device not connected...",
+    "connectionError": "Connection Error",
+    "counterNotConnected": "Device not connected. Cannot send counter command.",
+    "mouseError": "Mouse Action Failed:",
+    "robotError": "RobotJS Error",
+    "deleteError": "Delete Error"
+  },
+  "toast": {
+    "configSaveFailed": "Failed to save config!",
+    "configRestoredBackup": "Config restored from backup",
+    "configResetCorruption": "Config reset due to corruption",
+    "configNotLoaded": "Config not loaded.",
+    "configCopied": "Config copied to clipboard",
+    "configCopyFailed": "Failed to copy",
+    "configDownloaded": "Config downloaded",
+    "notConnected": "Not connected to device",
+    "requestingConfig": "Requesting config from ESP32...",
+    "logCleared": "Log cleared",
+    "failedReadConfig": "Failed to read config:",
+    "iconsLoadFailed": "Failed to load default icons. Check manifest.json or select folder."
+  },
+  "timer": {
+    "finished": "Timer Finished",
+    "complete": "Your timer \"{label}\" is complete."
+  },
+  "serialMonitor": {
+    "title": "Serial Monitor",
+    "send": "Send",
+    "clear": "Clear",
+    "copyLog": "Copy Log",
+    "downloadLog": "Download Log",
+    "getConfig": "Get ESP Config",
+    "placeholder": "Type command...",
+    "logCopied": "Log copied to clipboard"
+  },
+  "settings": {
+    "title": "Application Settings",
+    "startup": "Start with Windows",
+    "startupLabel": "Startup",
+    "startupDesc": "Automatically start minimized to tray on login.",
+    "windowBehavior": "Window Behavior",
+    "closeAction": "When clicking 'X' (Close) button",
+    "closeOptions": {
+      "ask": "Always Ask (Show Confirmation)",
+      "minimize": "Minimize to Tray (Keep Running)",
+      "exit": "Exit Application Immediately"
+    },
+    "language": "Language",
+    "languageSelect": "Application Language",
+    "sounds": "Sound Settings",
+    "soundsToggle": "Default Toggle Sound",
+    "soundsTogglePlaceholder": "Default (switch.wav)",
+    "soundsTimer": "Timer Notification Sound",
+    "soundsTimerPlaceholder": "Default (notification.wav)",
+    "browse": "Browse",
+    "reset_sound": "Reset",
+    "screen": "Screen & Device Settings",
+    "brightness": "Screen Brightness",
+    "sleep": "Screen Sleep (Dim)",
+    "sleepDesc": "Dim screen after inactivity to save power.",
+    "about": "About & Updates",
+    "appName": "Smart Deck App",
+    "version": "Version {version}",
+    "loadingVersion": "Loading version...",
+    "checkUpdates": "Check for Updates",
+    "newVersionAvailable": "New version available!",
+    "downloadUpdate": "Download",
+    "upToDate": "You're up to date!",
+    "checking": "Checking...",
+    "checkFailed": "Check Failed",
+    "updateFound": "Update Found!",
+    "done": "Done",
+    "weather": "Weather (Sleep Screen)",
+    "weatherSettings": "Weather Settings",
+    "weatherCity": "City",
+    "weatherCityPlaceholder": "Search city...",
+    "weatherUnits": "Temperature Unit",
+    "weatherNoResults": "No cities found",
+    "weatherSearchError": "Search failed",
+    "weatherCitySaved": "Weather location saved",
+    "dimLedAnimation": "Dim Mode LED Animation",
+    "dimLedAnimationDesc": "LED animation when screen is dimmed.",
+    "dimLedOff": "Off",
+    "dimLedBreathing": "Breathing",
+    "dimLedRainbow": "Rainbow Cycle",
+    "dimLedPulse": "Pulse",
+    "dimLedComet": "Comet",
+    "dimLedSparkle": "Sparkle",
+    "developer": "Developer Tools",
+    "serialMonitor": "Serial Monitor",
+    "resetEsp": "Reset ESP32",
+    "espInfo": "ESP32 Info",
+    "resetSent": "Reset command sent",
+    "infoRequested": "Info requested",
+    "dumpConfig": "Dump Config",
+    "deepSleep": "Deep Sleep",
+    "deepSleepDesc": "Turn off screen and LEDs completely after dim period.",
+    "deepSleepHint": "Rotate the knob to wake up from deep sleep."
+  },
+  "knob": {
+    "title": "Knob Settings",
+    "ledSettings": "LED Settings",
+    "ledColor": "LED Color",
+    "tailLength": "Tail Length",
+    "ledBrightness": "LED Brightness",
+    "ledOffset": "LED Offset",
+    "sound": "Sound",
+    "clickSound": "Click Sound",
+    "clickSoundDesc": "Play sound when knob rotates",
+    "sensitivity": "Sensitivity",
+    "knobSensitivity": "Knob Sensitivity",
+    "sensitivityHint": "Higher = Smoother, Lower = Coarse",
+    "sensitivityLow": "Low",
+    "sensitivityHigh": "High",
+    "rotationActions": "Rotation Actions",
+    "rotateRight": "Rotate Right (CW)",
+    "rotateLeft": "Rotate Left (CCW)",
+    "presets": "Presets...",
+    "selectPreset": "── Select Preset ──",
+    "shortcutPlaceholder": "Shortcut (e.g. CTRL+Z)",
+    "capture": "Capture",
+    "mainPage": "Main",
+    "customCleared": "Custom settings cleared",
+    "clearCustom": "Clear custom settings",
+    "saved": "Knob settings saved",
+    "pressKey": "Press a key..."
+  },
+  "prompt": {
+    "renamePage": {
+      "title": "Rename Page {pageNum}",
+      "label": "New Page Name:"
+    },
+    "addPage": {
+      "title": "Add New Page",
+      "label": "New Page Name:",
+      "default": "Page {pageNum}"
+    },
+    "pageApp": "Associated Application (Optional)",
+    "noApp": "-- None --",
+    "pageAppHint": "Auto-switch to this page when app is focused",
+    "appPath": "Application Path",
+    "appPathPlaceholder": "C:\\Program Files\\...\\app.exe",
+    "browse": "Browse",
+    "autoFocus": "Switch to this page when app is focused",
+    "autoFocusHint": "Automatically switch ESP32 to this page when the application gets focus"
+  },
+  "dialogs": {
+    "confirm": {
+      "defaultTitle": "Confirmation",
+      "defaultOK": "OK"
+    },
+    "prompt": {
+      "defaultTitle": "Enter Value",
+      "defaultLabel": "Value:"
+    },
+    "alert": {
+      "defaultTitle": "Info",
+      "defaultMessage": "Message will go here.",
+      "defaultDismiss": "Dismiss"
+    },
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "input": "Input"
+  },
+  "footer": {
+    "installFirmware": "Install Firmware"
+  },
+  "firmware": {
+    "title": "Install Firmware",
+    "selectModel": "1. Select Screen Model",
+    "selectPort": "2. Select COM Port",
+    "scanning": "Scanning...",
+    "loadingModels": "Loading models...",
+    "warning": "* Please close the app connection first if connected.",
+    "startBtn": "START FLASHING",
+    "btnFlashing": "FLASHING... DO NOT UNPLUG!",
+    "logLabel": "Process Log:",
+    "logWaiting": "Waiting to start...",
+    "alerts": {
+      "invalidPortTitle": "Selection Error",
+      "invalidPort": "Please select a valid COM port first.",
+      "successTitle": "Success!",
+      "success": "Firmware updated successfully! Device will reboot.",
+      "failedTitle": "Failed",
+      "failed": "Firmware update failed. Please check the log area for details."
+    },
+    "logs": {
+      "autoDisconnect": "Auto-disconnected from app to free the port.",
+      "successReboot": "--- SUCCESS! Device is rebooting... ---",
+      "failedCheck": "--- FAILED! Check logs above. ---"
+    }
+  },
+  "update": {
+    "downloading": "Downloading...",
+    "ready": "Update Ready (Restart)",
+    "available": "New Update Available (Click to Download)"
+  },
+  "upload": {
+    "title": "Upload to Device (WiFi)",
+    "message": "This process will upload the new configuration to the device ({host}) and restart it.\n\nOld, unused icons will be cleaned up *after* the device restarts.\nContinue?",
+    "confirm": "Upload",
+    "generating": "Generating files...",
+    "uploadingConfig": "Uploading config...",
+    "uploadingIcon": "Uploading icon {current}/{total}...",
+    "rebooting": "Rebooting device...",
+    "success": "Upload complete! {count} files uploaded. Device ({host}) is rebooting.",
+    "error": "Error: Failed to connect or upload to device ({host}). Details: {error}",
+    "generationError": "Errors found during file generation. Aborting upload."
+  },
+  "serialUpload": {
+    "title": "Upload Confirmation",
+    "confirm": "Start Upload",
+    "noChanges": "No changes detected. Your device is up to date.\n\nDo you want to force a full upload anyway?",
+    "smartUpload": "Smart Upload Ready:\n- {changed} files changed/new.\n- {skipped} files unchanged (skipping).\n\nContinue?",
+    "forceUpload": "Force Full Upload (Slow)",
+    "upToDate": "Up to date. No upload needed.",
+    "alreadyUploading": "Upload already in progress...",
+    "calculatingChanges": "Calculating changes...",
+    "finalizing": "Finalizing...",
+    "finishing": "Finishing upload...",
+    "handshake": "Establishing connection...",
+    "noDeviceSelected": "No device selected",
+    "selectDevice": "Please select a device first"
+  },
+  "export": {
+    "title": "Export Complete",
+    "errorTitle": "Export Error",
+    "generationError": "Failed to generate export data. Please check your configuration.",
+    "noFolder": "No folder selected. Please select a valid folder.",
+    "success": "Export successful!\n\nConfig: {configFile}\nImages: {imageCount} files saved\n\nCopy these files to your SD card root folder.",
+    "warnings": "Warnings:",
+    "failed": "Export failed: {error}\n\nPlease try again and make sure you have write permission to the selected folder."
+  },
+  "weather": {
+    "clearSky": "Clear Sky",
+    "mainlyClear": "Mainly Clear",
+    "partlyCloudy": "Partly Cloudy",
+    "overcast": "Overcast",
+    "foggy": "Foggy",
+    "drizzle": "Drizzle",
+    "freezingDrizzle": "Freezing Drizzle",
+    "rain": "Rain",
+    "freezingRain": "Freezing Rain",
+    "snow": "Snow",
+    "snowGrains": "Snow Grains",
+    "rainShowers": "Rain Showers",
+    "snowShowers": "Snow Showers",
+    "thunderstorm": "Thunderstorm",
+    "thunderstormHail": "Thunderstorm + Hail",
+    "unknown": "Unknown"
+  },
+  "icons": {
+    "loadFailed": "Failed to load icons",
+    "loaded": "Icons loaded",
+    "noSource": "No icon source available"
+  },
+  "page": {
+    "deletePage": "Delete Page",
+    "settings": "Page Settings"
+  }
+}

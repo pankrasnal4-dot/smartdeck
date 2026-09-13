@@ -1,0 +1,17 @@
+{
+  "name": "smartdeck",
+  "version": "2.5.1",
+  "description": "Smart Deck - Customizable Macro Deck for Windows",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pankrasnal4-dot/smartdeck.git"
+  },
+  "author": "pankrasnal4-dot",
+  "license": "MIT",
+  "dependencies": {
+    "@jitsi/robotjs": "^0.6.0",
+    "active-win": "^8.2.1",
+    "electron-updater": "^6.6.2"
+  }
+}

@@ -1,0 +1,564 @@
+{
+  "header": {
+    "title": "SmartDeck",
+    "buttons": {
+      "reset": "Reiniciar",
+      "import": "Importar",
+      "export": "Exportar Ajustes",
+      "exportTooltip": "Exportar ajustes de la aplicación como archivo JSON",
+      "presets": "Preajustes",
+      "presetsTooltip": "Explorar y aplicar plantillas de atajos",
+      "themes": "🎨 Temas",
+      "themesTooltip": "Explorar y aplicar temas de color",
+      "undo": "Deshacer",
+      "redo": "Rehacer",
+      "settings": "⚙️"
+    }
+  },
+  "themes": {
+    "title": "Temas de Color",
+    "apply": "Aplicar",
+    "cancel": "Cancelar",
+    "saveCurrent": "Guardar Actual",
+    "import": "Importar",
+    "export": "Exportar",
+    "delete": "Eliminar",
+    "enterName": "Introduce el nombre del tema:",
+    "saveTitle": "Guardar Tema",
+    "applied": "Tema aplicado:",
+    "saved": "Tema guardado:",
+    "deleted": "eliminado",
+    "exported": "¡Tema exportado!",
+    "imported": "Tema importado:",
+    "invalidFile": "Archivo de tema inválido",
+    "importFailed": "Error al importar tema"
+  },
+  "contextMenu": {
+    "copy": "Copiar",
+    "paste": "Pegar",
+    "delete": "Eliminar",
+    "copied": "Botón copiado",
+    "pasted": "Botón pegado",
+    "deleted": "Botón eliminado",
+    "preview": "Vista previa/Probar",
+    "previewExecuted": "Acción ejecutada"
+  },
+  "device": {
+    "frame": {
+      "title": "Nombre del Dispositivo",
+      "page": "Página {pageNum}"
+    },
+    "hint": "Arrastra las celdas para reordenar o mover entre páginas • Haz clic para editar",
+    "settings": {
+      "resolution": "Resolución del Dispositivo",
+      "grid": "Cuadrícula (Máx)",
+      "deviceName": "Nombre del Dispositivo",
+      "background": "Fondo",
+      "button": "Botón",
+      "text": "Texto",
+      "stroke": "Borde",
+      "shadow": "Sombra",
+      "led": "LED"
+    },
+    "buttons": {
+      "exportLocal": "📂 Exportar a Tarjeta SD",
+      "exportLocalTooltip": "Exportar config.json e imágenes a la carpeta de tu tarjeta SD",
+      "upload": "Subir Ajustes"
+    }
+  },
+  "plugins": {
+    "title": "Plugins",
+    "buttons": {
+      "openFolder_title": "Abrir Carpeta de Plugins",
+      "reload_title": "Recargar Plugins"
+    },
+    "loading": "Cargando plugins...",
+    "none": "No se encontraron plugins en la carpeta /plugins.",
+    "api_not_ready": "API no lista.",
+    "button": "Ejecutar Plugin",
+    "unknown": "Plugin desconocido"
+  },
+  "presets": {
+    "title": "Preajustes",
+    "loading": "Cargando preajustes...",
+    "none": "No se encontraron preajustes en la carpeta /presets.",
+    "openFolder": "Abrir Carpeta de Preajustes",
+    "refresh": "Actualizar",
+    "button": "Aplicar Preset",
+    "selectPreset": "Seleccionar preset",
+    "unknown": "Preset desconocido"
+  },
+  "connection": {
+    "connected": "Conectado: {deviceName}",
+    "disconnected": "Desconectado",
+    "searching": "Buscando...",
+    "buttons": {
+      "refresh_title": "Actualizar"
+    },
+    "accessDenied": "Acceso Denegado",
+    "connect": "Conectar",
+    "connecting": "Conectando...",
+    "identifying": "Identificando dispositivo...",
+    "notFound": "Dispositivo no encontrado",
+    "portBusy": "Puerto ocupado",
+    "selectPort": "Seleccionar Puerto"
+  },
+  "editor": {
+    "title": "Botón – Celda {cellNum}",
+    "previewTitle": "Vista Previa (110×110)",
+    "iconLabel": "Icono (PNG/JPG/SVG/WebP)",
+    "iconPlaceholder": "Escribe para buscar iconos en línea...",
+    "iconBrowse": "📁 Archivo Local",
+    "cropTitle": "Recortar y Escalar Imagen",
+    "zoom": "Zoom",
+    "useIcon": "Usar Icono",
+    "iconHint": "Si no se selecciona un icono, solo se mostrará el texto.",
+    "textLabel": "Título del Texto",
+    "textPlaceholder": "Título del Botón",
+    "positionLabel": "Posición",
+    "posTop": "Arriba",
+    "posMid": "Medio",
+    "posBot": "Abajo",
+    "labelColor": "Color Texto",
+    "iconColor": "Color Icono",
+    "buttonColor": "Color Botón",
+    "textSize": "Tamaño Texto",
+    "iconScale": "Escala Icono",
+    "reset": "Reiniciar",
+    "actionTypeLabel": "Tipo de Acción",
+    "action": {
+      "key": "Atajo",
+      "goto": "Página",
+      "toggle": "Alternar",
+      "text": "Texto",
+      "app": "Abrir",
+      "timer": "Temporizador",
+      "script": "Script",
+      "website": "Web",
+      "media": "Media",
+      "mouse": "Ratón",
+      "counter": "Contador",
+      "sound": "Sonido",
+      "multi": "Multi"
+    },
+    "multi": {
+      "title": "Constructor Multi-Acción",
+      "actions": "Acciones",
+      "actionSequence": "Secuencia de Acciones",
+      "emptyHint": "Arrastra acciones aquí para construir tu secuencia",
+      "settings": "Ajustes de Acción",
+      "deleteAction": "Eliminar esta acción",
+      "delay": "Retraso",
+      "delayMs": "Retraso (ms)",
+      "hotkey": "Atajo",
+      "text": "Texto",
+      "openApp": "Abrir App",
+      "website": "Sitio Web",
+      "script": "Script",
+      "media": "Media",
+      "sound": "Sonido",
+      "mouse": "Ratón",
+      "gotoPage": "Ir a Página"
+    },
+    "toggle": {
+      "stateA": "Estado A (APAGADO)",
+      "stateADesc": "Estado Predeterminado",
+      "stateB": "Estado B (ENCENDIDO)",
+      "stateBDesc": "Estado Activo",
+      "preset": "Preajustes...",
+      "shortcutPlaceholder": "Atajo o Script...",
+      "capture": "Capturar",
+      "clear": "Limpiar",
+      "visuals": "Visuales Activos (Solo Estado B)",
+      "bgColor": "Color Fondo",
+      "iconColor": "Color Icono",
+      "activeIcon": "Icono Activo (Opcional)",
+      "searchIcon": "Buscar icono...",
+      "playSound": "Reproducir Sonido de Cambio",
+      "playSoundDesc": "Puedes cambiar el sonido de alternar en Ajustes."
+    },
+    "media": {
+      "label": "Acción Multimedia",
+      "play": "Reproducir/Pausa",
+      "mute": "Silenciar",
+      "vol_up": "Subir Vol",
+      "prev": "Anterior",
+      "next": "Siguiente",
+      "vol_down": "Bajar Vol"
+    },
+    "sound": {
+      "file": "Archivo de Audio",
+      "placeholder": "Seleccionar un archivo de audio...",
+      "browse": "Explorar",
+      "volume": "Volumen ({percent}%)"
+    },
+    "counter": {
+      "start": "Valor Inicial",
+      "action": "Acción",
+      "inc": "Incrementar (+)",
+      "dec": "Decrementar (-)",
+      "hint": "Una pulsación larga en el dispositivo reiniciará el contador al valor inicial."
+    },
+    "mouse": {
+      "event": "Evento",
+      "events": {
+        "click": "Clic",
+        "double_click": "Doble Clic",
+        "move": "Mover",
+        "drag": "Arrastrar y Soltar"
+      },
+      "button": "Botón",
+      "buttons": {
+        "left": "Clic Izquierdo",
+        "right": "Clic Derecho",
+        "middle": "Clic Central"
+      },
+      "posMove": "Posición (Mover A)",
+      "posDragStart": "Arrastrar desde (Inicio)",
+      "posDragEnd": "Soltar en (Fin)",
+      "xaxis": "Eje X",
+      "yaxis": "Eje Y",
+      "capture": "Capturar",
+      "captureStart": "Capturar Inicio",
+      "captureEnd": "Capturar Fin",
+      "realtime": "Actual: X: {x}, Y: {y}"
+    },
+    "website": {
+      "label": "URL del Sitio Web",
+      "placeholder": "https://www.google.com"
+    },
+    "app": {
+      "label": "Aplicación",
+      "select": "Seleccionar app...",
+      "browse": "Explorar",
+      "hint": "Seleccionar de la lista O explorar manualmente.",
+      "loading": "Cargando apps...",
+      "loadError": "Error al cargar apps"
+    },
+    "key": {
+      "label": "Combinación de Atajos",
+      "win": "WIN",
+      "enter": "ENTER",
+      "capture": "Capturar",
+      "placeholder": "Ej: CTRL+ALT+SUPR"
+    },
+    "goto": {
+      "label": "Página de Destino"
+    },
+    "textMacro": {
+      "label": "Texto a Escribir",
+      "hint": "Presiona 'Enter' en el cuadro para una nueva línea (envía la tecla 'Enter')",
+      "placeholder": "Escribe tu macro de texto aquí...",
+      "simulate": "Simular Escritura",
+      "simulateHint": "Habilitar esto envía la macro como una serie de pulsaciones de teclas individuales en lugar de usar el portapapeles. Útil para aplicaciones que bloquean copiar/pegar."
+    },
+    "timer": {
+      "label": "Duración del Temporizador",
+      "minutes": "Minutos",
+      "seconds": "Segundos"
+    },
+    "script": {
+      "label": "Script Personalizado (Línea de Comandos)",
+      "hint": "Se ejecuta en la terminal de Windows (cmd)",
+      "placeholder": "Ej: taskkill /f /im chrome.exe\ncalc",
+      "hintNircmd": "*Los preajustes de audio requieren que ",
+      "hintNircmdLink": " esté en el PATH de su sistema.",
+      "selectPreset": "--- Seleccionar Script Preajustado ---"
+    },
+    "picker": {
+      "title": "Seleccionar Icono (En línea)",
+      "placeholder": "Buscar más de 100.000 iconos (ej: home, settings)...",
+      "status": "Escribe arriba para buscar...",
+      "close": "Cerrar",
+      "error": "Error al buscar iconos.",
+      "minChars": "Escribe al menos 2 caracteres",
+      "noResults": "No se encontraron resultados",
+      "searching": "Buscando..."
+    },
+    "clear": "Limpiar",
+    "copy": "Copiar",
+    "paste": "Pegar",
+    "cancel": "Cancelar",
+    "apply": "Aplicar",
+    "capture": {
+      "listening": "Escuchando...",
+      "pressKeys": "Presiona teclas...",
+      "start": "Capturar"
+    }
+  },
+  "alerts": {
+    "reset": {
+      "title": "Reiniciar Todos los Ajustes",
+      "message": "ADVERTENCIA: Esto eliminará todas sus páginas, botones y ajustes, revirtiendo todo a los valores predeterminados.\n\n¿Está seguro? Asegúrese de haber hecho una copia de seguridad de sus ajustes."
+    },
+    "pageFull": {
+      "title": "Error al Soltar",
+      "message": "La página está llena. Suelte sobre un botón existente para intercambiar, o sobre una celda vacía."
+    },
+    "deletePage": {
+      "title": "Eliminar Página",
+      "message": "¿Está seguro de que desea eliminar '{pageName}'?\nTodos los botones de esta página se perderán.",
+      "error_min_pages": "Debe tener al menos una página."
+    },
+    "deviceNotConnected": "Dispositivo no conectado...",
+    "connectionError": "Error de Conexión",
+    "counterNotConnected": "Dispositivo no conectado. No se puede enviar el comando del contador.",
+    "mouseError": "Acción del Ratón Fallida:",
+    "robotError": "Error de RobotJS",
+    "deleteError": "Error al Eliminar"
+  },
+  "toast": {
+    "configSaveFailed": "¡Error al guardar configuración!",
+    "configRestoredBackup": "Configuración restaurada desde respaldo",
+    "configResetCorruption": "Configuración reiniciada por corrupción",
+    "configNotLoaded": "Configuración no cargada.",
+    "configCopied": "Configuración copiada al portapapeles",
+    "configCopyFailed": "Error al copiar",
+    "configDownloaded": "Configuración descargada",
+    "notConnected": "No conectado al dispositivo",
+    "requestingConfig": "Solicitando configuración de ESP32...",
+    "logCleared": "Registro limpiado",
+    "failedReadConfig": "Error al leer configuración:",
+    "iconsLoadFailed": "Error al cargar iconos predeterminados. Verifique manifest.json o seleccione carpeta."
+  },
+  "timer": {
+    "finished": "Temporizador Terminado",
+    "complete": "Tu temporizador \"{label}\" ha terminado."
+  },
+  "serialMonitor": {
+    "title": "Monitor Serial",
+    "send": "Enviar",
+    "clear": "Limpiar",
+    "copyLog": "Copiar Registro",
+    "downloadLog": "Descargar Registro",
+    "getConfig": "Obtener Config ESP",
+    "placeholder": "Escribe comando...",
+    "logCopied": "Registro copiado al portapapeles"
+  },
+  "settings": {
+    "title": "Configuración de Aplicación",
+    "startup": "Iniciar con Windows",
+    "startupLabel": "Inicio",
+    "startupDesc": "Iniciar automáticamente minimizado en la bandeja del sistema al iniciar sesión.",
+    "windowBehavior": "Comportamiento de Ventana",
+    "closeAction": "Al hacer clic en el botón 'X' (Cerrar)",
+    "closeOptions": {
+      "ask": "Preguntar Siempre (Mostrar Confirmación)",
+      "minimize": "Minimizar a la Bandeja (Seguir Ejecutando)",
+      "exit": "Salir de la Aplicación Inmediatamente"
+    },
+    "language": "Idioma",
+    "languageSelect": "Idioma de la Aplicación",
+    "sounds": "Ajustes de Sonido",
+    "soundsToggle": "Sonido de Alternar Predeterminado",
+    "soundsTogglePlaceholder": "Predeterminado (switch.wav)",
+    "soundsTimer": "Sonido de Notificación del Temporizador",
+    "soundsTimerPlaceholder": "Predeterminado (notification.wav)",
+    "browse": "Explorar",
+    "reset_sound": "Reiniciar",
+    "screen": "Ajustes de Pantalla y Dispositivo",
+    "brightness": "Brillo de Pantalla",
+    "sleep": "Suspender Pantalla (Atenuar)",
+    "sleepDesc": "Atenuar la pantalla después de inactividad para ahorrar energía.",
+    "about": "Acerca de y Actualizaciones",
+    "appName": "Aplicación Smart Deck",
+    "version": "Versión {version}",
+    "loadingVersion": "Cargando versión...",
+    "checkUpdates": "Buscar Actualizaciones",
+    "newVersionAvailable": "¡Nueva versión disponible!",
+    "downloadUpdate": "Descargar",
+    "upToDate": "¡Estás actualizado!",
+    "checking": "Verificando...",
+    "checkFailed": "Verificación Fallida",
+    "updateFound": "¡Actualización Encontrada!",
+    "done": "Hecho",
+    "developer": "Herramientas de Desarrollador",
+    "serialMonitor": "Monitor Serial",
+    "resetEsp": "Reiniciar ESP32",
+    "espInfo": "Info ESP32",
+    "resetSent": "Comando de reinicio enviado",
+    "infoRequested": "Info solicitada",
+    "dumpConfig": "Volcar Config",
+    "weather": "Clima (Pantalla de Suspensión)",
+    "weatherSettings": "Ajustes del Clima",
+    "weatherCity": "Ciudad",
+    "weatherCityPlaceholder": "Buscar ciudad...",
+    "weatherUnits": "Unidad de temperatura",
+    "weatherNoResults": "No se encontraron ciudades",
+    "weatherSearchError": "Búsqueda fallida",
+    "weatherCitySaved": "Ubicación del clima guardada",
+    "dimLedAnimation": "Animación LED en Modo Atenuado",
+    "dimLedAnimationDesc": "Animación LED cuando la pantalla está atenuada.",
+    "dimLedOff": "Apagado",
+    "dimLedBreathing": "Respiración",
+    "dimLedRainbow": "Ciclo Arcoíris",
+    "dimLedPulse": "Pulso",
+    "dimLedComet": "Cometa",
+    "dimLedSparkle": "Destello",
+    "deepSleep": "Sueño Profundo",
+    "deepSleepDesc": "Apagar la pantalla y los LEDs completamente después del período de atenuación.",
+    "deepSleepHint": "Gira la perilla para despertar del sueño profundo."
+  },
+  "knob": {
+    "title": "Ajustes del Dial",
+    "ledSettings": "Ajustes LED",
+    "ledColor": "Color LED",
+    "tailLength": "Longitud de Cola",
+    "ledBrightness": "Brillo LED",
+    "ledOffset": "Desfase LED",
+    "sound": "Sonido",
+    "clickSound": "Sonido de Clic",
+    "clickSoundDesc": "Reproducir sonido al girar el dial",
+    "sensitivity": "Sensibilidad",
+    "knobSensitivity": "Sensibilidad del Dial",
+    "sensitivityHint": "Mayor = Más suave, Menor = Más brusco",
+    "sensitivityLow": "Bajo",
+    "sensitivityHigh": "Alto",
+    "rotationActions": "Acciones de Rotación",
+    "rotateRight": "Girar Derecha (HS)",
+    "rotateLeft": "Girar Izquierda (AHS)",
+    "presets": "Preajustes...",
+    "selectPreset": "── Seleccionar Preajuste ──",
+    "shortcutPlaceholder": "Atajo (ej. CTRL+Z)",
+    "capture": "Capturar",
+    "mainPage": "Página Principal",
+    "customCleared": "Ajustes personalizados limpiados",
+    "clearCustom": "Limpiar ajustes personalizados",
+    "saved": "Ajustes del dial guardados",
+    "pressKey": "Presiona una tecla..."
+  },
+  "prompt": {
+    "renamePage": {
+      "title": "Renombrar Página {pageNum}",
+      "label": "Nuevo Nombre de Página:"
+    },
+    "addPage": {
+      "title": "Añadir Nueva Página",
+      "label": "Nuevo Nombre de Página:",
+      "default": "Página {pageNum}"
+    },
+    "pageApp": "Aplicación Asociada (Opcional)",
+    "noApp": "-- Ninguna --",
+    "pageAppHint": "Cambiar automáticamente cuando la app está enfocada",
+    "appPath": "Ruta de la Aplicación",
+    "appPathPlaceholder": "C:\\Program Files\\...\\app.exe",
+    "browse": "Explorar",
+    "autoFocus": "Cambiar a esta página cuando la app esté enfocada",
+    "autoFocusHint": "ESP32 cambiará automáticamente a esta página cuando la aplicación obtenga el foco"
+  },
+  "dialogs": {
+    "confirm": {
+      "defaultTitle": "Confirmación",
+      "defaultOK": "Aceptar"
+    },
+    "prompt": {
+      "defaultTitle": "Ingresar Valor",
+      "defaultLabel": "Valor:"
+    },
+    "alert": {
+      "defaultTitle": "Información",
+      "defaultMessage": "El mensaje irá aquí.",
+      "defaultDismiss": "Descartar"
+    },
+    "delete": "Eliminar",
+    "cancel": "Cancelar",
+    "ok": "Aceptar",
+    "input": "Entrada"
+  },
+  "footer": {
+    "installFirmware": "Instalar Firmware"
+  },
+  "firmware": {
+    "title": "Instalar Firmware",
+    "selectModel": "1. Seleccionar Modelo de Pantalla",
+    "selectPort": "2. Seleccionar Puerto COM",
+    "scanning": "Buscando...",
+    "loadingModels": "Cargando modelos...",
+    "warning": "* Por favor, cierre la conexión de la aplicación primero si está conectado.",
+    "startBtn": "INICIAR FLASH",
+    "btnFlashing": "FLASHING... ¡NO DESCONECTAR!",
+    "logLabel": "Registro del Proceso:",
+    "logWaiting": "Esperando para iniciar...",
+    "alerts": {
+      "invalidPortTitle": "Error de Selección",
+      "invalidPort": "Por favor, seleccione un puerto COM válido primero.",
+      "successTitle": "¡Éxito!",
+      "success": "¡Firmware actualizado con éxito! El dispositivo se reiniciará.",
+      "failedTitle": "Fallido",
+      "failed": "La actualización del firmware falló. Por favor, revise el registro para más detalles."
+    },
+    "logs": {
+      "autoDisconnect": "Desconexión automática de la aplicación para liberar el puerto.",
+      "successReboot": "--- ¡ÉXITO! El dispositivo se está reiniciando... ---",
+      "failedCheck": "--- ¡FALLIDO! Revise los registros arriba. ---"
+    }
+  },
+  "update": {
+    "downloading": "Descargando...",
+    "ready": "Actualización lista (Reiniciar)",
+    "available": "Nueva actualización disponible (Haz clic para descargar)"
+  },
+  "upload": {
+    "title": "Subir al Dispositivo (WiFi)",
+    "message": "Este proceso subirá la nueva configuración al dispositivo ({host}) y lo reiniciará.\n\nLos iconos antiguos no utilizados se limpiarán *después* de que el dispositivo se reinicie.\n¿Continuar?",
+    "confirm": "Subir",
+    "generating": "Generando archivos...",
+    "uploadingConfig": "Subiendo configuración...",
+    "uploadingIcon": "Subiendo icono {current}/{total}...",
+    "rebooting": "Reiniciando dispositivo...",
+    "success": "¡Subida completa! {count} archivos subidos. El dispositivo ({host}) se está reiniciando.",
+    "error": "Error: No se pudo conectar o subir al dispositivo ({host}). Detalles: {error}",
+    "generationError": "Se encontraron errores durante la generación de archivos. Cancelando subida."
+  },
+  "serialUpload": {
+    "title": "Confirmación de Subida",
+    "confirm": "Iniciar Subida",
+    "noChanges": "No se detectaron cambios. Su dispositivo está actualizado.\n\n¿Desea forzar una subida completa de todos modos?",
+    "smartUpload": "Subida Inteligente Lista:\n- {changed} archivos cambiados/nuevos.\n- {skipped} archivos sin cambios (omitiendo).\n\n¿Continuar?",
+    "forceUpload": "Forzar Subida Completa (Lento)",
+    "upToDate": "Actualizado. No se necesita subida.",
+    "alreadyUploading": "Carga ya en progreso...",
+    "calculatingChanges": "Calculando cambios...",
+    "finalizing": "Finalizando...",
+    "finishing": "Terminando carga...",
+    "handshake": "Estableciendo conexión...",
+    "noDeviceSelected": "Ningún dispositivo seleccionado",
+    "selectDevice": "Por favor seleccione un dispositivo primero"
+  },
+  "export": {
+    "title": "Exportación Completa",
+    "errorTitle": "Error de Exportación",
+    "generationError": "No se pudieron generar los datos de exportación. Por favor, verifique su configuración.",
+    "noFolder": "No se seleccionó ninguna carpeta. Por favor, seleccione una carpeta válida.",
+    "success": "¡Exportación exitosa!\n\nConfiguración: {configFile}\nImágenes: {imageCount} archivos guardados\n\nCopie estos archivos a la carpeta raíz de su tarjeta SD.",
+    "warnings": "Advertencias:",
+    "failed": "Exportación fallida: {error}\n\nPor favor, intente de nuevo y asegúrese de tener permiso de escritura en la carpeta seleccionada."
+  },
+  "weather": {
+    "clearSky": "Cielo Despejado",
+    "mainlyClear": "Mayormente Despejado",
+    "partlyCloudy": "Parcialmente Nublado",
+    "overcast": "Nublado",
+    "foggy": "Niebla",
+    "drizzle": "Llovizna",
+    "freezingDrizzle": "Llovizna Helada",
+    "rain": "Lluvia",
+    "freezingRain": "Lluvia Helada",
+    "snow": "Nieve",
+    "snowGrains": "Granos de Nieve",
+    "rainShowers": "Chubascos",
+    "snowShowers": "Nevadas",
+    "thunderstorm": "Tormenta",
+    "thunderstormHail": "Tormenta + Granizo",
+    "unknown": "Desconocido"
+  },
+  "icons": {
+    "loadFailed": "Error al cargar iconos",
+    "loaded": "Iconos cargados",
+    "noSource": "No hay fuente de iconos disponible"
+  },
+  "page": {
+    "deletePage": "Eliminar Página",
+    "settings": "Configuración de Página"
+  }
+}

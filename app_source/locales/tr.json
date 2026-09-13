@@ -1,0 +1,564 @@
+{
+  "header": {
+    "title": "SmartDeck",
+    "buttons": {
+      "reset": "Sıfırla",
+      "import": "İçe Aktar",
+      "export": "Ayarları Dışa Aktar",
+      "exportTooltip": "Uygulama ayarlarını JSON dosyası olarak dışa aktar",
+      "presets": "Şablonlar",
+      "presetsTooltip": "Kısayol şablonlarına göz at ve uygula",
+      "themes": "🎨 Temalar",
+      "themesTooltip": "Renk temalarına göz at ve uygula",
+      "undo": "Geri Al",
+      "redo": "İleri Al",
+      "settings": "⚙️"
+    }
+  },
+  "themes": {
+    "title": "Renk Temaları",
+    "apply": "Uygula",
+    "cancel": "İptal",
+    "saveCurrent": "Mevcut Temayı Kaydet",
+    "import": "İçe Aktar",
+    "export": "Dışa Aktar",
+    "delete": "Sil",
+    "enterName": "Tema adını girin:",
+    "saveTitle": "Tema Kaydet",
+    "applied": "Tema uygulandı:",
+    "saved": "Tema kaydedildi:",
+    "deleted": "silindi",
+    "exported": "Tema dışa aktarıldı!",
+    "imported": "Tema içe aktarıldı:",
+    "invalidFile": "Geçersiz tema dosyası",
+    "importFailed": "Tema içe aktarılamadı"
+  },
+  "contextMenu": {
+    "copy": "Kopyala",
+    "paste": "Yapıştır",
+    "delete": "Sil",
+    "copied": "Buton kopyalandı",
+    "pasted": "Buton yapıştırıldı",
+    "deleted": "Buton silindi",
+    "preview": "Önizle/Test Et",
+    "previewExecuted": "Eylem çalıştırıldı"
+  },
+  "device": {
+    "frame": {
+      "title": "Cihaz Adı",
+      "page": "Sayfa {pageNum}"
+    },
+    "hint": "Hücreleri sıralamak veya sayfalar arasında taşımak için sürükleyin • Düzenlemek için tıklayın",
+    "settings": {
+      "resolution": "Cihaz Çözünürlüğü",
+      "grid": "Izgara (Maks)",
+      "deviceName": "Cihaz Adı",
+      "background": "Arka Plan",
+      "button": "Buton",
+      "text": "Metin",
+      "stroke": "Kenarlık",
+      "shadow": "Gölge",
+      "led": "LED"
+    },
+    "buttons": {
+      "exportLocal": "📂 SD Karta Aktar",
+      "exportLocalTooltip": "config.json ve görselleri SD kart klasörüne aktar",
+      "upload": "Ayarları Yükle"
+    }
+  },
+  "plugins": {
+    "title": "Eklentiler",
+    "buttons": {
+      "openFolder_title": "Eklentiler Klasörünü Aç",
+      "reload_title": "Eklentileri Yenile"
+    },
+    "loading": "Eklentiler yükleniyor...",
+    "none": "/plugins klasöründe eklenti bulunamadı.",
+    "api_not_ready": "API hazır değil.",
+    "button": "Eklenti Çalıştır",
+    "unknown": "Bilinmeyen eklenti"
+  },
+  "presets": {
+    "title": "Şablonlar",
+    "loading": "Şablonlar yükleniyor...",
+    "none": "/presets klasöründe şablon bulunamadı.",
+    "openFolder": "Şablonlar Klasörünü Aç",
+    "refresh": "Yenile",
+    "button": "Hazır Ayar Uygula",
+    "selectPreset": "Hazır ayar seçin",
+    "unknown": "Bilinmeyen hazır ayar"
+  },
+  "connection": {
+    "connected": "Bağlı: {deviceName}",
+    "disconnected": "Bağlantı Kesildi",
+    "searching": "Aranıyor...",
+    "buttons": {
+      "refresh_title": "Yenile"
+    },
+    "accessDenied": "Erişim Engellendi",
+    "connect": "Bağlan",
+    "connecting": "Bağlanıyor...",
+    "identifying": "Cihaz tanımlanıyor...",
+    "notFound": "Cihaz bulunamadı",
+    "portBusy": "Port meşgul",
+    "selectPort": "Port Seçin"
+  },
+  "editor": {
+    "title": "Buton – Hücre {cellNum}",
+    "previewTitle": "Önizleme (110×110)",
+    "iconLabel": "İkon (PNG/JPG/SVG/WebP)",
+    "iconPlaceholder": "Çevrimiçi ikon aramak için yazın...",
+    "iconBrowse": "📁 Yerel Dosya",
+    "cropTitle": "Görsel Kırp ve Ölçekle",
+    "zoom": "Yakınlaştır",
+    "useIcon": "İkonu Kullan",
+    "iconHint": "İkon seçilmezse yalnızca metin gösterilir.",
+    "textLabel": "Metin Başlığı",
+    "textPlaceholder": "Buton Başlığı",
+    "positionLabel": "Konum",
+    "posTop": "Üst",
+    "posMid": "Orta",
+    "posBot": "Alt",
+    "labelColor": "Etiket Rengi",
+    "iconColor": "İkon Rengi",
+    "buttonColor": "Buton Rengi",
+    "textSize": "Metin Boyutu",
+    "iconScale": "İkon Boyutu",
+    "reset": "Sıfırla",
+    "actionTypeLabel": "Eylem Türü",
+    "action": {
+      "key": "Kısayol",
+      "goto": "Sayfa",
+      "toggle": "Aç/Kapa",
+      "text": "Metin",
+      "app": "Aç",
+      "timer": "Zamanlayıcı",
+      "script": "Betik",
+      "website": "Web Sitesi",
+      "media": "Medya",
+      "mouse": "Fare",
+      "counter": "Sayaç",
+      "sound": "Ses",
+      "multi": "Çoklu"
+    },
+    "multi": {
+      "title": "Çoklu Eylem Oluşturucu",
+      "actions": "Eylemler",
+      "actionSequence": "Eylem Sırası",
+      "emptyHint": "Sıra oluşturmak için eylemleri buraya sürükleyin",
+      "settings": "Eylem Ayarları",
+      "deleteAction": "Bu eylemi sil",
+      "delay": "Gecikme",
+      "delayMs": "Gecikme (ms)",
+      "hotkey": "Kısayol",
+      "text": "Metin",
+      "openApp": "Uygulama Aç",
+      "website": "Web Sitesi",
+      "script": "Betik",
+      "media": "Medya",
+      "sound": "Ses",
+      "mouse": "Fare",
+      "gotoPage": "Sayfaya Git"
+    },
+    "toggle": {
+      "stateA": "Durum A (KAPALI)",
+      "stateADesc": "Varsayılan Durum",
+      "stateB": "Durum B (AÇIK)",
+      "stateBDesc": "Aktif Durum",
+      "preset": "Şablonlar...",
+      "shortcutPlaceholder": "Kısayol veya Betik...",
+      "capture": "Yakala",
+      "clear": "Temizle",
+      "visuals": "Aktif Görünüm (Sadece Durum B)",
+      "bgColor": "Arka Plan Rengi",
+      "iconColor": "İkon Rengi",
+      "activeIcon": "Aktif İkon (İsteğe Bağlı)",
+      "searchIcon": "İkon ara...",
+      "playSound": "Geçiş Sesi Çal",
+      "playSoundDesc": "Geçiş sesini Ayarlar'dan değiştirebilirsiniz."
+    },
+    "media": {
+      "label": "Medya Eylemi",
+      "play": "Oynat/Duraklat",
+      "mute": "Sessiz",
+      "vol_up": "Ses +",
+      "prev": "Önceki",
+      "next": "Sonraki",
+      "vol_down": "Ses -"
+    },
+    "sound": {
+      "file": "Ses Dosyası",
+      "placeholder": "Bir ses dosyası seçin...",
+      "browse": "Gözat",
+      "volume": "Ses Seviyesi ({percent}%)"
+    },
+    "counter": {
+      "start": "Başlangıç Değeri",
+      "action": "Eylem",
+      "inc": "Artır (+)",
+      "dec": "Azalt (-)",
+      "hint": "Cihazda uzun basma sayacı Başlangıç Değerine sıfırlar."
+    },
+    "mouse": {
+      "event": "Olay",
+      "events": {
+        "click": "Tıklama",
+        "double_click": "Çift Tıklama",
+        "move": "Taşı",
+        "drag": "Sürükle Bırak"
+      },
+      "button": "Buton",
+      "buttons": {
+        "left": "Sol Tık",
+        "right": "Sağ Tık",
+        "middle": "Orta Tık"
+      },
+      "posMove": "Konum (Taşı)",
+      "posDragStart": "Sürükle (Başlangıç)",
+      "posDragEnd": "Bırak (Bitiş)",
+      "xaxis": "X Ekseni",
+      "yaxis": "Y Ekseni",
+      "capture": "Yakala",
+      "captureStart": "Başlangıç Yakala",
+      "captureEnd": "Bitiş Yakala",
+      "realtime": "Şu an: X: {x}, Y: {y}"
+    },
+    "website": {
+      "label": "Web Sitesi URL",
+      "placeholder": "https://www.google.com"
+    },
+    "app": {
+      "label": "Uygulama",
+      "select": "Uygulama seç...",
+      "browse": "Gözat",
+      "hint": "Yukarıdaki listeden seçin VEYA manuel olarak gözatın.",
+      "loading": "Uygulamalar yükleniyor...",
+      "loadError": "Uygulamalar yüklenirken hata"
+    },
+    "key": {
+      "label": "Kısayol Kombinasyonu",
+      "win": "WIN",
+      "enter": "ENTER",
+      "capture": "Yakala",
+      "placeholder": "örn. CTRL+ALT+DELETE"
+    },
+    "goto": {
+      "label": "Hedef Sayfa"
+    },
+    "textMacro": {
+      "label": "Yazılacak Metin",
+      "hint": "Yeni satır için kutuda 'Enter'a basın ('Enter' tuşu gönderir)",
+      "placeholder": "Metin makronuzu buraya yazın...",
+      "simulate": "Yazma Simülasyonu",
+      "simulateHint": "Bu seçenek etkinleştirildiğinde makroyu pano yerine tek tek tuş vuruşları olarak gönderir. Kopyala/yapıştırmayı engelleyen uygulamalar için kullanışlıdır."
+    },
+    "timer": {
+      "label": "Zamanlayıcı Süresi",
+      "minutes": "Dakika",
+      "seconds": "Saniye"
+    },
+    "script": {
+      "label": "Özel Betik (Komut Satırı)",
+      "hint": "Windows kabuğunda (cmd) çalışır",
+      "placeholder": "örn., taskkill /f /im chrome.exe\ncalc",
+      "hintNircmd": "*Ses şablonları için ",
+      "hintNircmdLink": " sisteminizin PATH'inde olmalıdır.",
+      "selectPreset": "--- Şablon Betik Seç ---"
+    },
+    "picker": {
+      "title": "İkon Seç (Çevrimiçi)",
+      "placeholder": "100.000+ ikon arayın (örn: home, settings)...",
+      "status": "Aramak için yukarıya yazın...",
+      "close": "Kapat",
+      "error": "İkon aranırken hata oluştu.",
+      "minChars": "En az 2 karakter girin",
+      "noResults": "Sonuç bulunamadı",
+      "searching": "Aranıyor..."
+    },
+    "clear": "Temizle",
+    "copy": "Kopyala",
+    "paste": "Yapıştır",
+    "cancel": "İptal",
+    "apply": "Uygula",
+    "capture": {
+      "listening": "Dinleniyor...",
+      "pressKeys": "Tuşlara basın...",
+      "start": "Yakala"
+    }
+  },
+  "alerts": {
+    "reset": {
+      "title": "Tüm Ayarları Sıfırla",
+      "message": "UYARI: Bu işlem tüm sayfalarınızı, butonlarınızı ve ayarlarınızı silecek, her şeyi varsayılana döndürecektir.\n\nEmin misiniz? Ayarlarınızı yedeklediğinizden emin olun."
+    },
+    "pageFull": {
+      "title": "Bırakma Başarısız",
+      "message": "Sayfa dolu. Takas yapmak için mevcut bir butona veya boş bir hücreye bırakın."
+    },
+    "deletePage": {
+      "title": "Sayfayı Sil",
+      "message": "'{pageName}' sayfasını silmek istediğinizden emin misiniz?\nBu sayfadaki tüm butonlar kaybolacak.",
+      "error_min_pages": "En az bir sayfanız olmalıdır."
+    },
+    "deviceNotConnected": "Cihaz bağlı değil...",
+    "connectionError": "Bağlantı Hatası",
+    "counterNotConnected": "Cihaz bağlı değil. Sayaç komutu gönderilemiyor.",
+    "mouseError": "Fare Eylemi Başarısız:",
+    "robotError": "RobotJS Hatası",
+    "deleteError": "Silme Hatası"
+  },
+  "toast": {
+    "configSaveFailed": "Yapılandırma kaydedilemedi!",
+    "configRestoredBackup": "Yapılandırma yedekten geri yüklendi",
+    "configResetCorruption": "Bozulma nedeniyle yapılandırma sıfırlandı",
+    "configNotLoaded": "Yapılandırma yüklenmedi.",
+    "configCopied": "Yapılandırma panoya kopyalandı",
+    "configCopyFailed": "Kopyalama başarısız",
+    "configDownloaded": "Yapılandırma indirildi",
+    "notConnected": "Cihaza bağlı değil",
+    "requestingConfig": "ESP32'den yapılandırma isteniyor...",
+    "logCleared": "Günlük temizlendi",
+    "failedReadConfig": "Yapılandırma okunamadı:",
+    "iconsLoadFailed": "Varsayılan ikonlar yüklenemedi. manifest.json'u kontrol edin veya klasör seçin."
+  },
+  "timer": {
+    "finished": "Zamanlayıcı Tamamlandı",
+    "complete": "\"{label}\" zamanlayıcınız tamamlandı."
+  },
+  "serialMonitor": {
+    "title": "Seri Monitör",
+    "send": "Gönder",
+    "clear": "Temizle",
+    "copyLog": "Günlüğü Kopyala",
+    "downloadLog": "Günlüğü İndir",
+    "getConfig": "ESP Yapılandırmasını Al",
+    "placeholder": "Komut yazın...",
+    "logCopied": "Günlük panoya kopyalandı"
+  },
+  "settings": {
+    "title": "Uygulama Ayarları",
+    "startup": "Windows ile Başlat",
+    "startupLabel": "Başlangıç",
+    "startupDesc": "Oturum açıldığında otomatik olarak sistem tepsisinde küçültülmüş başlat.",
+    "windowBehavior": "Pencere Davranışı",
+    "closeAction": "'X' (Kapat) butonuna tıklandığında",
+    "closeOptions": {
+      "ask": "Her Zaman Sor (Onay Göster)",
+      "minimize": "Sistem Tepsisine Küçült (Çalışmaya Devam Et)",
+      "exit": "Uygulamayı Hemen Kapat"
+    },
+    "language": "Dil",
+    "languageSelect": "Uygulama Dili",
+    "sounds": "Ses Ayarları",
+    "soundsToggle": "Varsayılan Geçiş Sesi",
+    "soundsTogglePlaceholder": "Varsayılan (switch.wav)",
+    "soundsTimer": "Zamanlayıcı Bildirim Sesi",
+    "soundsTimerPlaceholder": "Varsayılan (notification.wav)",
+    "browse": "Gözat",
+    "reset_sound": "Sıfırla",
+    "screen": "Ekran ve Cihaz Ayarları",
+    "brightness": "Ekran Parlaklığı",
+    "sleep": "Ekran Uykusu (Karart)",
+    "sleepDesc": "Güç tasarrufu için hareketsizlikten sonra ekranı karart.",
+    "about": "Hakkında ve Güncellemeler",
+    "appName": "Smart Deck Uygulaması",
+    "version": "Sürüm {version}",
+    "loadingVersion": "Sürüm yükleniyor...",
+    "checkUpdates": "Güncellemeleri Kontrol Et",
+    "newVersionAvailable": "Yeni sürüm mevcut!",
+    "downloadUpdate": "İndir",
+    "upToDate": "Güncelsiniz!",
+    "checking": "Kontrol ediliyor...",
+    "checkFailed": "Kontrol Başarısız",
+    "updateFound": "Güncelleme Bulundu!",
+    "done": "Tamam",
+    "weather": "Hava Durumu (Uyku Ekranı)",
+    "weatherSettings": "Hava Durumu Ayarları",
+    "weatherCity": "Şehir",
+    "weatherCityPlaceholder": "Şehir ara...",
+    "weatherUnits": "Sıcaklık Birimi",
+    "weatherNoResults": "Şehir bulunamadı",
+    "weatherSearchError": "Arama başarısız",
+    "weatherCitySaved": "Hava durumu konumu kaydedildi",
+    "dimLedAnimation": "Karartma Modu LED Animasyonu",
+    "dimLedAnimationDesc": "Ekran karartıldığında LED animasyonu.",
+    "dimLedOff": "Kapalı",
+    "dimLedBreathing": "Nefes",
+    "dimLedRainbow": "Gökkuşağı Döngüsü",
+    "dimLedPulse": "Nabız",
+    "dimLedComet": "Kuyruklu Yıldız",
+    "dimLedSparkle": "Parıltı",
+    "developer": "Geliştirici Araçları",
+    "serialMonitor": "Seri Monitör",
+    "resetEsp": "ESP32'yi Sıfırla",
+    "espInfo": "ESP32 Bilgisi",
+    "resetSent": "Sıfırlama komutu gönderildi",
+    "infoRequested": "Bilgi istendi",
+    "dumpConfig": "Yapılandırmayı Dök",
+    "deepSleep": "Derin Uyku",
+    "deepSleepDesc": "Ekran karardıktan sonra ekranı ve LED'leri tamamen kapat.",
+    "deepSleepHint": "Derin uykudan uyanmak için düğmeyi çevirin."
+  },
+  "knob": {
+    "title": "Düğme Ayarları",
+    "ledSettings": "LED Ayarları",
+    "ledColor": "LED Rengi",
+    "tailLength": "Kuyruk Uzunluğu",
+    "ledBrightness": "LED Parlaklığı",
+    "ledOffset": "LED Ofseti",
+    "sound": "Ses",
+    "clickSound": "Tıklama Sesi",
+    "clickSoundDesc": "Düğme döndürüldüğünde ses çal",
+    "sensitivity": "Hassasiyet",
+    "knobSensitivity": "Düğme Hassasiyeti",
+    "sensitivityHint": "Yüksek = Yumuşak, Düşük = Kaba",
+    "sensitivityLow": "Düşük",
+    "sensitivityHigh": "Yüksek",
+    "rotationActions": "Döndürme Eylemleri",
+    "rotateRight": "Sağa Döndür (SS)",
+    "rotateLeft": "Sola Döndür (SST)",
+    "presets": "Şablonlar...",
+    "selectPreset": "── Şablon Seç ──",
+    "shortcutPlaceholder": "Kısayol (örn. CTRL+Z)",
+    "capture": "Yakala",
+    "mainPage": "Ana Sayfa",
+    "customCleared": "Özel ayarlar temizlendi",
+    "clearCustom": "Özel ayarları temizle",
+    "saved": "Düğme ayarları kaydedildi",
+    "pressKey": "Bir tuşa basın..."
+  },
+  "prompt": {
+    "renamePage": {
+      "title": "Sayfa {pageNum} Yeniden Adlandır",
+      "label": "Yeni Sayfa Adı:"
+    },
+    "addPage": {
+      "title": "Yeni Sayfa Ekle",
+      "label": "Yeni Sayfa Adı:",
+      "default": "Sayfa {pageNum}"
+    },
+    "pageApp": "İlişkili Uygulama (İsteğe Bağlı)",
+    "noApp": "-- Yok --",
+    "pageAppHint": "Uygulama odaklandığında otomatik geçiş yap",
+    "appPath": "Uygulama Yolu",
+    "appPathPlaceholder": "C:\\Program Files\\...\\app.exe",
+    "browse": "Gözat",
+    "autoFocus": "Uygulama odaklandığında bu sayfaya geç",
+    "autoFocusHint": "Uygulama odaklandığında ESP32 otomatik olarak bu sayfaya geçer"
+  },
+  "dialogs": {
+    "confirm": {
+      "defaultTitle": "Onay",
+      "defaultOK": "Tamam"
+    },
+    "prompt": {
+      "defaultTitle": "Değer Girin",
+      "defaultLabel": "Değer:"
+    },
+    "alert": {
+      "defaultTitle": "Bilgi",
+      "defaultMessage": "Mesaj buraya gelecek.",
+      "defaultDismiss": "Kapat"
+    },
+    "delete": "Sil",
+    "cancel": "İptal",
+    "ok": "Tamam",
+    "input": "Giriş"
+  },
+  "footer": {
+    "installFirmware": "Firmware Yükle"
+  },
+  "firmware": {
+    "title": "Firmware Yükle",
+    "selectModel": "1. Ekran Modelini Seçin",
+    "selectPort": "2. COM Portunu Seçin",
+    "scanning": "Taranıyor...",
+    "loadingModels": "Modeller yükleniyor...",
+    "warning": "* Bağlıysa lütfen önce uygulama bağlantısını kesin.",
+    "startBtn": "YÜKLEMEYE BAŞLA",
+    "btnFlashing": "YÜKLENİYOR... FİŞİ ÇEKMEYİN!",
+    "logLabel": "İşlem Günlüğü:",
+    "logWaiting": "Başlamak için bekleniyor...",
+    "alerts": {
+      "invalidPortTitle": "Seçim Hatası",
+      "invalidPort": "Lütfen önce geçerli bir COM portu seçin.",
+      "successTitle": "Başarılı!",
+      "success": "Firmware başarıyla güncellendi! Cihaz yeniden başlayacak.",
+      "failedTitle": "Başarısız",
+      "failed": "Firmware güncellemesi başarısız oldu. Ayrıntılar için günlük alanını kontrol edin."
+    },
+    "logs": {
+      "autoDisconnect": "Portu boşaltmak için uygulama bağlantısı otomatik kesildi.",
+      "successReboot": "--- BAŞARILI! Cihaz yeniden başlıyor... ---",
+      "failedCheck": "--- BAŞARISIZ! Yukarıdaki günlükleri kontrol edin. ---"
+    }
+  },
+  "update": {
+    "downloading": "İndiriliyor...",
+    "ready": "Güncelleme Hazır (Yeniden Başlat)",
+    "available": "Yeni Güncelleme Mevcut (İndirmek için Tıklayın)"
+  },
+  "upload": {
+    "title": "Cihaza Yükle (WiFi)",
+    "message": "Bu işlem yeni yapılandırmayı cihaza ({host}) yükleyecek ve yeniden başlatacak.\n\nEski, kullanılmayan ikonlar cihaz yeniden başladıktan *sonra* temizlenecek.\nDevam edilsin mi?",
+    "confirm": "Yükle",
+    "generating": "Dosyalar oluşturuluyor...",
+    "uploadingConfig": "Yapılandırma yükleniyor...",
+    "uploadingIcon": "İkon yükleniyor {current}/{total}...",
+    "rebooting": "Cihaz yeniden başlatılıyor...",
+    "success": "Yükleme tamamlandı! {count} dosya yüklendi. Cihaz ({host}) yeniden başlıyor.",
+    "error": "Hata: Cihaza ({host}) bağlanılamadı veya yüklenemedi. Ayrıntılar: {error}",
+    "generationError": "Dosya oluşturma sırasında hatalar bulundu. Yükleme iptal ediliyor."
+  },
+  "serialUpload": {
+    "title": "Yükleme Onayı",
+    "confirm": "Yüklemeyi Başlat",
+    "noChanges": "Değişiklik algılanmadı. Cihazınız güncel.\n\nYine de tam yüklemeyi zorlamak ister misiniz?",
+    "smartUpload": "Akıllı Yükleme Hazır:\n- {changed} dosya değişti/yeni.\n- {skipped} dosya değişmedi (atlanıyor).\n\nDevam edilsin mi?",
+    "forceUpload": "Tam Yüklemeyi Zorla (Yavaş)",
+    "upToDate": "Güncel. Yükleme gerekmiyor.",
+    "alreadyUploading": "Yükleme zaten devam ediyor...",
+    "calculatingChanges": "Değişiklikler hesaplanıyor...",
+    "finalizing": "Sonlandırılıyor...",
+    "finishing": "Yükleme tamamlanıyor...",
+    "handshake": "Bağlantı kuruluyor...",
+    "noDeviceSelected": "Cihaz seçilmedi",
+    "selectDevice": "Lütfen önce bir cihaz seçin"
+  },
+  "export": {
+    "title": "Dışa Aktarma Tamamlandı",
+    "errorTitle": "Dışa Aktarma Hatası",
+    "generationError": "Dışa aktarma verileri oluşturulamadı. Lütfen yapılandırmanızı kontrol edin.",
+    "noFolder": "Klasör seçilmedi. Lütfen geçerli bir klasör seçin.",
+    "success": "Dışa aktarma başarılı!\n\nYapılandırma: {configFile}\nGörseller: {imageCount} dosya kaydedildi\n\nBu dosyaları SD kartınızın kök klasörüne kopyalayın.",
+    "warnings": "Uyarılar:",
+    "failed": "Dışa aktarma başarısız: {error}\n\nLütfen tekrar deneyin ve seçilen klasöre yazma izniniz olduğundan emin olun."
+  },
+  "weather": {
+    "clearSky": "Açık Hava",
+    "mainlyClear": "Çoğunlukla Açık",
+    "partlyCloudy": "Parçalı Bulutlu",
+    "overcast": "Kapalı",
+    "foggy": "Sisli",
+    "drizzle": "Çisenti",
+    "freezingDrizzle": "Dondurucu Çisenti",
+    "rain": "Yağmurlu",
+    "freezingRain": "Dondurucu Yağmur",
+    "snow": "Karlı",
+    "snowGrains": "Kar Taneleri",
+    "rainShowers": "Sağanak Yağış",
+    "snowShowers": "Kar Yağışı",
+    "thunderstorm": "Gök Gürültülü Fırtına",
+    "thunderstormHail": "Dolu Fırtınası",
+    "unknown": "Bilinmiyor"
+  },
+  "icons": {
+    "loadFailed": "İkonlar yüklenemedi",
+    "loaded": "İkonlar yüklendi",
+    "noSource": "İkon kaynağı bulunamadı"
+  },
+  "page": {
+    "deletePage": "Sayfayı Sil",
+    "settings": "Sayfa Ayarları"
+  }
+}

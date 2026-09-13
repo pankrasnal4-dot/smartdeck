@@ -1,0 +1,564 @@
+{
+  "header": {
+    "title": "SmartDeck",
+    "buttons": {
+      "reset": "リセット",
+      "import": "インポート",
+      "export": "設定をエクスポート",
+      "exportTooltip": "アプリケーション設定をJSONファイルとしてエクスポート",
+      "presets": "プリセット",
+      "presetsTooltip": "ショートカットプリセットを参照して適用",
+      "themes": "🎨 テーマ",
+      "themesTooltip": "カラーテーマを参照して適用",
+      "undo": "元に戻す",
+      "redo": "やり直す",
+      "settings": "⚙️"
+    }
+  },
+  "themes": {
+    "title": "カラーテーマ",
+    "apply": "適用",
+    "cancel": "キャンセル",
+    "saveCurrent": "現在のテーマを保存",
+    "import": "インポート",
+    "export": "エクスポート",
+    "delete": "削除",
+    "enterName": "テーマ名を入力:",
+    "saveTitle": "テーマを保存",
+    "applied": "テーマを適用:",
+    "saved": "テーマを保存:",
+    "deleted": "削除済み",
+    "exported": "テーマをエクスポートしました！",
+    "imported": "テーマをインポート:",
+    "invalidFile": "無効なテーマファイル",
+    "importFailed": "テーマのインポートに失敗しました"
+  },
+  "contextMenu": {
+    "copy": "コピー",
+    "paste": "貼り付け",
+    "delete": "削除",
+    "copied": "ボタンをコピーしました",
+    "pasted": "ボタンを貼り付けました",
+    "deleted": "ボタンを削除しました",
+    "preview": "プレビュー/テスト",
+    "previewExecuted": "アクションが実行されました"
+  },
+  "device": {
+    "frame": {
+      "title": "デバイス名",
+      "page": "ページ {pageNum}"
+    },
+    "hint": "セルをドラッグして並べ替えまたはページ間移動 • クリックで編集",
+    "settings": {
+      "resolution": "デバイス解像度",
+      "grid": "グリッド（最大）",
+      "deviceName": "デバイス名",
+      "background": "背景",
+      "button": "ボタン",
+      "text": "テキスト",
+      "stroke": "枠線",
+      "shadow": "影",
+      "led": "LED"
+    },
+    "buttons": {
+      "exportLocal": "📂 SDカードへエクスポート",
+      "exportLocalTooltip": "config.jsonと画像をSDカードフォルダにエクスポート",
+      "upload": "設定をアップロード"
+    }
+  },
+  "plugins": {
+    "title": "プラグイン",
+    "buttons": {
+      "openFolder_title": "プラグインフォルダを開く",
+      "reload_title": "プラグインを再読み込み"
+    },
+    "loading": "プラグインを読み込み中...",
+    "none": "/pluginsフォルダにプラグインが見つかりません。",
+    "api_not_ready": "APIの準備ができていません。",
+    "button": "プラグインを実行",
+    "unknown": "不明なプラグイン"
+  },
+  "presets": {
+    "title": "プリセット",
+    "loading": "プリセットを読み込み中...",
+    "none": "/presetsフォルダにプリセットが見つかりません。",
+    "openFolder": "プリセットフォルダを開く",
+    "refresh": "更新",
+    "button": "プリセットを適用",
+    "selectPreset": "プリセットを選択",
+    "unknown": "不明なプリセット"
+  },
+  "connection": {
+    "connected": "接続済み: {deviceName}",
+    "disconnected": "切断",
+    "searching": "検索中...",
+    "buttons": {
+      "refresh_title": "更新"
+    },
+    "accessDenied": "アクセス拒否",
+    "connect": "接続",
+    "connecting": "接続中...",
+    "identifying": "デバイスを識別中...",
+    "notFound": "デバイスが見つかりません",
+    "portBusy": "ポートがビジー状態",
+    "selectPort": "ポートを選択"
+  },
+  "editor": {
+    "title": "ボタン – セル {cellNum}",
+    "previewTitle": "プレビュー (110×110)",
+    "iconLabel": "アイコン (PNG/JPG/SVG/WebP)",
+    "iconPlaceholder": "オンラインアイコンを検索...",
+    "iconBrowse": "📁 ローカルファイル",
+    "cropTitle": "画像をトリミング＆スケール",
+    "zoom": "ズーム",
+    "useIcon": "アイコンを使用",
+    "iconHint": "アイコンが選択されていない場合、テキストのみ表示されます。",
+    "textLabel": "テキストタイトル",
+    "textPlaceholder": "ボタンタイトル",
+    "positionLabel": "位置",
+    "posTop": "上",
+    "posMid": "中",
+    "posBot": "下",
+    "labelColor": "ラベル色",
+    "iconColor": "アイコン色",
+    "buttonColor": "ボタン色",
+    "textSize": "テキストサイズ",
+    "iconScale": "アイコンサイズ",
+    "reset": "リセット",
+    "actionTypeLabel": "アクションタイプ",
+    "action": {
+      "key": "ホットキー",
+      "goto": "ページ",
+      "toggle": "トグル",
+      "text": "テキスト",
+      "app": "開く",
+      "timer": "タイマー",
+      "script": "スクリプト",
+      "website": "ウェブサイト",
+      "media": "メディア",
+      "mouse": "マウス",
+      "counter": "カウンター",
+      "sound": "サウンド",
+      "multi": "マルチ"
+    },
+    "multi": {
+      "title": "マルチアクションビルダー",
+      "actions": "アクション",
+      "actionSequence": "アクションシーケンス",
+      "emptyHint": "アクションをここにドラッグしてシーケンスを作成",
+      "settings": "アクション設定",
+      "deleteAction": "このアクションを削除",
+      "delay": "遅延",
+      "delayMs": "遅延 (ms)",
+      "hotkey": "ホットキー",
+      "text": "テキスト",
+      "openApp": "アプリを開く",
+      "website": "ウェブサイト",
+      "script": "スクリプト",
+      "media": "メディア",
+      "sound": "サウンド",
+      "mouse": "マウス",
+      "gotoPage": "ページへ移動"
+    },
+    "toggle": {
+      "stateA": "状態A（OFF）",
+      "stateADesc": "デフォルト状態",
+      "stateB": "状態B（ON）",
+      "stateBDesc": "アクティブ状態",
+      "preset": "プリセット...",
+      "shortcutPlaceholder": "ショートカットまたはスクリプト...",
+      "capture": "キャプチャ",
+      "clear": "クリア",
+      "visuals": "アクティブビジュアル（状態Bのみ）",
+      "bgColor": "背景色",
+      "iconColor": "アイコン色",
+      "activeIcon": "アクティブアイコン（オプション）",
+      "searchIcon": "アイコンを検索...",
+      "playSound": "切り替え音を再生",
+      "playSoundDesc": "設定で切り替え音を変更できます。"
+    },
+    "media": {
+      "label": "メディアアクション",
+      "play": "再生/一時停止",
+      "mute": "ミュート",
+      "vol_up": "音量上げる",
+      "prev": "前へ",
+      "next": "次へ",
+      "vol_down": "音量下げる"
+    },
+    "sound": {
+      "file": "オーディオファイル",
+      "placeholder": "オーディオファイルを選択...",
+      "browse": "参照",
+      "volume": "音量 ({percent}%)"
+    },
+    "counter": {
+      "start": "開始値",
+      "action": "アクション",
+      "inc": "増加 (+)",
+      "dec": "減少 (-)",
+      "hint": "デバイスで長押しするとカウンターが開始値にリセットされます。"
+    },
+    "mouse": {
+      "event": "イベント",
+      "events": {
+        "click": "クリック",
+        "double_click": "ダブルクリック",
+        "move": "移動",
+        "drag": "ドラッグ＆ドロップ"
+      },
+      "button": "ボタン",
+      "buttons": {
+        "left": "左クリック",
+        "right": "右クリック",
+        "middle": "中央クリック"
+      },
+      "posMove": "位置（移動先）",
+      "posDragStart": "ドラッグ開始（始点）",
+      "posDragEnd": "ドロップ先（終点）",
+      "xaxis": "X軸",
+      "yaxis": "Y軸",
+      "capture": "キャプチャ",
+      "captureStart": "始点をキャプチャ",
+      "captureEnd": "終点をキャプチャ",
+      "realtime": "現在: X: {x}, Y: {y}"
+    },
+    "website": {
+      "label": "ウェブサイトURL",
+      "placeholder": "https://www.google.com"
+    },
+    "app": {
+      "label": "アプリケーション",
+      "select": "アプリを選択...",
+      "browse": "参照",
+      "hint": "リストから選択するか手動で参照してください。",
+      "loading": "アプリを読み込み中...",
+      "loadError": "アプリの読み込みエラー"
+    },
+    "key": {
+      "label": "ショートカットキー",
+      "win": "WIN",
+      "enter": "ENTER",
+      "capture": "キャプチャ",
+      "placeholder": "例: CTRL+ALT+DELETE"
+    },
+    "goto": {
+      "label": "移動先ページ"
+    },
+    "textMacro": {
+      "label": "入力するテキスト",
+      "hint": "改行するにはボックス内で「Enter」を押す（Enterキーを送信）",
+      "placeholder": "テキストマクロを入力...",
+      "simulate": "タイピングをシミュレート",
+      "simulateHint": "有効にすると、クリップボードを使用せずにマクロを個々のキー入力として送信します。コピー/ペーストをブロックするアプリに便利です。"
+    },
+    "timer": {
+      "label": "タイマー時間",
+      "minutes": "分",
+      "seconds": "秒"
+    },
+    "script": {
+      "label": "カスタムスクリプト（コマンドライン）",
+      "hint": "Windowsシェル（cmd）で実行",
+      "placeholder": "例: taskkill /f /im chrome.exe\ncalc",
+      "hintNircmd": "*オーディオプリセットには",
+      "hintNircmdLink": "がシステムのPATHにある必要があります。",
+      "selectPreset": "--- プリセットスクリプトを選択 ---"
+    },
+    "picker": {
+      "title": "アイコンを選択（オンライン）",
+      "placeholder": "100,000以上のアイコンを検索（例: home, settings）...",
+      "status": "上に入力して検索...",
+      "close": "閉じる",
+      "error": "アイコン検索中にエラーが発生しました。",
+      "minChars": "2文字以上入力してください",
+      "noResults": "結果が見つかりません",
+      "searching": "検索中..."
+    },
+    "clear": "クリア",
+    "copy": "コピー",
+    "paste": "貼り付け",
+    "cancel": "キャンセル",
+    "apply": "適用",
+    "capture": {
+      "listening": "リスニング中...",
+      "pressKeys": "キーを押してください...",
+      "start": "キャプチャ"
+    }
+  },
+  "alerts": {
+    "reset": {
+      "title": "すべての設定をリセット",
+      "message": "警告: これによりすべてのページ、ボタン、設定が削除され、デフォルトに戻ります。\n\nよろしいですか？設定をバックアップしていることを確認してください。"
+    },
+    "pageFull": {
+      "title": "ドロップ失敗",
+      "message": "ページがいっぱいです。既存のボタンにドロップして交換するか、空のセルにドロップしてください。"
+    },
+    "deletePage": {
+      "title": "ページを削除",
+      "message": "'{pageName}'を削除してもよろしいですか？\nこのページのすべてのボタンが失われます。",
+      "error_min_pages": "少なくとも1ページは必要です。"
+    },
+    "deviceNotConnected": "デバイスが接続されていません...",
+    "connectionError": "接続エラー",
+    "counterNotConnected": "デバイスが接続されていません。カウンターコマンドを送信できません。",
+    "mouseError": "マウスアクション失敗:",
+    "robotError": "RobotJSエラー",
+    "deleteError": "削除エラー"
+  },
+  "toast": {
+    "configSaveFailed": "設定の保存に失敗しました！",
+    "configRestoredBackup": "バックアップから設定を復元しました",
+    "configResetCorruption": "破損のため設定をリセットしました",
+    "configNotLoaded": "設定が読み込まれていません。",
+    "configCopied": "設定をクリップボードにコピーしました",
+    "configCopyFailed": "コピーに失敗しました",
+    "configDownloaded": "設定をダウンロードしました",
+    "notConnected": "デバイスに接続されていません",
+    "requestingConfig": "ESP32から設定を要求中...",
+    "logCleared": "ログをクリアしました",
+    "failedReadConfig": "設定の読み取りに失敗:",
+    "iconsLoadFailed": "デフォルトアイコンの読み込みに失敗しました。manifest.jsonを確認するかフォルダを選択してください。"
+  },
+  "timer": {
+    "finished": "タイマー終了",
+    "complete": "タイマー「{label}」が完了しました。"
+  },
+  "serialMonitor": {
+    "title": "シリアルモニター",
+    "send": "送信",
+    "clear": "クリア",
+    "copyLog": "ログをコピー",
+    "downloadLog": "ログをダウンロード",
+    "getConfig": "ESP設定を取得",
+    "placeholder": "コマンドを入力...",
+    "logCopied": "ログをクリップボードにコピーしました"
+  },
+  "settings": {
+    "title": "アプリケーション設定",
+    "startup": "Windowsと一緒に起動",
+    "startupLabel": "スタートアップ",
+    "startupDesc": "ログイン時にシステムトレイに最小化して自動起動します。",
+    "windowBehavior": "ウィンドウの動作",
+    "closeAction": "「X」（閉じる）ボタンをクリックしたとき",
+    "closeOptions": {
+      "ask": "常に確認する（確認画面を表示）",
+      "minimize": "システムトレイに最小化（実行を継続）",
+      "exit": "すぐにアプリを終了"
+    },
+    "language": "言語",
+    "languageSelect": "アプリケーション言語",
+    "sounds": "サウンド設定",
+    "soundsToggle": "デフォルト切り替え音",
+    "soundsTogglePlaceholder": "デフォルト (switch.wav)",
+    "soundsTimer": "タイマー通知音",
+    "soundsTimerPlaceholder": "デフォルト (notification.wav)",
+    "browse": "参照",
+    "reset_sound": "リセット",
+    "screen": "画面＆デバイス設定",
+    "brightness": "画面の明るさ",
+    "sleep": "画面スリープ（暗く）",
+    "sleepDesc": "節電のため非アクティブ時に画面を暗くします。",
+    "about": "情報＆アップデート",
+    "appName": "Smart Deck アプリ",
+    "version": "バージョン {version}",
+    "loadingVersion": "バージョンを読み込み中...",
+    "checkUpdates": "アップデートを確認",
+    "newVersionAvailable": "新しいバージョンが利用可能です！",
+    "downloadUpdate": "ダウンロード",
+    "upToDate": "最新です！",
+    "checking": "確認中...",
+    "checkFailed": "確認失敗",
+    "updateFound": "アップデートが見つかりました！",
+    "done": "完了",
+    "developer": "開発者ツール",
+    "serialMonitor": "シリアルモニター",
+    "resetEsp": "ESP32をリセット",
+    "espInfo": "ESP32情報",
+    "resetSent": "リセットコマンドを送信しました",
+    "infoRequested": "情報を要求しました",
+    "dumpConfig": "設定をダンプ",
+    "weather": "天気（スリープ画面）",
+    "weatherSettings": "天気設定",
+    "weatherCity": "都市",
+    "weatherCityPlaceholder": "都市を検索...",
+    "weatherUnits": "温度単位",
+    "weatherNoResults": "都市が見つかりません",
+    "weatherSearchError": "検索に失敗しました",
+    "weatherCitySaved": "天気の場所が保存されました",
+    "dimLedAnimation": "減光モードLEDアニメーション",
+    "dimLedAnimationDesc": "画面が暗くなった時のLEDアニメーション。",
+    "dimLedOff": "オフ",
+    "dimLedBreathing": "ブリージング",
+    "dimLedRainbow": "レインボーサイクル",
+    "dimLedPulse": "パルス",
+    "dimLedComet": "コメット",
+    "dimLedSparkle": "スパークル",
+    "deepSleep": "ディープスリープ",
+    "deepSleepDesc": "減光期間後に画面とLEDを完全にオフにします。",
+    "deepSleepHint": "ノブを回してディープスリープから復帰します。"
+  },
+  "knob": {
+    "title": "ノブ設定",
+    "ledSettings": "LED設定",
+    "ledColor": "LED色",
+    "tailLength": "テール長さ",
+    "ledBrightness": "LED明るさ",
+    "ledOffset": "LEDオフセット",
+    "sound": "サウンド",
+    "clickSound": "クリック音",
+    "clickSoundDesc": "ノブを回すときに音を再生",
+    "sensitivity": "感度",
+    "knobSensitivity": "ノブ感度",
+    "sensitivityHint": "高い = スムーズ、低い = 粗い",
+    "sensitivityLow": "低",
+    "sensitivityHigh": "高",
+    "rotationActions": "回転アクション",
+    "rotateRight": "右回転（時計回り）",
+    "rotateLeft": "左回転（反時計回り）",
+    "presets": "プリセット...",
+    "selectPreset": "── プリセットを選択 ──",
+    "shortcutPlaceholder": "ショートカット（例: CTRL+Z）",
+    "capture": "キャプチャ",
+    "mainPage": "メインページ",
+    "customCleared": "カスタム設定をクリアしました",
+    "clearCustom": "カスタム設定をクリア",
+    "saved": "ノブ設定を保存しました",
+    "pressKey": "キーを押してください..."
+  },
+  "prompt": {
+    "renamePage": {
+      "title": "ページ {pageNum} の名前を変更",
+      "label": "新しいページ名:"
+    },
+    "addPage": {
+      "title": "新しいページを追加",
+      "label": "新しいページ名:",
+      "default": "ページ {pageNum}"
+    },
+    "pageApp": "関連アプリケーション（オプション）",
+    "noApp": "-- なし --",
+    "pageAppHint": "アプリがフォーカスされると自動切り替え",
+    "appPath": "アプリケーションパス",
+    "appPathPlaceholder": "C:\\Program Files\\...\\app.exe",
+    "browse": "参照",
+    "autoFocus": "アプリがフォーカスされるとこのページに切り替え",
+    "autoFocusHint": "アプリケーションがフォーカスされるとESP32が自動的にこのページに切り替わります"
+  },
+  "dialogs": {
+    "confirm": {
+      "defaultTitle": "確認",
+      "defaultOK": "OK"
+    },
+    "prompt": {
+      "defaultTitle": "値を入力",
+      "defaultLabel": "値:"
+    },
+    "alert": {
+      "defaultTitle": "情報",
+      "defaultMessage": "メッセージがここに表示されます。",
+      "defaultDismiss": "閉じる"
+    },
+    "delete": "削除",
+    "cancel": "キャンセル",
+    "ok": "OK",
+    "input": "入力"
+  },
+  "footer": {
+    "installFirmware": "ファームウェアをインストール"
+  },
+  "firmware": {
+    "title": "ファームウェアをインストール",
+    "selectModel": "1. 画面モデルを選択",
+    "selectPort": "2. COMポートを選択",
+    "scanning": "スキャン中...",
+    "loadingModels": "モデルを読み込み中...",
+    "warning": "* 接続している場合は、まずアプリの接続を閉じてください。",
+    "startBtn": "フラッシュ開始",
+    "btnFlashing": "フラッシュ中... 切断しないでください！",
+    "logLabel": "プロセスログ:",
+    "logWaiting": "開始待機中...",
+    "alerts": {
+      "invalidPortTitle": "選択エラー",
+      "invalidPort": "まず有効なCOMポートを選択してください。",
+      "successTitle": "成功！",
+      "success": "ファームウェアが正常に更新されました！デバイスが再起動します。",
+      "failedTitle": "失敗",
+      "failed": "ファームウェアの更新に失敗しました。詳細についてはログエリアを確認してください。"
+    },
+    "logs": {
+      "autoDisconnect": "ポートを解放するためアプリから自動切断しました。",
+      "successReboot": "--- 成功！デバイスを再起動しています... ---",
+      "failedCheck": "--- 失敗！上記のログを確認してください。 ---"
+    }
+  },
+  "update": {
+    "downloading": "ダウンロード中...",
+    "ready": "アップデート準備完了（再起動）",
+    "available": "新しいアップデートあり（クリックでダウンロード）"
+  },
+  "upload": {
+    "title": "デバイスにアップロード (WiFi)",
+    "message": "このプロセスは新しい設定をデバイス ({host}) にアップロードし、再起動します。\n\n古い未使用のアイコンはデバイスの再起動*後*にクリーンアップされます。\n続行しますか？",
+    "confirm": "アップロード",
+    "generating": "ファイルを生成中...",
+    "uploadingConfig": "設定をアップロード中...",
+    "uploadingIcon": "アイコンをアップロード中 {current}/{total}...",
+    "rebooting": "デバイスを再起動中...",
+    "success": "アップロード完了！{count}ファイルをアップロードしました。デバイス ({host}) を再起動しています。",
+    "error": "エラー: デバイス ({host}) への接続またはアップロードに失敗しました。詳細: {error}",
+    "generationError": "ファイル生成中にエラーが見つかりました。アップロードを中止します。"
+  },
+  "serialUpload": {
+    "title": "アップロード確認",
+    "confirm": "アップロード開始",
+    "noChanges": "変更が検出されませんでした。デバイスは最新です。\n\nそれでも強制的に完全アップロードしますか？",
+    "smartUpload": "スマートアップロード準備完了:\n- {changed}ファイルが変更/新規。\n- {skipped}ファイルが変更なし（スキップ）。\n\n続行しますか？",
+    "forceUpload": "完全アップロードを強制（遅い）",
+    "upToDate": "最新です。アップロード不要。",
+    "alreadyUploading": "アップロード中です...",
+    "calculatingChanges": "変更を計算中...",
+    "finalizing": "完了処理中...",
+    "finishing": "アップロードを完了中...",
+    "handshake": "接続を確立中...",
+    "noDeviceSelected": "デバイスが選択されていません",
+    "selectDevice": "最初にデバイスを選択してください"
+  },
+  "export": {
+    "title": "エクスポート完了",
+    "errorTitle": "エクスポートエラー",
+    "generationError": "エクスポートデータの生成に失敗しました。設定を確認してください。",
+    "noFolder": "フォルダが選択されていません。有効なフォルダを選択してください。",
+    "success": "エクスポート成功！\n\n設定: {configFile}\n画像: {imageCount}ファイルを保存\n\nこれらのファイルをSDカードのルートフォルダにコピーしてください。",
+    "warnings": "警告:",
+    "failed": "エクスポート失敗: {error}\n\n再試行して、選択したフォルダへの書き込み権限があることを確認してください。"
+  },
+  "weather": {
+    "clearSky": "快晴",
+    "mainlyClear": "晴れ",
+    "partlyCloudy": "曇り時々晴れ",
+    "overcast": "曇り",
+    "foggy": "霧",
+    "drizzle": "霧雨",
+    "freezingDrizzle": "着氷性霧雨",
+    "rain": "雨",
+    "freezingRain": "着氷性の雨",
+    "snow": "雪",
+    "snowGrains": "雪あられ",
+    "rainShowers": "にわか雨",
+    "snowShowers": "にわか雪",
+    "thunderstorm": "雷雨",
+    "thunderstormHail": "雷雨+ひょう",
+    "unknown": "不明"
+  },
+  "icons": {
+    "loadFailed": "アイコンの読み込みに失敗しました",
+    "loaded": "アイコンを読み込みました",
+    "noSource": "アイコンソースがありません"
+  },
+  "page": {
+    "deletePage": "ページを削除",
+    "settings": "ページ設定"
+  }
+}

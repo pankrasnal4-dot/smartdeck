@@ -1,0 +1,1280 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SmartDeck v1</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .knob-mods {
+      margin-top: 4px;
+    }
+    .knob-mods .mod {
+      padding: 5px 8px;
+      font-size: 11px;
+      min-width: 36px;
+      height: 26px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="layout">
+    <header class="main-header">
+      <div class="brand-cluster">
+        <div class="brand-logo-badge">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="2" width="9" height="9" rx="2.5" fill="#3B82F6"/>
+            <rect x="13" y="2" width="9" height="9" rx="2.5" fill="#3B82F6" fill-opacity="0.4"/>
+            <rect x="2" y="13" width="9" height="9" rx="2.5" fill="#3B82F6" fill-opacity="0.4"/>
+            <rect x="13" y="13" width="9" height="9" rx="2.5" fill="#3B82F6"/>
+          </svg>
+        </div>
+        <div class="brand-title-group">
+          <h1 data-i18n="header.title" class="brand-title">SmartDeck</h1>
+          <span class="brand-edition-tag">STUDIO PRO</span>
+        </div>
+      </div>
+
+      <!-- Live Weather Capsule for Łódź -->
+      <div id="headerWeatherWidget" class="header-weather-badge" title="Kliknij, aby odświeżyć pogodę dla Łodzi">
+        <span id="headerWeatherIcon" class="weather-icon">⛅</span>
+        <div class="weather-meta">
+          <div class="weather-top-row">
+            <span id="headerWeatherCity" class="weather-city">Łódź</span>
+            <span id="headerWeatherTemp" class="weather-temp">--°C</span>
+          </div>
+          <span id="headerWeatherDesc" class="weather-desc">Pobieranie...</span>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+      <div class="header-actions">
+        <div class="header-button-group">
+          <button id="presetsBtn" class="ghost" data-i18n="header.buttons.presets"
+            data-i18n-title="header.buttons.presetsTooltip" title="Shortcut Presets">⚡ Presets</button>
+          <button id="themesBtn" class="ghost" data-i18n="header.buttons.themes"
+            data-i18n-title="header.buttons.themesTooltip" title="Color Themes">🎨 Themes</button>
+        </div>
+        <div class="header-button-group">
+          <button id="importSettingsBtn" class="ghost" data-i18n="header.buttons.import">Import</button>
+          <input type="file" id="importFile" accept="application/json" hidden />
+          <button id="exportSettingsBtn" class="ghost" data-i18n="header.buttons.export"
+            data-i18n-title="header.buttons.exportTooltip" title="Export application settings as JSON file">Export</button>
+          <button id="resetSettingsBtn" class="danger" data-i18n="header.buttons.reset">Reset</button>
+        </div>
+        <div class="header-button-group">
+          <button id="undoBtn" class="ghost" disabled data-i18n="header.buttons.undo" title="Undo">↩</button>
+          <button id="redoBtn" class="ghost" disabled data-i18n="header.buttons.redo" title="Redo">↪</button>
+        </div>
+        <div class="header-button-group">
+          <button id="settingsBtn" class="ghost icon-only-btn" data-i18n-title="settings.title"
+            title="Application Settings">⚙️</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="device-area">
+      <section class="device">
+        <!-- Unified container for knob and grid -->
+        <div class="device-panel">
+          <div class="device-row-wrapper" style="display: flex; align-items: center; justify-content: center; gap: 30px;">
+
+            <!-- NEW KNOB LOCATION -->
+            <div class="knob-section-left">
+              <div class="knob-visual-container" id="knobTriggerBtn" title="Click to Configure">
+
+                <svg class="knob-arc-ring" viewBox="-10 -10 220 220" style="overflow: visible;">
+                  <defs>
+                    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+                      <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+                      <feMerge>
+                        <feMergeNode in="coloredBlur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  <circle class="arc-active" cx="100" cy="100" r="93" />
+                </svg>
+
+                <div class="knob-body">
+                  <div class="knob-indicator"></div>
+                </div>
+
+                <div class="knob-info-box">
+                  <span id="knobTextCCW" class="action-label">VOL -</span>
+                  <div class="knob-sep"></div>
+                  <span id="knobTextCW" class="action-label">VOL +</span>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="device-frame">
+              <div id="web-title-bar" class="web-device-bar">
+                <span id="web-title-text">Device Name</span>
+              </div>
+              <div id="grid" class="grid" aria-label="custom grid"></div>
+              <div id="web-footer-bar" class="web-device-bar">
+                <span id="web-page-name">Page 1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End of device-panel -->
+        <div id="pagebar" class="pagebar"></div>
+        <small class="hint" data-i18n="device.hint">Drag cells to reorder or move between pages • Click to
+          edit</small>
+
+        <section class="settings">
+          <div class="row inline">
+            <div class="control-group">
+              <div class="control" id="resControl"><label data-i18n="device.settings.resolution">Device
+                  Resolution</label><select id="resolutionSelect"></select></div>
+              <div class="control" id="gridControl"><label data-i18n="device.settings.grid">Grid (Max)</label>
+                <div class="grid-ctrl"><select id="cols"></select><span>×</span><select id="rows"></select></div>
+              </div>
+              <div class="control" id="knobToggleControl">
+                <label>Knob</label>
+                <label class="switch" style="margin-top: 5px;" title="Show or hide rotary knob">
+                  <input type="checkbox" id="showKnobCheckbox">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <div class="control" style="flex-grow: 1;"><label data-i18n="device.settings.deviceName">Device
+                  Name</label><input type="text" id="deviceName" class="text" placeholder="My Deck"></div>
+              <div class="control"><label data-i18n="device.settings.background">Background</label><input type="color"
+                  id="bgColor"></div>
+              <div class="control"><label data-i18n="device.settings.button">Button</label><input type="color"
+                  id="btnColor"></div>
+              <div class="control"><label data-i18n="device.settings.text">Text</label><input type="color"
+                  id="txtColor"></div>
+              <div class="control"><label data-i18n="device.settings.stroke">Stroke</label><input type="color"
+                  id="strokeColor"></div>
+              <div class="control"><label data-i18n="device.settings.shadow">Shadow</label><input type="color"
+                  id="shadowColor"></div>
+              <div class="control"><label data-i18n="device.settings.led">LED</label><input type="color" id="ledColor"
+                  title="Knob LED Color"></div>
+            </div>
+          </div>
+          <div class="row inline" id="button-row-wrapper">
+            <div class="control-group" id="buttonControls">
+              <div class="control"><label>&nbsp;</label>
+                <div class="hstack">
+                  <button id="uploadViaUsbBtn" class="primary upload-primary-btn" data-i18n="device.buttons.upload">⚡ Upload Settings</button>
+                  <button id="exportEspBtn" class="ghost" data-i18n="device.buttons.exportLocal"
+                    data-i18n-title="device.buttons.exportLocalTooltip"
+                    title="Export config and images to a folder">📁 Export to Folder</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row inline" id="upload-status-row">
+            <div id="uploadStatus" class="upload-status-message"></div>
+          </div>
+
+        </section>
+      </section>
+      <div style="flex: 1;"></div>
+
+      <div id="update-container" class="update-footer-container" style="display: none;">
+        <button id="updateBtn" class="update-strip">
+          <span class="spin">↻</span> İndiriliyor...
+        </button>
+      </div>
+
+    </section>
+    <aside class="plugins-sidebar">
+
+
+      <div class="plugins-section-wrapper">
+        <div class="sidebar-header">
+          <h3 data-i18n="plugins.title">Plugins</h3>
+          <button id="openPluginsFolderBtn" class="refresh-btn small" title="Open Plugins Folder">📁</button>
+          <div class="spacer"></div>
+          <button id="refreshPluginsBtn" class="refresh-btn small" title="Reload Plugins">↻</button>
+        </div>
+        <div id="pluginsContainer" class="plugins-list">
+          <div class="muted" style="text-align:center; padding:20px;" data-i18n="plugins.loading">Loading plugins...
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div id="connectionBar" class="connection-bar-wrapper">
+      <div class="conn-box left-box">
+        <div class="hstack">
+          <div id="connectionDot" class="status-dot disconnected"></div>
+          <span id="connStatus" class="conn-disconnected" data-i18n="connection.disconnected">Disconnected</span>
+        </div>
+        <button id="refreshSerialBtn" class="refresh-btn small" data-i18n-title="connection.buttons.refresh_title"
+          title="Refresh Ports" style="border: 1px solid var(--border);">
+          <span class="refresh-icon">↻</span>
+        </button>
+      </div>
+
+      <div class="conn-box right-box">
+        <span class="app-version-text">Smart Deck v1.6</span>
+        <div class="vert-sep"></div>
+        <button id="openFlasherBtn" class="ghost"
+          style="border: 1px solid var(--border); padding: 6px 12px; font-size: 12px; height: 32px; display: flex; align-items: center; gap: 6px; color: var(--text); cursor: pointer; border-radius: 8px; margin-left: 5px;">
+          <span style="color: #f1c40f;">⚡</span> <span data-i18n="footer.installFirmware">Install Firmware</span>
+        </button>
+      </div>
+    </div>
+    <dialog id="customAlertDialog" class="custom-alert-dialog">
+      <div class="alert-content">
+        <h4 id="alertTitle" style="margin-top: 0; color: var(--text);"></h4>
+        <p id="alertMessage" style="color: var(--muted); margin-bottom: 25px;"></p>
+        <button id="alertOkBtn" class="primary" style="width: 100%;">OK</button>
+      </div>
+    </dialog>
+  </main>
+  <dialog id="knobSettingsDialog">
+    <div class="editor">
+      <div class="hstack" style="justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="margin: 0;" data-i18n="knob.title">Knob Settings</h3>
+        <button type="button" id="knobCloseBtn" class="dialog-close-btn" style="position: static;">×</button>
+      </div>
+
+      <!-- PAGE SELECTOR TAB BAR -->
+      <div class="knob-page-tabs-container" style="margin-bottom: 15px;">
+        <button class="knob-page-scroll-btn left" id="knobPageScrollLeft">◀</button>
+        <div class="knob-page-tabs" id="knobPageTabs">
+          <!-- Tabs will be generated by JS -->
+        </div>
+        <button class="knob-page-scroll-btn right" id="knobPageScrollRight">▶</button>
+      </div>
+
+      <!-- VISUAL KNOB PREVIEW IN DIALOG -->
+      <div style="display: flex; justify-content: center; margin-bottom: 20px; overflow: visible;">
+        <div class="knob-visual-container" id="knobPreviewInDialog">
+          <svg class="knob-arc-ring" id="dialogKnobLeds" viewBox="-10 -10 220 220" style="overflow: visible;">
+            <defs>
+              <filter id="glowDialog" x="-100%" y="-100%" width="300%" height="300%">
+                <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                <feMerge>
+                  <feMergeNode in="coloredBlur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            <!-- Single arc for active segments -->
+            <circle class="arc-active" cx="100" cy="100" r="93" />
+          </svg>
+          <div class="knob-body" id="dialogKnobBody">
+            <div class="knob-indicator"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="group-box">
+        <label style="font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase;"
+          data-i18n="knob.ledSettings">LED Settings</label>
+        <div class="row distributed colors-row" style="margin-top: 10px;">
+          <div class="fld">
+            <label data-i18n="knob.ledColor">LED Color</label>
+            <input type="color" id="knobLedColor" value="#ff0000">
+          </div>
+          <div class="fld"
+            style="flex: 3; text-align: center; align-items: center; display: flex; flex-direction: column;">
+            <label data-i18n="knob.tailLength">Tail Length</label>
+            <div class="hstack" style="width: 100%;">
+              <input type="range" id="knobTailRange" min="1" max="16" step="1" value="5" style="flex:1;">
+              <input type="number" id="knobTailVal" class="num" min="1" max="99" value="5" style="width: 48px; text-align: center; background: transparent; border: none; color: inherit; cursor: pointer; -moz-appearance: textfield;">
+            </div>
+          </div>
+          <div class="fld"
+            style="flex: 3; text-align: right; align-items: flex-end; display: flex; flex-direction: column;">
+            <label data-i18n="knob.ledOffset">LED Offset</label>
+            <div class="hstack" style="width: 100%;">
+              <input type="range" id="knobLedOffsetRange" min="-180" max="180" step="1" value="0" style="flex:1;">
+              <span id="knobLedOffsetVal" style="min-width: 50px; text-align: right; font-size: 13px; color: var(--text);">0°</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="group-box">
+        <div class="row">
+          <div class="hstack settings-row-stretch" style="justify-content: space-between; align-items: center;">
+            <div style="flex: 1;">
+              <label style="font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase;"
+                data-i18n="knob.clickSound">Click Sound</label>
+              <div class="muted" style="font-size: 11px; margin-top: 4px;" data-i18n="knob.clickSoundDesc">Play sound
+                when knob rotates</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="knobClickSoundToggle">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="group-box">
+        <label style="font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase;"
+          data-i18n="knob.ledBrightness">LED Brightness</label>
+        <div class="row" style="margin-top: 10px;">
+          <div class="fld" style="flex: 1;">
+            <div class="hstack" style="gap: 10px;">
+              <span style="font-size: 11px; color: var(--muted);">0%</span>
+              <input type="range" id="ledBrightnessRange" min="0" max="100" step="1" value="100" style="flex:1;">
+              <span style="font-size: 11px; color: var(--muted);">100%</span>
+              <span id="ledBrightnessVal" class="num" style="width: 48px; text-align: center;">100%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="group-box">
+        <label style="font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase;"
+          data-i18n="knob.knobSensitivity">Knob Sensitivity</label>
+        <div class="row" style="margin-top: 10px;">
+          <div class="fld" style="flex: 1;">
+            <div class="hstack" style="gap: 10px;">
+              <span style="font-size: 11px; color: var(--muted);">Low</span>
+              <input type="range" id="knobSensitivityRange" min="1" max="15" step="1" value="10" style="flex:1;">
+              <span style="font-size: 11px; color: var(--muted);">High</span>
+              <span id="knobSensitivityVal" class="num" style="width: 30px; text-align: center;">5</span>
+            </div>
+            <small style="color: var(--muted); font-size: 10px; margin-top: 5px; display: block;"
+              data-i18n="knob.sensitivityHint">Higher = Smoother, Lower = Coarse</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="group-box">
+        <label style="font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase;"
+          data-i18n="knob.rotationActions">Rotation Actions</label>
+
+        <div class="knob-split-layout">
+
+          <div class="knob-col">
+            <label style="color: var(--accent); font-size:12px; font-weight:600;">↻ <span
+                data-i18n="knob.rotateRight">Rotate Right (CW)</span></label>
+
+            <select id="knobCwPreset" class="text" style="width: 100%; margin-bottom: 5px;">
+              <option value="">── Select Preset ──</option>
+              <optgroup label="System">
+                <option value="VOL_UP">System Volume Up</option>
+                <option value="BRIGHT_UP">Screen Brightness Up</option>
+              </optgroup>
+              <optgroup label="Navigation">
+                <option value="SCROLL_DOWN">Scroll Down</option>
+                <option value="ARROW_DOWN">Arrow Down</option>
+                <option value="ARROW_RIGHT">Arrow Right</option>
+                <option value="TAB">Tab</option>
+              </optgroup>
+              <optgroup label="Media">
+                <option value="AUDIO_NEXT">Media Next</option>
+                <option value="AUDIO_VOL_UP">Volume Up (Key)</option>
+              </optgroup>
+              <optgroup label="After Effects">
+                <option value="SCROLL_DOWN">Preview Zoom In</option>
+                <option value="ALT+SCROLL_DOWN">Timeline Zoom In</option>
+                <option value=".">Sequential Zoom In</option>
+                <option value="PAGE_DOWN">Next Frame</option>
+                <option value="SHIFT+PAGE_DOWN">10 Frames Forward</option>
+              </optgroup>
+              <optgroup label="Premiere Pro">
+                <option value="=">Zoom In Timeline</option>
+                <option value="ARROW_RIGHT">Next Frame</option>
+                <option value="SHIFT+ARROW_RIGHT">5 Frames Forward</option>
+              </optgroup>
+              <optgroup label="Photoshop">
+                <option value="CTRL+=">Zoom In</option>
+                <option value="]">Brush Size Up</option>
+                <option value="SHIFT+]">Brush Hardness Up</option>
+              </optgroup>
+              <optgroup label="DaVinci Resolve">
+                <option value="CTRL+=">Timeline Zoom In</option>
+                <option value="ARROW_RIGHT">Next Frame</option>
+              </optgroup>
+              <optgroup label="Browser / General">
+                <option value="CTRL+=">Zoom In</option>
+                <option value="CTRL+TAB">Next Tab</option>
+              </optgroup>
+            </select>
+
+            <div class="knob-mods" style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 5px;">
+              <button type="button" class="mod" data-target="knobCwAction" data-mod="CTRL">CTRL</button>
+              <button type="button" class="mod" data-target="knobCwAction" data-mod="ALT">ALT</button>
+              <button type="button" class="mod" data-target="knobCwAction" data-mod="SHIFT">SHIFT</button>
+              <button type="button" class="mod" data-target="knobCwAction" data-mod="WIN">WIN</button>
+              <button type="button" class="mod ghost" data-target="knobCwAction" data-key="TAB">TAB</button>
+              <button type="button" class="mod ghost" data-target="knobCwAction" data-key="ENTER">ENTER</button>
+              <button type="button" class="mod ghost" data-target="knobCwAction" data-key="SCROLL_UP">▲Scr</button>
+              <button type="button" class="mod ghost" data-target="knobCwAction" data-key="SCROLL_DOWN">▼Scr</button>
+              <button type="button" class="mod ghost" data-target="knobCwAction" data-key="PAGE_UP">PgUp</button>
+              <button type="button" class="mod ghost" data-target="knobCwAction" data-key="PAGE_DOWN">PgDn</button>
+              <button type="button" class="mod ghost" data-target="knobCwAction" data-key="ARROW_UP">↑</button>
+              <button type="button" class="mod ghost" data-target="knobCwAction" data-key="ARROW_DOWN">↓</button>
+              <button type="button" class="mod ghost" data-target="knobCwAction" data-key="ARROW_LEFT">←</button>
+              <button type="button" class="mod ghost" data-target="knobCwAction" data-key="ARROW_RIGHT">→</button>
+            </div>
+
+            <div class="hstack">
+              <input type="text" id="knobCwAction" class="text" data-i18n-placeholder="knob.shortcutPlaceholder"
+                placeholder="Shortcut" style="flex:1; min-width: 0;">
+              <button type="button" class="primary small-capture-btn knob-capture-btn" data-target="knobCwAction"
+                data-i18n="knob.capture">Capt</button>
+            </div>
+          </div>
+
+          <div class="knob-vert-sep"></div>
+
+          <div class="knob-col">
+            <label style="color: var(--danger); font-size:12px; font-weight:600;">↺ <span
+                data-i18n="knob.rotateLeft">Rotate Left (CCW)</span></label>
+
+            <select id="knobCcwPreset" class="text" style="width: 100%; margin-bottom: 5px;">
+              <option value="">── Select Preset ──</option>
+              <optgroup label="System">
+                <option value="VOL_DOWN">System Volume Down</option>
+                <option value="BRIGHT_DOWN">Screen Brightness Down</option>
+              </optgroup>
+              <optgroup label="Navigation">
+                <option value="SCROLL_UP">Scroll Up</option>
+                <option value="ARROW_UP">Arrow Up</option>
+                <option value="ARROW_LEFT">Arrow Left</option>
+                <option value="SHIFT+TAB">Shift + Tab</option>
+              </optgroup>
+              <optgroup label="Media">
+                <option value="AUDIO_PREV">Media Prev</option>
+                <option value="AUDIO_VOL_DOWN">Volume Down (Key)</option>
+              </optgroup>
+              <optgroup label="After Effects">
+                <option value="SCROLL_UP">Preview Zoom Out</option>
+                <option value="ALT+SCROLL_UP">Timeline Zoom Out</option>
+                <option value=",">Sequential Zoom Out</option>
+                <option value="PAGE_UP">Prev Frame</option>
+                <option value="SHIFT+PAGE_UP">10 Frames Back</option>
+              </optgroup>
+              <optgroup label="Premiere Pro">
+                <option value="-">Zoom Out Timeline</option>
+                <option value="ARROW_LEFT">Prev Frame</option>
+                <option value="SHIFT+ARROW_LEFT">5 Frames Back</option>
+              </optgroup>
+              <optgroup label="Photoshop">
+                <option value="CTRL+-">Zoom Out</option>
+                <option value="[">Brush Size Down</option>
+                <option value="SHIFT+[">Brush Hardness Down</option>
+              </optgroup>
+              <optgroup label="DaVinci Resolve">
+                <option value="CTRL+-">Timeline Zoom Out</option>
+                <option value="ARROW_LEFT">Prev Frame</option>
+              </optgroup>
+              <optgroup label="Browser / General">
+                <option value="CTRL+-">Zoom Out</option>
+                <option value="CTRL+SHIFT+TAB">Prev Tab</option>
+              </optgroup>
+            </select>
+
+            <div class="knob-mods" style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 5px;">
+              <button type="button" class="mod" data-target="knobCcwAction" data-mod="CTRL">CTRL</button>
+              <button type="button" class="mod" data-target="knobCcwAction" data-mod="ALT">ALT</button>
+              <button type="button" class="mod" data-target="knobCcwAction" data-mod="SHIFT">SHIFT</button>
+              <button type="button" class="mod" data-target="knobCcwAction" data-mod="WIN">WIN</button>
+              <button type="button" class="mod ghost" data-target="knobCcwAction" data-key="TAB">TAB</button>
+              <button type="button" class="mod ghost" data-target="knobCcwAction" data-key="ENTER">ENTER</button>
+              <button type="button" class="mod ghost" data-target="knobCcwAction" data-key="SCROLL_UP">▲Scr</button>
+              <button type="button" class="mod ghost" data-target="knobCcwAction" data-key="SCROLL_DOWN">▼Scr</button>
+              <button type="button" class="mod ghost" data-target="knobCcwAction" data-key="PAGE_UP">PgUp</button>
+              <button type="button" class="mod ghost" data-target="knobCcwAction" data-key="PAGE_DOWN">PgDn</button>
+              <button type="button" class="mod ghost" data-target="knobCcwAction" data-key="ARROW_UP">↑</button>
+              <button type="button" class="mod ghost" data-target="knobCcwAction" data-key="ARROW_DOWN">↓</button>
+              <button type="button" class="mod ghost" data-target="knobCcwAction" data-key="ARROW_LEFT">←</button>
+              <button type="button" class="mod ghost" data-target="knobCcwAction" data-key="ARROW_RIGHT">→</button>
+            </div>
+
+            <div class="hstack">
+              <input type="text" id="knobCcwAction" class="text" data-i18n-placeholder="knob.shortcutPlaceholder"
+                placeholder="Shortcut" style="flex:1; min-width: 0;">
+              <button type="button" class="primary small-capture-btn knob-capture-btn" data-target="knobCcwAction"
+                data-i18n="knob.capture">Capt</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="actions-box">
+        <div class="row actions">
+          <div class="spacer"></div>
+          <button id="knobCancelBtn" type="reset" class="danger" data-i18n="editor.cancel">Cancel</button>
+          <button id="knobSaveBtn" class="primary" data-i18n="editor.apply">Apply</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+  <dialog id="firmwareDialog">
+    <div class="picker">
+      <div class="hstack" style="justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="margin: 0;">⚡ <span data-i18n="firmware.title">Install Firmware</span></h3>
+        <button type="button" id="firmwareCloseBtn" class="dialog-close-btn" style="position: static;">×</button>
+      </div>
+
+      <div class="group-box" style="padding: 15px;">
+
+        <div class="row">
+          <label style="color: var(--muted); font-size: 12px; font-weight: 600; margin-bottom: 5px;"
+            data-i18n="firmware.selectModel">1. Select Screen Model</label>
+          <select id="fwModelSelect" class="text" style="width: 100%;">
+            <option value="" disabled selected>Loading models...</option>
+          </select>
+        </div>
+
+        <div class="row" style="margin-top: 15px;">
+          <label style="color: var(--muted); font-size: 12px; font-weight: 600; margin-bottom: 5px;"
+            data-i18n="firmware.selectPort">2. Select COM Port</label>
+          <div class="hstack">
+            <select id="fwPortSelect" class="text" style="flex: 1;">
+              <option value="" data-i18n="firmware.scanning">Scanning...</option>
+            </select>
+            <button id="fwRefreshPortsBtn" class="ghost" style="width: 40px; justify-content: center;"
+              data-i18n-title="connection.buttons.refresh_title" title="Refresh Ports">↻</button>
+          </div>
+          <small style="color: #e14c4c; font-size: 11px; margin-top: 4px; display: none;" id="fwPortWarning"
+            data-i18n="firmware.warning">
+            * Please close the app connection first if connected.
+          </small>
+        </div>
+
+        <div class="row" style="margin-top: 20px;">
+          <button id="btnStartFlash" class="primary"
+            style="width: 100%; height: 45px; font-weight: bold; font-size: 15px;" data-i18n="firmware.startBtn">
+            START FLASHING
+          </button>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <label style="color: var(--muted); font-size: 11px; margin-bottom: 5px;" data-i18n="firmware.logLabel">Process
+          Log:</label>
+        <div id="fwLogArea" class="console-log" data-i18n="firmware.logWaiting">Waiting to start...</div>
+      </div>
+
+    </div>
+  </dialog>
+
+  </main>
+
+  <dialog id="editor">
+    <form method="dialog" class="editor">
+      <button type="button" class="dialog-close-btn" id="editorCloseBtn">×</button>
+      <h3 id="editorTitle">Button</h3>
+
+      <div class="row">
+        <label data-i18n="editor.previewTitle">Preview (110×110)</label>
+        <div class="previewBtn btn" style="position: relative; overflow: hidden;">
+          <i id="previewIcon" class="icon-img"></i>
+          <img id="previewImgRaw" class="icon-img" src="#"
+            style="display: none; object-fit: contain; width: 100%; height: 100%;" />
+          <div id="previewLabel" class="label">Sample text</div>
+        </div>
+      </div>
+
+
+      <div class="group-box">
+        <div class="row">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px;">
+              <label data-i18n="editor.iconLabel">Icon (PNG/JPG/SVG/WebP)</label>
+              <div class="icon-path">
+                <input id="iconPath" data-i18n-placeholder="editor.iconPlaceholder"
+                  placeholder="Type to search online icons..." autocomplete="off" />
+                <button type="button" id="browseLocalIconBtn" class="ghost" style="white-space: nowrap;"
+                  data-i18n="editor.iconBrowse">📁 Local File</button>
+              </div>
+            </div>
+            <div style="display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
+              <div class="fld" style="min-width: 140px;">
+                <label data-i18n="editor.iconScale">Icon Scale</label>
+                <div class="hstack">
+                  <input id="iconScaleRange" type="range" min="-100" max="100" step="1" value="0" style="width: 80px;" />
+                  <input id="iconScale" type="number" min="-100" max="100" step="1" value="0" class="num" />
+                </div>
+              </div>
+              <div class="fld">
+                <label data-i18n="editor.iconColor">Icon Color</label>
+                <div class="hstack">
+                  <input type="color" id="iconColor" value="#ffffff" />
+                  <button id="iconColorClear" class="ghost" type="button" data-i18n="editor.reset">Reset</button>
+                </div>
+              </div>
+              <div class="fld">
+                <label data-i18n="editor.buttonColor">Button Color</label>
+                <div class="hstack">
+                  <input type="color" id="btnBgColor" />
+                  <button id="btnBgColorClear" class="ghost" type="button" data-i18n="editor.reset">Reset</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <dialog id="cropDialog">
+            <div class="picker" style="  max-height: 90vh;">
+              <h3 style="margin-top:0;" data-i18n="editor.cropTitle">Crop & Scale Image</h3>
+
+              <div class="crop-container">
+                <div class="crop-wrapper" id="cropWrapper">
+                  <img id="cropImageToEdit" draggable="false" />
+                  <div class="crop-overlay"></div>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: 15px;">
+                <label data-i18n="editor.zoom">Zoom</label>
+                <input type="range" id="cropZoomSlider">
+              </div>
+
+              <div class="row actions" style="margin-top: 20px;">
+                <button id="cropCancelBtn" class="danger" type="button" data-i18n="editor.cancel">Cancel</button>
+                <div class="spacer"></div>
+                <button id="cropSaveBtn" class="primary" type="button" data-i18n="editor.useIcon">Use Icon</button>
+              </div>
+            </div>
+          </dialog>
+
+          <ul id="inlineIconResults" class="icon-list-inner editor-icon-list"></ul>
+          <small class="muted" data-i18n="editor.iconHint">If no icon is selected, only text will be shown.</small>
+        </div>
+      </div>
+
+      <div class="group-box">
+        <div class="row">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap;">
+            <div class="fld" style="flex: 1; min-width: 200px;">
+              <label data-i18n="editor.textLabel">Text Title</label>
+              <input id="labelText" class="text" data-i18n-placeholder="editor.textPlaceholder"
+                placeholder="Button Title" />
+            </div>
+            <div style="display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
+              <div class="fld" style="min-width: 140px;">
+                <label data-i18n="editor.textSize">Text Size</label>
+                <div class="hstack">
+                  <input id="labelSizeRange" type="range" min="10" max="28" step="1" value="18" style="width: 80px;" />
+                  <input id="labelSize" type="number" min="10" max="28" step="1" value="18" class="num" />
+                </div>
+              </div>
+              <div class="fld">
+                <label data-i18n="editor.labelColor">Label Color</label>
+                <div class="hstack">
+                  <input type="color" id="labelColor" value="#ffffff" />
+                  <button id="labelColorClear" class="ghost" type="button" data-i18n="editor.reset">Reset</button>
+                </div>
+              </div>
+              <div class="fld pos-fld">
+                <label data-i18n="editor.positionLabel">Position</label>
+                <div class="seg">
+                  <button type="button" class="seg-btn" data-val="top" data-i18n="editor.posTop">Top</button>
+                  <button type="button" class="seg-btn" data-val="middle" data-i18n="editor.posMid">Mid</button>
+                  <button type="button" class="seg-btn" data-val="bottom" data-i18n="editor.posBot">Bot</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="group-box">
+        <div class="row">
+          <label data-i18n="editor.actionTypeLabel">Action Type</label>
+          <div class="seg" style="width: 100%; display: flex;">
+            <button type="button" class="seg-btn" data-act="key" style="flex: 1; text-align: center;"
+              data-i18n="editor.action.key">HotKey</button>
+            <button type="button" class="seg-btn" data-act="multi" style="flex: 1; text-align: center;"
+              data-i18n="editor.action.multi">Multi</button>
+            <button type="button" class="seg-btn" data-act="goto" style="flex: 1; text-align: center;"
+              data-i18n="editor.action.goto">Page</button>
+            <button type="button" class="seg-btn" data-act="folder" style="flex: 1; text-align: center;">📁 Folder</button>
+            <button type="button" class="seg-btn" data-act="toggle" style="flex: 1; text-align: center;"
+              data-i18n="editor.action.toggle">Toggle</button>
+            <button type="button" class="seg-btn" data-act="text" style="flex: 1; text-align: center;"
+              data-i18n="editor.action.text">Text</button>
+            <button type="button" class="seg-btn" data-act="app" style="flex: 1; text-align: center;"
+              data-i18n="editor.action.app">Open</button>
+            <button type="button" class="seg-btn" data-act="timer" style="flex: 1; text-align: center;"
+              data-i18n="editor.action.timer">Timer</button>
+            <button type="button" class="seg-btn" data-act="script" style="flex: 1; text-align: center;"
+              data-i18n="editor.action.script">Script</button>
+            <button type="button" class="seg-btn" data-act="website" style="flex: 1; text-align: center;"
+              data-i18n="editor.action.website">Website</button>
+            <button type="button" class="seg-btn" data-act="media" style="flex: 1; text-align: center;"
+              data-i18n="editor.action.media">Media</button>
+            <button type="button" class="seg-btn" data-act="mouse" style="flex: 1; text-align: center;"
+              data-i18n="editor.action.mouse">Mouse</button>
+            <button type="button" class="seg-btn" data-act="counter" style="flex: 1; text-align: center;"
+              data-i18n="editor.action.counter">Counter</button>
+            <button type="button" class="seg-btn" data-act="sound" style="flex: 1; text-align: center;"
+              data-i18n="editor.action.sound">Sound</button>
+          </div>
+        </div>
+
+        <div class="row action-panel" id="rowToggle" style="display: none;">
+
+          <div class="group-box" style="padding: 10px; margin-bottom: 10px;">
+            <div class="hstack" style="justify-content: space-between; margin-bottom: 5px;">
+              <label style="color: var(--muted); font-weight: 600;" data-i18n="editor.toggle.stateA">State A
+                (OFF)</label>
+              <small class="muted" style="font-size: 11px;" data-i18n="editor.toggle.stateADesc">Default State</small>
+            </div>
+
+            <div class="row" style="margin-bottom: 0;">
+              <div class="hstack" style="gap: 8px;">
+                <select id="toggleOffPreset" class="text" style="width: 110px; flex-shrink: 0;">
+                  <option value="" data-i18n="editor.toggle.preset">Presets...</option>
+                </select>
+                <input id="toggleOffCombo" class="text" data-i18n-placeholder="editor.toggle.shortcutPlaceholder"
+                  placeholder="Shortcut or Script..." readonly style="flex: 1;" />
+                <button type="button" class="primary small-capture-btn" data-target="toggleOffCombo"
+                  style="width: 70px;" data-i18n="editor.toggle.capture">Capture</button>
+                <button type="button" class="ghost small-clear-btn" data-target="toggleOffCombo"
+                  data-i18n-title="editor.toggle.clear" title="×">×</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="group-box" style="padding: 10px;">
+            <div class="hstack" style="justify-content: space-between; margin-bottom: 5px;">
+              <label style="color: var(--accent); font-weight: 600;" data-i18n="editor.toggle.stateB">State B
+                (ON)</label>
+              <small class="muted" style="font-size: 11px;" data-i18n="editor.toggle.stateBDesc">Active State</small>
+            </div>
+
+            <div class="row" style="margin-bottom: 15px;">
+              <div class="hstack" style="gap: 8px;">
+                <select id="toggleOnPreset" class="text" style="width: 110px; flex-shrink: 0;">
+                  <option value="" data-i18n="editor.toggle.preset">Presets...</option>
+                </select>
+                <input id="toggleOnCombo" class="text" data-i18n-placeholder="editor.toggle.shortcutPlaceholder"
+                  placeholder="Shortcut or Script..." readonly style="flex: 1;" />
+                <button type="button" class="primary small-capture-btn" data-target="toggleOnCombo" style="width: 70px;"
+                  data-i18n="editor.toggle.capture">Capture</button>
+                <button type="button" class="ghost small-clear-btn" data-target="toggleOnCombo"
+                  data-i18n-title="editor.toggle.clear" title="×">×</button>
+              </div>
+            </div>
+
+            <div
+              style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; padding: 10px;">
+              <label style="display: block; font-size: 11px; color: var(--muted); margin-bottom: 8px; font-weight: 600;"
+                data-i18n="editor.toggle.visuals">Active
+                Visuals (State B Only)</label>
+
+              <div class="hstack" style="align-items: flex-end; gap: 15px;">
+
+                <div style="display: flex; gap: 10px;">
+                  <div class="fld">
+                    <label style="font-size: 11px; white-space: nowrap;" data-i18n="editor.toggle.bgColor">BG
+                      Color</label>
+                    <div class="hstack">
+                      <input type="color" id="toggleOnColor" value="#2ecc71" style="height: 35px;" />
+                    </div>
+                  </div>
+                  <div class="fld">
+                    <label style="font-size: 11px; white-space: nowrap;" data-i18n="editor.toggle.iconColor">Icon
+                      Color</label>
+                    <div class="hstack">
+                      <input type="color" id="toggleOnIconColor" value="#ffffff" style="height: 35px;" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="fld" style="flex: 1; position: relative;">
+                  <label style="font-size: 11px;" data-i18n="editor.toggle.activeIcon">Active Icon (Optional)</label>
+                  <div class="hstack">
+                    <div id="toggleOnIconPreviewBox"
+                      style="width: 60px; height: 60px; border: 1px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center; margin-right: 8px; overflow: hidden; flex-shrink: 0; background: #222;">
+                      <img id="toggleOnIconPreview" style="width: 28px; height: 28px; display: none;" />
+                    </div>
+                    <input id="toggleOnIconPath" class="text" data-i18n-placeholder="editor.toggle.searchIcon"
+                      placeholder="Search icon..." autocomplete="off" style="flex: 1;" />
+                  </div>
+                  <div id="toggleOnIconResults" class="editor-icon-list"
+                    style="top: 60px; left: 68px; width: calc(100% - 68px);"></div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="group-box">
+            <div class="hstack" style="justify-content: space-between; align-items: center;">
+              <div>
+                <label for="toggleUseDefaultSound"
+                  style="cursor: pointer; margin: 0; font-weight: 600; color: var(--text);"
+                  data-i18n="editor.toggle.playSound">Play Switch Sound</label>
+                <div class="muted" style="font-size: 11px; margin-top: 2px;" data-i18n="editor.toggle.playSoundDesc">You
+                  can change the toggle sound in
+                  Settings.</div>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="toggleUseDefaultSound">
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+        <div class="row action-panel" id="rowMedia" style="display: none;">
+          <label data-i18n="editor.media.label">Media Action</label>
+          <div class="seg media-seg">
+            <button type="button" class="seg-btn" data-media="play_pause" data-i18n="editor.media.play"><i>▶</i>
+              Play/Pause</button>
+            <button type="button" class="seg-btn" data-media="mute" data-i18n="editor.media.mute"><i>🔇</i>
+              Mute</button>
+            <button type="button" class="seg-btn" data-media="vol_up" data-i18n="editor.media.vol_up"><i>🔊</i> Vol
+              Up</button>
+            <button type="button" class="seg-btn" data-media="prev_track" data-i18n="editor.media.prev"><i>⏪</i>
+              Prev</button>
+            <button type="button" class="seg-btn" data-media="next_track" data-i18n="editor.media.next"><i>⏩</i>
+              Next</button>
+            <button type="button" class="seg-btn" data-media="vol_down" data-i18n="editor.media.vol_down"><i>🔉</i> Vol
+              Down</button>
+          </div>
+        </div>
+        <div class="row action-panel" id="rowSound" style="display: none;">
+          <div class="row">
+            <label data-i18n="editor.sound.file">Audio File</label>
+            <div class="hstack">
+              <input type="text" id="soundPath" class="text" style="flex: 1;"
+                data-i18n-placeholder="editor.sound.placeholder" placeholder="Select an audio file..." readonly />
+              <button id="browseSoundBtn" class="ghost" type="button" style="flex-shrink: 0;"
+                data-i18n="editor.sound.browse">Browse</button>
+            </div>
+          </div>
+          <div class="row">
+            <label>Volume (<span id="soundVolLabel">100%</span>)</label>
+            <input type="range" id="soundVolume" min="0" max="100" value="100"
+              style="width: 100%; accent-color: var(--accent);">
+          </div>
+        </div>
+
+        <!-- MULTI-ACTION PANEL -->
+        <div class="row action-panel" id="rowMultiAction" style="display: none;">
+          <label data-i18n="editor.multi.title">Multi-Action Builder</label>
+          <div class="multi-action-container">
+            <!-- Sol: Aksiyon Paleti -->
+            <div class="multi-action-palette">
+              <div class="palette-title" data-i18n="editor.multi.actions">Actions</div>
+              <div class="palette-items">
+                <div class="palette-item" draggable="true" data-action-type="delay">
+                  <span class="drag-handle">☰</span>
+                  <span class="action-icon">⏱️</span>
+                  <span data-i18n="editor.multi.delay">Delay</span>
+                </div>
+                <div class="palette-item" draggable="true" data-action-type="key">
+                  <span class="drag-handle">☰</span>
+                  <span class="action-icon">⌨️</span>
+                  <span data-i18n="editor.multi.hotkey">HotKey</span>
+                </div>
+                <div class="palette-item" draggable="true" data-action-type="text">
+                  <span class="drag-handle">☰</span>
+                  <span class="action-icon">📝</span>
+                  <span data-i18n="editor.multi.text">Text</span>
+                </div>
+                <div class="palette-item" draggable="true" data-action-type="app">
+                  <span class="drag-handle">☰</span>
+                  <span class="action-icon">🚀</span>
+                  <span data-i18n="editor.multi.openApp">Open App</span>
+                </div>
+                <div class="palette-item" draggable="true" data-action-type="website">
+                  <span class="drag-handle">☰</span>
+                  <span class="action-icon">🌐</span>
+                  <span data-i18n="editor.multi.website">Website</span>
+                </div>
+                <div class="palette-item" draggable="true" data-action-type="script">
+                  <span class="drag-handle">☰</span>
+                  <span class="action-icon">📜</span>
+                  <span data-i18n="editor.multi.script">Script</span>
+                </div>
+                <div class="palette-item" draggable="true" data-action-type="media">
+                  <span class="drag-handle">☰</span>
+                  <span class="action-icon">🎵</span>
+                  <span data-i18n="editor.multi.media">Media</span>
+                </div>
+                <div class="palette-item" draggable="true" data-action-type="sound">
+                  <span class="drag-handle">☰</span>
+                  <span class="action-icon">🔊</span>
+                  <span data-i18n="editor.multi.sound">Sound</span>
+                </div>
+                <div class="palette-item" draggable="true" data-action-type="mouse">
+                  <span class="drag-handle">☰</span>
+                  <span class="action-icon">🖱️</span>
+                  <span data-i18n="editor.multi.mouse">Mouse</span>
+                </div>
+                <div class="palette-item" draggable="true" data-action-type="goto">
+                  <span class="drag-handle">☰</span>
+                  <span class="action-icon">📄</span>
+                  <span data-i18n="editor.multi.gotoPage">Go to Page</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sağ: Action Stack -->
+            <div class="multi-action-stack-container">
+              <div class="stack-title" data-i18n="editor.multi.actionSequence">Action Sequence</div>
+              <div class="multi-action-stack" id="multiActionStack">
+                <div class="stack-empty-hint" data-i18n="editor.multi.emptyHint">Drag actions here to build your sequence</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Seçili Aksiyonun Ayarları -->
+          <div class="multi-action-settings" id="multiActionSettings" style="display: none;">
+            <div class="settings-header">
+              <span id="multiSettingsTitle" data-i18n="editor.multi.settings">Action Settings</span>
+              <button type="button" class="delete-action-btn" id="deleteSelectedAction" data-i18n-title="editor.multi.deleteAction" title="Delete this action">🗑️</button>
+            </div>
+            <div class="settings-content" id="multiSettingsContent">
+              <!-- Dinamik olarak doldurulacak -->
+            </div>
+          </div>
+        </div>
+        <div class="row action-panel" id="rowCounter" style="display: none;">
+          <div class="hstack" style="gap: 12px; align-items: flex-end;">
+            <div class="fld" style="flex: 1;">
+              <label for="counterStartValue" data-i18n="editor.counter.start">Start Value</label>
+              <input type="number" id="counterStartValue" class="text num" value="0">
+            </div>
+            <div class="fld" style="flex: 1;">
+              <label data-i18n="editor.counter.action">Action</label>
+              <div class="seg" id="counterActionSeg">
+                <button type="button" class="seg-btn" data-val="increment" data-i18n="editor.counter.inc">Increment
+                  (+)</button>
+                <button type="button" class="seg-btn" data-val="decrement" data-i18n="editor.counter.dec">Decrement
+                  (-)</button>
+              </div>
+            </div>
+          </div>
+          <small class="muted" style="margin-top: 5px;" data-i18n="editor.counter.hint">Long press on the device will
+            reset the counter to the Start
+            Value.</small>
+        </div>
+
+        <div class="row action-panel" id="rowMouse" style="display: none;">
+          <div class="hstack" style="justify-content: space-between; align-items: flex-end;">
+            <div class="fld" style="flex: 1;">
+              <label for="mouseEventSelect" data-i18n="editor.mouse.event">Event</label>
+              <select id="mouseEventSelect" class="text">
+                <option value="click" data-i18n="editor.mouse.events.click">Mouse Click</option>
+                <option value="double_click" data-i18n="editor.mouse.events.double_click">Mouse Double Click</option>
+                <option value="move" data-i18n="editor.mouse.events.move">Mouse Move</option>
+                <option value="drag" data-i18n="editor.mouse.events.drag">Drag and Drop</option>
+              </select>
+            </div>
+            <div class="fld" id="mouseButtonSelectDiv" style="flex: 1;">
+              <label for="mouseButtonSelect" data-i18n="editor.mouse.button">Button</label>
+              <select id="mouseButtonSelect" class="text">
+                <option value="left" data-i18n="editor.mouse.buttons.left">Left Click</option>
+                <option value="right" data-i18n="editor.mouse.buttons.right">Right Click</option>
+                <option value="middle" data-i18n="editor.mouse.buttons.middle">Middle Click</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="mouseMoveOptions" class="mouse-sub-panel" style="margin-top: 10px;">
+            <label data-i18n="editor.mouse.posMove">Position (Move To)</label>
+            <div class="hstack" style="gap: 12px;">
+              <div class="fld" style="flex: 1;"><label for="mouseX1" data-i18n="editor.mouse.xaxis">X-axis</label><input
+                  type="number" id="mouseX1" class="text" value="0"></div>
+              <div class="fld" style="flex: 1;"><label for="mouseY1" data-i18n="editor.mouse.yaxis">Y-axis</label><input
+                  type="number" id="mouseY1" class="text" value="0"></div>
+              <button type="button" class="primary" id="mouseCaptureBtnStart"
+                style="flex-shrink: 0; height: 38px; margin-top: 18px;"
+                data-i18n="editor.mouse.capture">Capture</button>
+            </div>
+          </div>
+
+          <div id="mouseDragOptions" class="mouse-sub-panel" style=" margin-top: 10px;">
+            <label data-i18n="editor.mouse.posDragStart">Drag from (Start)</label>
+            <div class="hstack" style="gap: 12px;">
+              <div class="fld" style="flex: 1;"><label for="mouseDragX1"
+                  data-i18n="editor.mouse.xaxis">X-axis</label><input type="number" id="mouseDragX1" class="text"
+                  value="0"></div>
+              <div class="fld" style="flex: 1;"><label for="mouseDragY1"
+                  data-i18n="editor.mouse.yaxis">Y-axis</label><input type="number" id="mouseDragY1" class="text"
+                  value="0"></div>
+              <button type="button" class="primary" id="mouseCaptureBtnDragStart"
+                style="flex-shrink: 0; height: 38px; margin-top: 18px;" data-i18n="editor.mouse.captureStart">Capture
+                Start</button>
+            </div>
+            <label style="margin-top: 10px;" data-i18n="editor.mouse.posDragEnd">Drag to (End)</label>
+            <div class="hstack" style="gap: 12px;">
+              <div class="fld" style="flex: 1;"><label for="mouseDragX2"
+                  data-i18n="editor.mouse.xaxis">X-axis</label><input type="number" id="mouseDragX2" class="text"
+                  value="0"></div>
+              <div class="fld" style="flex: 1;"><label for="mouseDragY2"
+                  data-i18n="editor.mouse.yaxis">Y-axis</label><input type="number" id="mouseDragY2" class="text"
+                  value="0"></div>
+              <button type="button" class="primary" id="mouseCaptureBtnDragEnd"
+                style="flex-shrink: 0; height: 38px; margin-top: 18px;" data-i18n="editor.mouse.captureEnd">Capture
+                End</button>
+            </div>
+          </div>
+
+          <div id="mouseRealtimePos" class="muted">
+            Current: X: 0, Y: 0
+          </div>
+        </div>
+
+
+        <div class="row action-panel" id="rowWebsite" style="display: none;">
+          <label for="websiteUrl" data-i18n="editor.website.label">Website URL</label>
+          <input type="text" id="websiteUrl" class="text" data-i18n-placeholder="editor.website.placeholder"
+            placeholder="https://www.google.com">
+        </div>
+
+
+        <div class="row action-panel" id="rowApp" style="display: none;">
+          <label data-i18n="editor.app.label">Application</label>
+          <div style="margin-bottom: 8px;">
+            <select id="appQuickSelect" style="width: 100%;">
+              <option value="" data-i18n="editor.app.select">Select app...</option>
+            </select>
+          </div>
+          <div class="hstack">
+            <input type="text" id="appPath" class="text" style="flex: 1;" placeholder="C:\Program Files\..." />
+            <button id="browseAppBtn" class="ghost" type="button" style="flex-shrink: 0;"
+              data-i18n="editor.app.browse">Browse</button>
+          </div>
+          <small class="muted" data-i18n="editor.app.hint">Select from list above OR browse manually.</small>
+        </div>
+
+        <div class="row action-panel" id="rowKeyMods" style="display: none;">
+          <label data-i18n="editor.key.label">Shortcut Combination</label>
+
+          <div class="mods">
+            <button type="button" class="mod" data-mod="CTRL">CTRL</button>
+            <button type="button" class="mod" data-mod="ALT">ALT</button>
+            <button type="button" class="mod" data-mod="SHIFT">SHIFT</button>
+            <button type="button" class="mod" data-mod="GUI" data-i18n="editor.key.win">WIN</button>
+            <button type="button" id="addEnterKey" class="mod ghost" data-i18n="editor.key.enter">ENTER</button>
+            <button type="button" class="mod ghost" data-key="TAB">TAB</button>
+            <button type="button" class="mod ghost" data-key="SCROLL_UP">▲Scr</button>
+            <button type="button" class="mod ghost" data-key="SCROLL_DOWN">▼Scr</button>
+            <button type="button" class="mod ghost" data-key="PAGE_UP">PgUp</button>
+            <button type="button" class="mod ghost" data-key="PAGE_DOWN">PgDn</button>
+            <button type="button" class="mod ghost" data-key="ARROW_UP">↑</button>
+            <button type="button" class="mod ghost" data-key="ARROW_DOWN">↓</button>
+            <button type="button" class="mod ghost" data-key="ARROW_LEFT">←</button>
+            <button type="button" class="mod ghost" data-key="ARROW_RIGHT">→</button>
+
+            <button type="button" id="captureToggle" class="primary" style="display: none;"
+              data-i18n="editor.key.capture">Capture</button>
+
+            <div class="spacer" style="flex: 1 1 auto;"></div>
+
+            <select id="presetActionsSelect" class="text" style="width: 220px; height: 38px;">
+            </select>
+          </div>
+
+          <!-- Quick Action Chips for Fast Setup -->
+          <div class="quick-preset-bar" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; margin-bottom: 4px;">
+            <button type="button" class="quick-chip-btn discord-chip" data-quick-combo="CTRL+ALT+A" data-quick-label="Odbierz" title="Discord: Odbierz połączenie (działa w grach w tle)">🎧 Odbierz Discord</button>
+            <button type="button" class="quick-chip-btn discord-chip" data-quick-combo="CTRL+ALT+D" data-quick-label="Odrzuć" title="Discord: Odrzuć połączenie">🚫 Odrzuć Discord</button>
+            <button type="button" class="quick-chip-btn discord-chip" data-quick-combo="CTRL+SHIFT+M" data-quick-label="Mute" title="Discord: Wycisz mikrofon">🎙️ Mute Discord</button>
+            <button type="button" class="quick-chip-btn discord-chip" data-quick-combo="CTRL+SHIFT+D" data-quick-label="Deafen" title="Discord: Wycisz dźwięk/ogłusz">🔇 Deafen Discord</button>
+            <button type="button" class="quick-chip-btn spotify-chip" data-quick-combo="AUDIO_PLAY" data-quick-label="Play" title="Spotify: Play / Pause">🎵 Spotify Play</button>
+            <button type="button" class="quick-chip-btn spotify-chip" data-quick-combo="AUDIO_NEXT" data-quick-label="Next" title="Spotify: Następny utwór">⏭️ Spotify Next</button>
+            <button type="button" class="quick-chip-btn obs-chip" data-quick-combo="CTRL+F9" data-quick-label="Stream" title="OBS: Start/Stop Stream">🔴 OBS Stream</button>
+            <button type="button" class="quick-chip-btn obs-chip" data-quick-combo="CTRL+F10" data-quick-label="Record" title="OBS: Start/Stop Record">🎬 OBS Record</button>
+            <button type="button" class="quick-chip-btn game-chip" data-quick-combo="GUI+SHIFT+S" data-quick-label="Snip" title="Windows: Snip & Sketch Screenshot">✂️ Screenshot</button>
+          </div>
+
+          <div class="combo-row" style="margin-top: 8px;">
+            <input id="combo" class="text" data-i18n-placeholder="editor.key.placeholder"
+              placeholder="e.g. CTRL+ALT+DELETE" readonly />
+          </div>
+        </div>
+
+        <div class="row action-panel" id="rowGotoPages" style="display: none;">
+          <label data-i18n="editor.goto.label">Target Page</label>
+          <div id="gotoPages" class="page-chooser"></div>
+        </div>
+
+        <div class="row action-panel" id="rowFolder" style="display: none; flex-direction: column;">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 8px;">
+            <label style="font-weight: 600; color: #F8FAFC;">Wybierz stronę folderu lub stwórz nowy</label>
+            <button type="button" id="btnCreateNewFolder" class="primary" style="padding: 5px 14px; font-size: 12px; border-radius: 8px;">➕ Stwórz nowy folder</button>
+          </div>
+          <div id="folderPages" class="page-chooser"></div>
+          <small class="muted" style="margin-top: 8px; font-size: 11px; line-height: 1.4;">Folder grupuje wiele aplikacji i akcji na osobnej podstronie z automatycznym przyciskiem powrotu ⬅️.</small>
+        </div>
+        <div class="row action-panel" id="rowTextMacro" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; width: 100%;">
+            <label for="textMacro" data-i18n="editor.textMacro.label">Text to Type</label>
+            <small class="muted" style="font-size: 11px; margin-bottom: 4px;" data-i18n="editor.textMacro.hint">Press
+              'Enter' in box for new line (sends
+              'Enter' key)</small>
+          </div>
+          <textarea id="textMacro" class="text" data-i18n-placeholder="editor.textMacro.placeholder"
+            placeholder="Type your text macro here..." rows="3"></textarea>
+
+          <div class="row"
+            style="margin-top: 10px; margin-bottom: 0px; padding-top: 10px; border-top: 1px dashed var(--border);">
+            <div class="hstack" style="justify-content: space-between; align-items: center;">
+              <span style="color: var(--text);" data-i18n="editor.textMacro.simulate">Simulate Typing</span>
+              <label class="switch">
+                <input type="checkbox" id="simulateTypingCheckbox">
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <small class="muted" style="margin-top: 5px;" data-i18n="editor.textMacro.simulateHint">Enabling this sends
+              the macro as a series of individual key
+              presses instead of using the clipboard. Useful for applications that block copy/paste.</small>
+          </div>
+        </div>
+
+        <div class="row action-panel" id="rowTimer" style="display: none;">
+          <label data-i18n="editor.timer.label">Timer Duration</label>
+
+          <div class="timer-picker">
+
+            <div class="picker-highlight"></div>
+
+            <div class="picker-column">
+              <label for="timerMinutes" data-i18n="editor.timer.minutes">Minutes</label>
+              <div id="timerMinutes" class="picker-list"></div>
+            </div>
+
+            <span class="timer-colon">:</span>
+
+            <div class="picker-column">
+              <label for="timerSeconds" data-i18n="editor.timer.seconds">Seconds</label>
+              <div id="timerSeconds" class="picker-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row action-panel" id="rowScript" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; width: 100%;">
+            <label for="customScript" data-i18n="editor.script.label">Custom Script (Command Line)</label>
+            <small class="muted" style="font-size: 11px; margin-bottom: 4px;" data-i18n="editor.script.hint">Runs in
+              Windows shell (cmd)</small>
+          </div>
+
+          <select id="presetScriptSelect" class="text" style="width: 100%; margin-bottom: 8px;">
+          </select>
+
+          <textarea id="customScript" class="text" data-i18n-placeholder="editor.script.placeholder"
+            placeholder="e.g., taskkill /f /im chrome.exe&#10;calc" rows="3"></textarea>
+
+          <small class="muted" style="font-size: 11px; margin-top: 5px;">
+            <span data-i18n="editor.script.hintNircmd">*Audio presets require </span>
+            <a href='https://www.nirsoft.net/utils/nircmd.html' target='_blank'>NirCmd.exe</a>
+            <span data-i18n="editor.script.hintNircmdLink"> to be in your system's PATH.</span>
+          </small>
+        </div>
+
+        <div class="actions-box">
+          <div class="row actions">
+            <button id="clearBtn" class="danger" type="button" data-i18n="editor.clear">Clear</button>
+            <button id="copyBtn" class="ghost" type="button" data-i18n="editor.copy">Copy</button>
+            <button id="pasteBtn" class="ghost" type="button" data-i18n-title="editor.paste" title="Paste saved button"
+              data-i18n="editor.paste">Paste</button>
+            <div class="spacer"></div>
+            <button id="cancel" type="reset" class="danger" data-i18n="editor.cancel">Cancel</button>
+            <button id="apply" class="primary" type="submit" data-i18n="editor.apply">Apply</button>
+          </div>
+        </div>
+    </form>
+  </dialog>
+
+  <dialog id="iconPicker">
+    <div class="picker">
+      <button type="button" class="dialog-close-btn" id="iconPickerCloseBtn">×</button>
+      <h3 data-i18n="editor.picker.title">Select Icon (Online)</h3>
+
+      <div class="row">
+        <input type="search" id="iconSearchInput" class="text" data-i18n-placeholder="editor.picker.placeholder"
+          placeholder="Search 100,000+ icons (e.g., home, settings)..." />
+      </div>
+
+      <div id="pickerOnlineContainer" class="picker-container">
+        <div id="onlineList" class="icon-list-inner" style="padding: 10px 0; min-height: 250px;"></div>
+        <div id="onlineStatus" class="muted" style="text-align: center; padding: 20px;"
+          data-i18n="editor.picker.status">Type above to search Iconify...
+        </div>
+      </div>
+
+      <div class="row actions">
+        <div class="spacer"></div>
+        <button id="pickerClose" class="ghost" data-i18n="editor.picker.close">Close</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="customConfirm">
+    <div class="picker" style="min-width: 350px; max-width: 90vw;">
+      <h3 id="confirmTitle" style="margin-top: 0; margin-bottom: 15px;" data-i18n="dialogs.confirm.defaultTitle">
+        Confirmation</h3>
+
+      <div id="confirmMessage" class="confirm-message"></div>
+
+      <div class="row actions" style="margin-top: 25px;">
+        <div class="spacer"></div>
+        <button id="confirmCancelBtn" class="ghost" data-i18n="editor.cancel">Cancel</button>
+        <button id="confirmOkBtn" class="primary" data-i18n="dialogs.confirm.defaultOK">OK</button>
+      </div>
+    </div>
+  </dialog>
+  <dialog id="customPrompt">
+    <form method="dialog" class="picker" style="min-width: 350px; max-width: 90vw;">
+      <h3 id="promptTitle" style="margin-top: 0; margin-bottom: 15px;" data-i18n="dialogs.prompt.defaultTitle">Enter
+        Value</h3>
+
+      <div class="row">
+        <label id="promptLabel" for="promptInput" style="display: block; margin-bottom: 8px; color: var(--muted);"
+          data-i18n="dialogs.prompt.defaultLabel">Value:</label>
+        <input type="text" id="promptInput" class="text" style="width: 100%;" autocomplete="off" />
+      </div>
+
+      <div class="row actions" style="margin-top: 25px;">
+        <div class="spacer"></div>
+        <button id="promptCancelBtn" class="ghost" type="button" data-i18n="editor.cancel">Cancel</button>
+        <button id="promptOkBtn" class="primary" type="submit" data-i18n="dialogs.confirm.defaultOK">OK</button>
+      </div>
+    </form>
+  </dialog>
+  <dialog id="customAlert">
+    <div class="picker">
+      <button class="dialog-close-btn" id="alertCloseBtn" title="Close">×</button>
+      <h3 id="alertTitle" data-i18n="dialogs.alert.defaultTitle">Info</h3>
+      <div class="row">
+        <p id="alertMessage" class="confirm-message" data-i18n="dialogs.alert.defaultMessage">Message will go here.</p>
+      </div>
+      <div class="actions" style="justify-content: flex-end;">
+        <button id="alertOkBtn" class="primary" data-i18n="dialogs.alert.defaultDismiss">Dismiss</button>
+      </div>
+    </div>
+  </dialog>
+
+  <input type="file" id="hiddenLocalIconInput" accept="image/*" hidden />
+  <input type="file" id="hiddenAppInput" hidden />
+  <input type="file" id="hiddenSoundInput" accept="audio/*" hidden />
+
+  <!-- Presets Floating Window -->
+  <div id="presetsWindow" class="presets-window" style="display: none;">
+    <div class="presets-window-header" id="presetsWindowHeader">
+      <h3 data-i18n="presets.title">Presets</h3>
+      <div class="presets-header-actions">
+        <button id="openPresetsFolderBtn" class="refresh-btn small" title="Open Presets Folder">📁</button>
+        <button id="refreshPresetsBtn" class="refresh-btn small" title="Refresh">↻</button>
+        <button id="closePresetsBtn" class="refresh-btn small" title="Close">✕</button>
+      </div>
+    </div>
+    <div id="presetsContainer" class="presets-list">
+      <div class="muted" style="text-align:center; padding:20px;" data-i18n="presets.loading">Loading presets...</div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+
+</body>
+
+</html>

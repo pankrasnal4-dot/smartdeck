@@ -1,0 +1,47 @@
+{
+  "meta": {
+    "id": "media-controls",
+    "name": "Media Controls",
+    "author": "SmartDeck",
+    "version": "1.0.0",
+    "description": "Basic media control buttons"
+  },
+  "buttons": [
+    {
+      "label": "Play/Pause",
+      "icon": "online:mdi:play-pause",
+      "type": "media",
+      "mediaAction": "PLAY_PAUSE"
+    },
+    {
+      "label": "Previous",
+      "icon": "online:mdi:skip-previous",
+      "type": "media",
+      "mediaAction": "PREV"
+    },
+    {
+      "label": "Next",
+      "icon": "online:mdi:skip-next",
+      "type": "media",
+      "mediaAction": "NEXT"
+    },
+    {
+      "label": "Vol Up",
+      "icon": "online:mdi:volume-plus",
+      "type": "media",
+      "mediaAction": "VOL_UP"
+    },
+    {
+      "label": "Vol Down",
+      "icon": "online:mdi:volume-minus",
+      "type": "media",
+      "mediaAction": "VOL_DOWN"
+    },
+    {
+      "label": "Mute",
+      "icon": "online:mdi:volume-mute",
+      "type": "media",
+      "mediaAction": "MUTE"
+    }
+  ]
+}

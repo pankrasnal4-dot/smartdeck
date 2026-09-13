@@ -1,0 +1,564 @@
+{
+  "header": {
+    "title": "SmartDeck",
+    "buttons": {
+      "reset": "Zurücksetzen",
+      "import": "Importieren",
+      "export": "Einstellungen exportieren",
+      "exportTooltip": "Anwendungseinstellungen als JSON-Datei exportieren",
+      "presets": "Vorlagen",
+      "presetsTooltip": "Tastenkürzel-Vorlagen durchsuchen und anwenden",
+      "themes": "🎨 Themes",
+      "themesTooltip": "Farbthemen durchsuchen und anwenden",
+      "undo": "Rückgängig",
+      "redo": "Wiederholen",
+      "settings": "⚙️"
+    }
+  },
+  "themes": {
+    "title": "Farbthemen",
+    "apply": "Anwenden",
+    "cancel": "Abbrechen",
+    "saveCurrent": "Aktuelles speichern",
+    "import": "Importieren",
+    "export": "Exportieren",
+    "delete": "Löschen",
+    "enterName": "Theme-Name eingeben:",
+    "saveTitle": "Theme speichern",
+    "applied": "Theme angewendet:",
+    "saved": "Theme gespeichert:",
+    "deleted": "gelöscht",
+    "exported": "Theme exportiert!",
+    "imported": "Theme importiert:",
+    "invalidFile": "Ungültige Theme-Datei",
+    "importFailed": "Theme-Import fehlgeschlagen"
+  },
+  "contextMenu": {
+    "copy": "Kopieren",
+    "paste": "Einfügen",
+    "delete": "Löschen",
+    "copied": "Taste kopiert",
+    "pasted": "Taste eingefügt",
+    "deleted": "Taste gelöscht",
+    "preview": "Vorschau/Test",
+    "previewExecuted": "Aktion ausgeführt"
+  },
+  "device": {
+    "frame": {
+      "title": "Gerätename",
+      "page": "Seite {pageNum}"
+    },
+    "hint": "Zellen ziehen, um sie neu anzuordnen oder zwischen Seiten zu verschieben • Zum Bearbeiten klicken",
+    "settings": {
+      "resolution": "Geräteauflösung",
+      "grid": "Raster (Max)",
+      "deviceName": "Gerätename",
+      "background": "Hintergrund",
+      "button": "Taste",
+      "text": "Text",
+      "stroke": "Kontur",
+      "shadow": "Schatten",
+      "led": "LED"
+    },
+    "buttons": {
+      "exportLocal": "📂 Auf SD-Karte exportieren",
+      "exportLocalTooltip": "config.json und Bilder in Ihren SD-Karten-Ordner exportieren",
+      "upload": "Einstellungen hochladen"
+    }
+  },
+  "plugins": {
+    "title": "Plugins",
+    "buttons": {
+      "openFolder_title": "Plugin-Ordner öffnen",
+      "reload_title": "Plugins neu laden"
+    },
+    "loading": "Plugins werden geladen...",
+    "none": "Keine Plugins im Ordner /plugins gefunden.",
+    "api_not_ready": "API nicht bereit.",
+    "button": "Plugin ausführen",
+    "unknown": "Unbekanntes Plugin"
+  },
+  "presets": {
+    "title": "Vorlagen",
+    "loading": "Vorlagen werden geladen...",
+    "none": "Keine Vorlagen im Ordner /presets gefunden.",
+    "openFolder": "Vorlagen-Ordner öffnen",
+    "refresh": "Aktualisieren",
+    "button": "Vorlage anwenden",
+    "selectPreset": "Vorlage auswählen",
+    "unknown": "Unbekannte Vorlage"
+  },
+  "connection": {
+    "connected": "Verbunden: {deviceName}",
+    "disconnected": "Getrennt",
+    "searching": "Suchen...",
+    "buttons": {
+      "refresh_title": "Aktualisieren"
+    },
+    "accessDenied": "Zugriff verweigert",
+    "connect": "Verbinden",
+    "connecting": "Verbinden...",
+    "identifying": "Gerät wird identifiziert...",
+    "notFound": "Gerät nicht gefunden",
+    "portBusy": "Port ist belegt",
+    "selectPort": "Port auswählen"
+  },
+  "editor": {
+    "title": "Taste – Zelle {cellNum}",
+    "previewTitle": "Vorschau (110×110)",
+    "iconLabel": "Symbol (PNG/JPG/SVG/WebP)",
+    "iconPlaceholder": "Tippen, um Online-Symbole zu suchen...",
+    "iconBrowse": "📁 Lokale Datei",
+    "cropTitle": "Bild zuschneiden & skalieren",
+    "zoom": "Zoom",
+    "useIcon": "Symbol verwenden",
+    "iconHint": "Wenn kein Symbol ausgewählt ist, wird nur Text angezeigt.",
+    "textLabel": "Text-Titel",
+    "textPlaceholder": "Titel der Taste",
+    "positionLabel": "Position",
+    "posTop": "Oben",
+    "posMid": "Mitte",
+    "posBot": "Unten",
+    "labelColor": "Textfarbe",
+    "iconColor": "Symbolfarbe",
+    "buttonColor": "Tastenfarbe",
+    "textSize": "Textgröße",
+    "iconScale": "Symbolgröße",
+    "reset": "Zurücksetzen",
+    "actionTypeLabel": "Aktionstyp",
+    "action": {
+      "key": "Tastenkürzel",
+      "goto": "Seite",
+      "toggle": "Umschalten",
+      "text": "Text",
+      "app": "Öffnen",
+      "timer": "Timer",
+      "script": "Skript",
+      "website": "Webseite",
+      "media": "Medien",
+      "mouse": "Maus",
+      "counter": "Zähler",
+      "sound": "Ton",
+      "multi": "Multi"
+    },
+    "multi": {
+      "title": "Multi-Aktion Builder",
+      "actions": "Aktionen",
+      "actionSequence": "Aktionssequenz",
+      "emptyHint": "Aktionen hierher ziehen, um eine Sequenz zu erstellen",
+      "settings": "Aktionseinstellungen",
+      "deleteAction": "Diese Aktion löschen",
+      "delay": "Verzögerung",
+      "delayMs": "Verzögerung (ms)",
+      "hotkey": "Tastenkürzel",
+      "text": "Text",
+      "openApp": "App öffnen",
+      "website": "Webseite",
+      "script": "Skript",
+      "media": "Medien",
+      "sound": "Ton",
+      "mouse": "Maus",
+      "gotoPage": "Zur Seite"
+    },
+    "toggle": {
+      "stateA": "Status A (AUS)",
+      "stateADesc": "Standardzustand",
+      "stateB": "Status B (AN)",
+      "stateBDesc": "Aktiver Zustand",
+      "preset": "Voreinstellungen...",
+      "shortcutPlaceholder": "Kürzel oder Skript...",
+      "capture": "Erfassen",
+      "clear": "Löschen",
+      "visuals": "Aktive Optik (Nur Status B)",
+      "bgColor": "Hintergrundfarbe",
+      "iconColor": "Symbolfarbe",
+      "activeIcon": "Aktives Symbol (Optional)",
+      "searchIcon": "Symbol suchen...",
+      "playSound": "Umschalton abspielen",
+      "playSoundDesc": "Sie können den Umschalton in den Einstellungen ändern."
+    },
+    "media": {
+      "label": "Medienaktion",
+      "play": "Play/Pause",
+      "mute": "Stumm",
+      "vol_up": "Lauter",
+      "prev": "Zurück",
+      "next": "Vor",
+      "vol_down": "Leiser"
+    },
+    "sound": {
+      "file": "Audiodatei",
+      "placeholder": "Audiodatei auswählen...",
+      "browse": "Durchsuchen",
+      "volume": "Lautstärke ({percent}%)"
+    },
+    "counter": {
+      "start": "Startwert",
+      "action": "Aktion",
+      "inc": "Erhöhen (+)",
+      "dec": "Verringern (-)",
+      "hint": "Langes Drücken auf dem Gerät setzt den Zähler auf den Startwert zurück."
+    },
+    "mouse": {
+      "event": "Ereignis",
+      "events": {
+        "click": "Klick",
+        "double_click": "Doppelklick",
+        "move": "Bewegen",
+        "drag": "Ziehen & Ablegen"
+      },
+      "button": "Maustaste",
+      "buttons": {
+        "left": "Links",
+        "right": "Rechts",
+        "middle": "Mitte"
+      },
+      "posMove": "Position (Ziel)",
+      "posDragStart": "Ziehen von (Start)",
+      "posDragEnd": "Ablegen bei (Ende)",
+      "xaxis": "X-Achse",
+      "yaxis": "Y-Achse",
+      "capture": "Erfassen",
+      "captureStart": "Start erfassen",
+      "captureEnd": "Ende erfassen",
+      "realtime": "Aktuell: X: {x}, Y: {y}"
+    },
+    "website": {
+      "label": "Webseiten-URL",
+      "placeholder": "https://www.google.com"
+    },
+    "app": {
+      "label": "Anwendung",
+      "select": "App auswählen...",
+      "browse": "Durchsuchen",
+      "hint": "Aus Liste wählen ODER manuell suchen.",
+      "loading": "Apps werden geladen...",
+      "loadError": "Fehler beim Laden der Apps"
+    },
+    "key": {
+      "label": "Tastenkombination",
+      "win": "WIN",
+      "enter": "ENTER",
+      "capture": "Erfassen",
+      "placeholder": "z.B. STRG+ALT+ENTF"
+    },
+    "goto": {
+      "label": "Zielseite"
+    },
+    "textMacro": {
+      "label": "Zu tippender Text",
+      "hint": "Für Zeilenumbruch 'Enter' drücken (sendet 'Enter'-Taste)",
+      "placeholder": "Textmakro hier eingeben...",
+      "simulate": "Tippen simulieren",
+      "simulateHint": "Sendet das Makro als einzelne Tastenanschläge statt über die Zwischenablage. Nützlich für Apps, die Kopieren/Einfügen blockieren."
+    },
+    "timer": {
+      "label": "Timer-Dauer",
+      "minutes": "Minuten",
+      "seconds": "Sekunden"
+    },
+    "script": {
+      "label": "Benutzerdefiniertes Skript (CMD)",
+      "hint": "Wird in der Windows-Shell (cmd) ausgeführt",
+      "placeholder": "z.B. taskkill /f /im chrome.exe\ncalc",
+      "hintNircmd": "*Audio-Voreinstellungen erfordern, dass ",
+      "hintNircmdLink": " sich im PATH Ihres Systems befindet.",
+      "selectPreset": "--- Skript-Vorlage auswählen ---"
+    },
+    "picker": {
+      "title": "Symbol auswählen (Online)",
+      "placeholder": "Suche 100.000+ Symbole (z.B. home, settings)...",
+      "status": "Oben tippen zum Suchen...",
+      "close": "Schließen",
+      "error": "Fehler bei der Symbolsuche.",
+      "minChars": "Mindestens 2 Zeichen eingeben",
+      "noResults": "Keine Ergebnisse gefunden",
+      "searching": "Suche..."
+    },
+    "clear": "Löschen",
+    "copy": "Kopieren",
+    "paste": "Einfügen",
+    "cancel": "Abbrechen",
+    "apply": "Anwenden",
+    "capture": {
+      "listening": "Hören...",
+      "pressKeys": "Tasten drücken...",
+      "start": "Aufnehmen"
+    }
+  },
+  "alerts": {
+    "reset": {
+      "title": "Alle Einstellungen zurücksetzen",
+      "message": "WARNUNG: Dies löscht alle Ihre Seiten, Tasten und Einstellungen und setzt alles auf den Standard zurück.\n\nSind Sie sicher? Stellen Sie sicher, dass Sie Ihre Einstellungen gesichert haben."
+    },
+    "pageFull": {
+      "title": "Verschieben fehlgeschlagen",
+      "message": "Seite ist voll. Auf eine bestehende Taste ziehen, um zu tauschen, oder auf eine leere Zelle ziehen."
+    },
+    "deletePage": {
+      "title": "Seite löschen",
+      "message": "Möchten Sie Seite '{pageName}' wirklich löschen?\nAlle Tasten auf dieser Seite gehen verloren.",
+      "error_min_pages": "Sie müssen mindestens eine Seite haben."
+    },
+    "deviceNotConnected": "Gerät nicht verbunden...",
+    "connectionError": "Verbindungsfehler",
+    "counterNotConnected": "Gerät nicht verbunden. Zählerbefehl kann nicht gesendet werden.",
+    "mouseError": "Mausaktion fehlgeschlagen:",
+    "robotError": "RobotJS-Fehler",
+    "deleteError": "Löschfehler"
+  },
+  "toast": {
+    "configSaveFailed": "Konfiguration konnte nicht gespeichert werden!",
+    "configRestoredBackup": "Konfiguration aus Backup wiederhergestellt",
+    "configResetCorruption": "Konfiguration wegen Beschädigung zurückgesetzt",
+    "configNotLoaded": "Konfiguration nicht geladen.",
+    "configCopied": "Konfiguration in Zwischenablage kopiert",
+    "configCopyFailed": "Kopieren fehlgeschlagen",
+    "configDownloaded": "Konfiguration heruntergeladen",
+    "notConnected": "Nicht mit Gerät verbunden",
+    "requestingConfig": "Konfiguration von ESP32 angefordert...",
+    "logCleared": "Protokoll gelöscht",
+    "failedReadConfig": "Konfiguration konnte nicht gelesen werden:",
+    "iconsLoadFailed": "Standardsymbole konnten nicht geladen werden. Überprüfen Sie manifest.json oder wählen Sie einen Ordner."
+  },
+  "timer": {
+    "finished": "Timer abgelaufen",
+    "complete": "Ihr Timer \"{label}\" ist abgelaufen."
+  },
+  "serialMonitor": {
+    "title": "Serieller Monitor",
+    "send": "Senden",
+    "clear": "Löschen",
+    "copyLog": "Protokoll kopieren",
+    "downloadLog": "Protokoll herunterladen",
+    "getConfig": "ESP-Konfiguration abrufen",
+    "placeholder": "Befehl eingeben...",
+    "logCopied": "Protokoll in Zwischenablage kopiert"
+  },
+  "settings": {
+    "title": "Anwendungseinstellungen",
+    "startup": "Mit Windows starten",
+    "startupLabel": "Autostart",
+    "startupDesc": "Beim Anmelden automatisch minimiert in der Taskleiste starten.",
+    "windowBehavior": "Fensterverhalten",
+    "closeAction": "Beim Klick auf 'X' (Schließen)",
+    "closeOptions": {
+      "ask": "Immer fragen (Bestätigung anzeigen)",
+      "minimize": "In Taskleiste minimieren (Läuft weiter)",
+      "exit": "Anwendung sofort beenden"
+    },
+    "language": "Sprache",
+    "languageSelect": "Anwendungssprache",
+    "sounds": "Toneinstellungen",
+    "soundsToggle": "Standard-Umschalton",
+    "soundsTogglePlaceholder": "Standard (switch.wav)",
+    "soundsTimer": "Timer-Benachrichtigungston",
+    "soundsTimerPlaceholder": "Standard (notification.wav)",
+    "browse": "Durchsuchen",
+    "reset_sound": "Zurücksetzen",
+    "screen": "Bildschirm & Geräteeinstellungen",
+    "brightness": "Bildschirmhelligkeit",
+    "sleep": "Bildschirm-Ruhezustand (Abdunkeln)",
+    "sleepDesc": "Bildschirm nach Inaktivität abdunkeln, um Strom zu sparen.",
+    "about": "Über & Updates",
+    "appName": "Smart Deck App",
+    "version": "Version {version}",
+    "loadingVersion": "Version wird geladen...",
+    "checkUpdates": "Nach Updates suchen",
+    "newVersionAvailable": "Neue Version verfügbar!",
+    "downloadUpdate": "Herunterladen",
+    "upToDate": "Sie sind auf dem neuesten Stand!",
+    "checking": "Überprüfe...",
+    "checkFailed": "Überprüfung fehlgeschlagen",
+    "updateFound": "Update gefunden!",
+    "done": "Fertig",
+    "developer": "Entwicklertools",
+    "serialMonitor": "Serieller Monitor",
+    "resetEsp": "ESP32 Zurücksetzen",
+    "espInfo": "ESP32 Info",
+    "resetSent": "Zurücksetz-Befehl gesendet",
+    "infoRequested": "Info angefordert",
+    "dumpConfig": "Konfiguration ausgeben",
+    "weather": "Wetter (Schlafbildschirm)",
+    "weatherSettings": "Wetter-Einstellungen",
+    "weatherCity": "Stadt",
+    "weatherCityPlaceholder": "Stadt suchen...",
+    "weatherUnits": "Temperatureinheit",
+    "weatherNoResults": "Keine Städte gefunden",
+    "weatherSearchError": "Suche fehlgeschlagen",
+    "weatherCitySaved": "Wetterstandort gespeichert",
+    "dimLedAnimation": "Dimm-Modus LED-Animation",
+    "dimLedAnimationDesc": "LED-Animation wenn der Bildschirm gedimmt ist.",
+    "dimLedOff": "Aus",
+    "dimLedBreathing": "Atmen",
+    "dimLedRainbow": "Regenbogen-Zyklus",
+    "dimLedPulse": "Puls",
+    "dimLedComet": "Komet",
+    "dimLedSparkle": "Funkeln",
+    "deepSleep": "Tiefschlaf",
+    "deepSleepDesc": "Bildschirm und LEDs nach der Dimmphase vollständig ausschalten.",
+    "deepSleepHint": "Drehen Sie den Knopf, um aus dem Tiefschlaf aufzuwachen."
+  },
+  "knob": {
+    "title": "Drehregler-Einstellungen",
+    "ledSettings": "LED-Einstellungen",
+    "ledColor": "LED-Farbe",
+    "tailLength": "Schweif-Länge",
+    "ledBrightness": "LED-Helligkeit",
+    "ledOffset": "LED-Versatz",
+    "sound": "Ton",
+    "clickSound": "Klickton",
+    "clickSoundDesc": "Ton beim Drehen des Reglers abspielen",
+    "sensitivity": "Empfindlichkeit",
+    "knobSensitivity": "Regler-Empfindlichkeit",
+    "sensitivityHint": "Höher = Sanfter, Niedriger = Grober",
+    "sensitivityLow": "Niedrig",
+    "sensitivityHigh": "Hoch",
+    "rotationActions": "Drehaktionen",
+    "rotateRight": "Rechts drehen (UZS)",
+    "rotateLeft": "Links drehen (GgUZS)",
+    "presets": "Vorlagen...",
+    "selectPreset": "── Vorlage auswählen ──",
+    "shortcutPlaceholder": "Kürzel (z.B. STRG+Z)",
+    "capture": "Erfassen",
+    "mainPage": "Hauptseite",
+    "customCleared": "Benutzerdefinierte Einstellungen gelöscht",
+    "clearCustom": "Benutzerdefinierte Einstellungen löschen",
+    "saved": "Drehregler-Einstellungen gespeichert",
+    "pressKey": "Taste drücken..."
+  },
+  "prompt": {
+    "renamePage": {
+      "title": "Seite {pageNum} umbenennen",
+      "label": "Neuer Seitenname:"
+    },
+    "addPage": {
+      "title": "Neue Seite hinzufügen",
+      "label": "Neuer Seitenname:",
+      "default": "Seite {pageNum}"
+    },
+    "pageApp": "Zugehörige Anwendung (Optional)",
+    "noApp": "-- Keine --",
+    "pageAppHint": "Automatisch wechseln wenn App fokussiert",
+    "appPath": "Anwendungspfad",
+    "appPathPlaceholder": "C:\\Program Files\\...\\app.exe",
+    "browse": "Durchsuchen",
+    "autoFocus": "Zu dieser Seite wechseln, wenn App fokussiert",
+    "autoFocusHint": "ESP32 wechselt automatisch zu dieser Seite, wenn die Anwendung fokussiert wird"
+  },
+  "dialogs": {
+    "confirm": {
+      "defaultTitle": "Bestätigung",
+      "defaultOK": "OK"
+    },
+    "prompt": {
+      "defaultTitle": "Wert eingeben",
+      "defaultLabel": "Wert:"
+    },
+    "alert": {
+      "defaultTitle": "Info",
+      "defaultMessage": "Nachricht kommt hierher.",
+      "defaultDismiss": "Schließen"
+    },
+    "delete": "Löschen",
+    "cancel": "Abbrechen",
+    "ok": "OK",
+    "input": "Eingabe"
+  },
+  "footer": {
+    "installFirmware": "Firmware installieren"
+  },
+  "firmware": {
+    "title": "Firmware installieren",
+    "selectModel": "1. Bildschirmmodell wählen",
+    "selectPort": "2. COM-Port wählen",
+    "scanning": "Suchen...",
+    "loadingModels": "Modelle werden geladen...",
+    "warning": "* Bitte trennen Sie zuerst die App-Verbindung, falls verbunden.",
+    "startBtn": "FLASHEN STARTEN",
+    "btnFlashing": "WIRD GEFLASHT... NICHT TRENNEN!",
+    "logLabel": "Prozessprotokoll:",
+    "logWaiting": "Warten auf Start...",
+    "alerts": {
+      "invalidPortTitle": "Auswahlfehler",
+      "invalidPort": "Bitte wählen Sie zuerst einen gültigen COM-Port.",
+      "successTitle": "Erfolg!",
+      "success": "Firmware erfolgreich aktualisiert! Gerät wird neu gestartet.",
+      "failedTitle": "Fehlgeschlagen",
+      "failed": "Firmware-Update fehlgeschlagen. Bitte prüfen Sie das Protokoll für Details."
+    },
+    "logs": {
+      "autoDisconnect": "Automatische Trennung von der App, um den Port freizugeben.",
+      "successReboot": "--- ERFOLG! Gerät startet neu... ---",
+      "failedCheck": "--- FEHLGESCHLAGEN! Protokolle oben prüfen. ---"
+    }
+  },
+  "update": {
+    "downloading": "Wird heruntergeladen...",
+    "ready": "Update bereit (Neustart)",
+    "available": "Neues Update verfügbar (Zum Herunterladen klicken)"
+  },
+  "upload": {
+    "title": "Auf Gerät hochladen (WiFi)",
+    "message": "Dieser Vorgang lädt die neue Konfiguration auf das Gerät ({host}) hoch und startet es neu.\n\nAlte, nicht verwendete Symbole werden *nach* dem Neustart des Geräts bereinigt.\nFortfahren?",
+    "confirm": "Hochladen",
+    "generating": "Dateien werden erstellt...",
+    "uploadingConfig": "Konfiguration wird hochgeladen...",
+    "uploadingIcon": "Symbol {current}/{total} wird hochgeladen...",
+    "rebooting": "Gerät wird neu gestartet...",
+    "success": "Upload abgeschlossen! {count} Dateien hochgeladen. Gerät ({host}) wird neu gestartet.",
+    "error": "Fehler: Verbindung zum Gerät ({host}) fehlgeschlagen. Details: {error}",
+    "generationError": "Fehler bei der Dateierstellung gefunden. Upload wird abgebrochen."
+  },
+  "serialUpload": {
+    "title": "Upload-Bestätigung",
+    "confirm": "Upload starten",
+    "noChanges": "Keine Änderungen erkannt. Ihr Gerät ist aktuell.\n\nMöchten Sie trotzdem einen vollständigen Upload erzwingen?",
+    "smartUpload": "Smart Upload bereit:\n- {changed} Dateien geändert/neu.\n- {skipped} Dateien unverändert (werden übersprungen).\n\nFortfahren?",
+    "forceUpload": "Vollständigen Upload erzwingen (Langsam)",
+    "upToDate": "Aktuell. Kein Upload erforderlich.",
+    "alreadyUploading": "Upload läuft bereits...",
+    "calculatingChanges": "Änderungen werden berechnet...",
+    "finalizing": "Abschließen...",
+    "finishing": "Upload wird abgeschlossen...",
+    "handshake": "Verbindung wird hergestellt...",
+    "noDeviceSelected": "Kein Gerät ausgewählt",
+    "selectDevice": "Bitte wählen Sie zuerst ein Gerät aus"
+  },
+  "export": {
+    "title": "Export abgeschlossen",
+    "errorTitle": "Export-Fehler",
+    "generationError": "Export-Daten konnten nicht erstellt werden. Bitte überprüfen Sie Ihre Konfiguration.",
+    "noFolder": "Kein Ordner ausgewählt. Bitte wählen Sie einen gültigen Ordner.",
+    "success": "Export erfolgreich!\n\nKonfiguration: {configFile}\nBilder: {imageCount} Dateien gespeichert\n\nKopieren Sie diese Dateien in das Stammverzeichnis Ihrer SD-Karte.",
+    "warnings": "Warnungen:",
+    "failed": "Export fehlgeschlagen: {error}\n\nBitte versuchen Sie es erneut und stellen Sie sicher, dass Sie Schreibrechte für den ausgewählten Ordner haben."
+  },
+  "weather": {
+    "clearSky": "Klarer Himmel",
+    "mainlyClear": "Überwiegend klar",
+    "partlyCloudy": "Teilweise bewölkt",
+    "overcast": "Bedeckt",
+    "foggy": "Neblig",
+    "drizzle": "Nieselregen",
+    "freezingDrizzle": "Gefrierender Nieselregen",
+    "rain": "Regen",
+    "freezingRain": "Gefrierender Regen",
+    "snow": "Schnee",
+    "snowGrains": "Schneegriesel",
+    "rainShowers": "Regenschauer",
+    "snowShowers": "Schneeschauer",
+    "thunderstorm": "Gewitter",
+    "thunderstormHail": "Gewitter + Hagel",
+    "unknown": "Unbekannt"
+  },
+  "icons": {
+    "loadFailed": "Icons konnten nicht geladen werden",
+    "loaded": "Icons geladen",
+    "noSource": "Keine Icon-Quelle verfügbar"
+  },
+  "page": {
+    "deletePage": "Seite löschen",
+    "settings": "Seiteneinstellungen"
+  }
+}

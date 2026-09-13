@@ -1,0 +1,564 @@
+{
+  "header": {
+    "title": "SmartDeck",
+    "buttons": {
+      "reset": "重置",
+      "import": "导入",
+      "export": "导出设置",
+      "exportTooltip": "将应用程序设置导出为JSON文件",
+      "presets": "预设",
+      "presetsTooltip": "浏览和应用快捷键预设",
+      "themes": "🎨 主题",
+      "themesTooltip": "浏览和应用颜色主题",
+      "undo": "撤销",
+      "redo": "重做",
+      "settings": "⚙️"
+    }
+  },
+  "themes": {
+    "title": "颜色主题",
+    "apply": "应用",
+    "cancel": "取消",
+    "saveCurrent": "保存当前",
+    "import": "导入",
+    "export": "导出",
+    "delete": "删除",
+    "enterName": "输入主题名称:",
+    "saveTitle": "保存主题",
+    "applied": "主题已应用:",
+    "saved": "主题已保存:",
+    "deleted": "已删除",
+    "exported": "主题已导出！",
+    "imported": "主题已导入:",
+    "invalidFile": "无效的主题文件",
+    "importFailed": "主题导入失败"
+  },
+  "contextMenu": {
+    "copy": "复制",
+    "paste": "粘贴",
+    "delete": "删除",
+    "copied": "按钮已复制",
+    "pasted": "按钮已粘贴",
+    "deleted": "按钮已删除",
+    "preview": "预览/测试",
+    "previewExecuted": "操作已执行"
+  },
+  "device": {
+    "frame": {
+      "title": "设备名称",
+      "page": "页面 {pageNum}"
+    },
+    "hint": "拖动单元格以重新排序或在页面之间移动 • 单击以编辑",
+    "settings": {
+      "resolution": "设备分辨率",
+      "grid": "网格 (最大)",
+      "deviceName": "设备名称",
+      "background": "背景",
+      "button": "按钮",
+      "text": "文本",
+      "stroke": "描边",
+      "shadow": "阴影",
+      "led": "LED"
+    },
+    "buttons": {
+      "exportLocal": "📂 导出到SD卡",
+      "exportLocalTooltip": "将config.json和图片导出到SD卡文件夹",
+      "upload": "上传设置"
+    }
+  },
+  "plugins": {
+    "title": "插件",
+    "buttons": {
+      "openFolder_title": "打开插件文件夹",
+      "reload_title": "重新加载插件"
+    },
+    "loading": "正在加载插件...",
+    "none": "在 /plugins 文件夹中未找到插件。",
+    "api_not_ready": "API 未就绪。",
+    "button": "运行插件",
+    "unknown": "未知插件"
+  },
+  "presets": {
+    "title": "预设",
+    "loading": "正在加载预设...",
+    "none": "在 /presets 文件夹中未找到预设。",
+    "openFolder": "打开预设文件夹",
+    "refresh": "刷新",
+    "button": "应用预设",
+    "selectPreset": "选择预设",
+    "unknown": "未知预设"
+  },
+  "connection": {
+    "connected": "已连接: {deviceName}",
+    "disconnected": "已断开",
+    "searching": "正在搜索...",
+    "buttons": {
+      "refresh_title": "刷新"
+    },
+    "accessDenied": "访问被拒绝",
+    "connect": "连接",
+    "connecting": "连接中...",
+    "identifying": "正在识别设备...",
+    "notFound": "未找到设备",
+    "portBusy": "端口忙",
+    "selectPort": "选择端口"
+  },
+  "editor": {
+    "title": "按钮 – 单元格 {cellNum}",
+    "previewTitle": "预览 (110×110)",
+    "iconLabel": "图标 (PNG/JPG/SVG/WebP)",
+    "iconPlaceholder": "输入以搜索在线图标...",
+    "iconBrowse": "📁 本地文件",
+    "cropTitle": "裁剪和缩放图像",
+    "zoom": "缩放",
+    "useIcon": "使用图标",
+    "iconHint": "如果未选择图标，将仅显示文本。",
+    "textLabel": "文本标题",
+    "textPlaceholder": "按钮标题",
+    "positionLabel": "位置",
+    "posTop": "顶部",
+    "posMid": "中间",
+    "posBot": "底部",
+    "labelColor": "标签颜色",
+    "iconColor": "图标颜色",
+    "buttonColor": "按钮颜色",
+    "textSize": "文本大小",
+    "iconScale": "图标缩放",
+    "reset": "重置",
+    "actionTypeLabel": "操作类型",
+    "action": {
+      "key": "热键",
+      "goto": "页面",
+      "toggle": "切换",
+      "text": "文本",
+      "app": "打开",
+      "timer": "计时器",
+      "script": "脚本",
+      "website": "网站",
+      "media": "媒体",
+      "mouse": "鼠标",
+      "counter": "计数器",
+      "sound": "声音",
+      "multi": "多重"
+    },
+    "multi": {
+      "title": "多重操作构建器",
+      "actions": "操作",
+      "actionSequence": "操作序列",
+      "emptyHint": "将操作拖到此处以构建序列",
+      "settings": "操作设置",
+      "deleteAction": "删除此操作",
+      "delay": "延迟",
+      "delayMs": "延迟 (ms)",
+      "hotkey": "热键",
+      "text": "文本",
+      "openApp": "打开应用",
+      "website": "网站",
+      "script": "脚本",
+      "media": "媒体",
+      "sound": "声音",
+      "mouse": "鼠标",
+      "gotoPage": "转到页面"
+    },
+    "toggle": {
+      "stateA": "状态A（关）",
+      "stateADesc": "默认状态",
+      "stateB": "状态B（开）",
+      "stateBDesc": "激活状态",
+      "preset": "预设...",
+      "shortcutPlaceholder": "快捷键或脚本...",
+      "capture": "捕获",
+      "clear": "清除",
+      "visuals": "激活视觉效果（仅状态B）",
+      "bgColor": "背景色",
+      "iconColor": "图标颜色",
+      "activeIcon": "激活图标（可选）",
+      "searchIcon": "搜索图标...",
+      "playSound": "播放切换声音",
+      "playSoundDesc": "您可以在设置中更改切换声音。"
+    },
+    "media": {
+      "label": "媒体操作",
+      "play": "播放/暂停",
+      "mute": "静音",
+      "vol_up": "音量+",
+      "prev": "上一个",
+      "next": "下一个",
+      "vol_down": "音量-"
+    },
+    "sound": {
+      "file": "音频文件",
+      "placeholder": "选择音频文件...",
+      "browse": "浏览",
+      "volume": "音量 ({percent}%)"
+    },
+    "counter": {
+      "start": "起始值",
+      "action": "操作",
+      "inc": "增加 (+)",
+      "dec": "减少 (-)",
+      "hint": "在设备上长按将把计数器重置为起始值。"
+    },
+    "mouse": {
+      "event": "事件",
+      "events": {
+        "click": "点击",
+        "double_click": "双击",
+        "move": "移动",
+        "drag": "拖放"
+      },
+      "button": "按钮",
+      "buttons": {
+        "left": "左键点击",
+        "right": "右键点击",
+        "middle": "中键点击"
+      },
+      "posMove": "位置（移动到）",
+      "posDragStart": "拖动起点（开始）",
+      "posDragEnd": "拖动终点（结束）",
+      "xaxis": "X轴",
+      "yaxis": "Y轴",
+      "capture": "捕获",
+      "captureStart": "捕获起点",
+      "captureEnd": "捕获终点",
+      "realtime": "当前: X: {x}, Y: {y}"
+    },
+    "website": {
+      "label": "网站URL",
+      "placeholder": "https://www.google.com"
+    },
+    "app": {
+      "label": "应用程序",
+      "select": "选择应用...",
+      "browse": "浏览",
+      "hint": "从列表中选择或手动浏览。",
+      "loading": "正在加载应用...",
+      "loadError": "加载应用时出错"
+    },
+    "key": {
+      "label": "快捷键组合",
+      "win": "WIN",
+      "enter": "ENTER",
+      "capture": "捕获",
+      "placeholder": "例如 CTRL+ALT+DELETE"
+    },
+    "goto": {
+      "label": "目标页面"
+    },
+    "textMacro": {
+      "label": "要输入的文本",
+      "hint": "在框中按'Enter'换行（发送'Enter'键）",
+      "placeholder": "在此输入文本宏...",
+      "simulate": "模拟打字",
+      "simulateHint": "启用此选项会将宏作为单独的按键发送，而不是使用剪贴板。对于阻止复制/粘贴的应用程序很有用。"
+    },
+    "timer": {
+      "label": "计时器时长",
+      "minutes": "分钟",
+      "seconds": "秒"
+    },
+    "script": {
+      "label": "自定义脚本（命令行）",
+      "hint": "在Windows命令行（cmd）中运行",
+      "placeholder": "例如 taskkill /f /im chrome.exe\ncalc",
+      "hintNircmd": "*音频预设需要",
+      "hintNircmdLink": "在系统PATH中。",
+      "selectPreset": "--- 选择预设脚本 ---"
+    },
+    "picker": {
+      "title": "选择图标（在线）",
+      "placeholder": "搜索 100,000+ 图标（例如 home, settings）...",
+      "status": "在上方输入以搜索...",
+      "close": "关闭",
+      "error": "搜索图标时出错。",
+      "minChars": "请输入至少2个字符",
+      "noResults": "未找到结果",
+      "searching": "搜索中..."
+    },
+    "clear": "清除",
+    "copy": "复制",
+    "paste": "粘贴",
+    "cancel": "取消",
+    "apply": "应用",
+    "capture": {
+      "listening": "监听中...",
+      "pressKeys": "按下按键...",
+      "start": "捕获"
+    }
+  },
+  "alerts": {
+    "reset": {
+      "title": "重置所有设置",
+      "message": "警告：这将删除您的所有页面、按钮和设置，将所有内容恢复为默认值。\n\n您确定吗？ 请确保您已备份设置。"
+    },
+    "pageFull": {
+      "title": "放置失败",
+      "message": "页面已满。拖放到现有按钮上以交换，或拖放到空单元格上。"
+    },
+    "deletePage": {
+      "title": "删除页面",
+      "message": "您确定要删除 '{pageName}' 吗？\n此页面上的所有按钮都将丢失。",
+      "error_min_pages": "您必须至少保留一个页面。"
+    },
+    "deviceNotConnected": "设备未连接...",
+    "connectionError": "连接错误",
+    "counterNotConnected": "设备未连接。无法发送计数器命令。",
+    "mouseError": "鼠标操作失败:",
+    "robotError": "RobotJS错误",
+    "deleteError": "删除错误"
+  },
+  "toast": {
+    "configSaveFailed": "配置保存失败！",
+    "configRestoredBackup": "已从备份恢复配置",
+    "configResetCorruption": "由于损坏已重置配置",
+    "configNotLoaded": "配置未加载。",
+    "configCopied": "配置已复制到剪贴板",
+    "configCopyFailed": "复制失败",
+    "configDownloaded": "配置已下载",
+    "notConnected": "未连接到设备",
+    "requestingConfig": "正在从ESP32请求配置...",
+    "logCleared": "日志已清除",
+    "failedReadConfig": "读取配置失败:",
+    "iconsLoadFailed": "加载默认图标失败。请检查 manifest.json 或选择文件夹。"
+  },
+  "timer": {
+    "finished": "计时器结束",
+    "complete": "您的计时器 \"{label}\" 已完成。"
+  },
+  "serialMonitor": {
+    "title": "串口监视器",
+    "send": "发送",
+    "clear": "清除",
+    "copyLog": "复制日志",
+    "downloadLog": "下载日志",
+    "getConfig": "获取ESP配置",
+    "placeholder": "输入命令...",
+    "logCopied": "日志已复制到剪贴板"
+  },
+  "settings": {
+    "title": "应用设置",
+    "startup": "随 Windows 启动",
+    "startupLabel": "启动",
+    "startupDesc": "登录时自动最小化到系统托盘启动。",
+    "windowBehavior": "窗口行为",
+    "closeAction": "点击 'X' (关闭) 按钮时",
+    "closeOptions": {
+      "ask": "总是询问 (显示确认)",
+      "minimize": "最小化到托盘 (保持运行)",
+      "exit": "立即退出应用程序"
+    },
+    "language": "语言",
+    "languageSelect": "应用程序语言",
+    "sounds": "声音设置",
+    "soundsToggle": "默认切换声音",
+    "soundsTogglePlaceholder": "默认 (switch.wav)",
+    "soundsTimer": "计时器通知音",
+    "soundsTimerPlaceholder": "默认 (notification.wav)",
+    "browse": "浏览",
+    "reset_sound": "重置",
+    "screen": "屏幕和设备设置",
+    "brightness": "屏幕亮度",
+    "sleep": "屏幕休眠 (变暗)",
+    "sleepDesc": "闲置一段时间后调暗屏幕以节省电量。",
+    "about": "关于和更新",
+    "appName": "Smart Deck 应用",
+    "version": "版本 {version}",
+    "loadingVersion": "正在加载版本...",
+    "checkUpdates": "检查更新",
+    "newVersionAvailable": "新版本可用！",
+    "downloadUpdate": "下载",
+    "upToDate": "已是最新版本！",
+    "checking": "正在检查...",
+    "checkFailed": "检查失败",
+    "updateFound": "发现更新！",
+    "done": "完成",
+    "developer": "开发者工具",
+    "serialMonitor": "串口监视器",
+    "resetEsp": "重启ESP32",
+    "espInfo": "ESP32信息",
+    "resetSent": "重启命令已发送",
+    "infoRequested": "信息已请求",
+    "dumpConfig": "导出配置",
+    "weather": "天气（睡眠屏幕）",
+    "weatherSettings": "天气设置",
+    "weatherCity": "城市",
+    "weatherCityPlaceholder": "搜索城市...",
+    "weatherUnits": "温度单位",
+    "weatherNoResults": "未找到城市",
+    "weatherSearchError": "搜索失败",
+    "weatherCitySaved": "天气位置已保存",
+    "dimLedAnimation": "屏幕变暗时LED动画",
+    "dimLedAnimationDesc": "屏幕变暗时的LED动画效果。",
+    "dimLedOff": "关闭",
+    "dimLedBreathing": "呼吸",
+    "dimLedRainbow": "彩虹循环",
+    "dimLedPulse": "脉冲",
+    "dimLedComet": "彗星",
+    "dimLedSparkle": "闪烁",
+    "deepSleep": "深度睡眠",
+    "deepSleepDesc": "在屏幕变暗后完全关闭屏幕和LED。",
+    "deepSleepHint": "转动旋钮从深度睡眠中唤醒。"
+  },
+  "knob": {
+    "title": "旋钮设置",
+    "ledSettings": "LED设置",
+    "ledColor": "LED颜色",
+    "tailLength": "尾迹长度",
+    "ledBrightness": "LED亮度",
+    "ledOffset": "LED偏移",
+    "sound": "声音",
+    "clickSound": "点击声音",
+    "clickSoundDesc": "旋转旋钮时播放声音",
+    "sensitivity": "灵敏度",
+    "knobSensitivity": "旋钮灵敏度",
+    "sensitivityHint": "高 = 平滑，低 = 粗糙",
+    "sensitivityLow": "低",
+    "sensitivityHigh": "高",
+    "rotationActions": "旋转操作",
+    "rotateRight": "右旋（顺时针）",
+    "rotateLeft": "左旋（逆时针）",
+    "presets": "预设...",
+    "selectPreset": "── 选择预设 ──",
+    "shortcutPlaceholder": "快捷键（例如 CTRL+Z）",
+    "capture": "捕获",
+    "mainPage": "主页",
+    "customCleared": "自定义设置已清除",
+    "clearCustom": "清除自定义设置",
+    "saved": "旋钮设置已保存",
+    "pressKey": "按一个键..."
+  },
+  "prompt": {
+    "renamePage": {
+      "title": "重命名页面 {pageNum}",
+      "label": "新页面名称:"
+    },
+    "addPage": {
+      "title": "添加新页面",
+      "label": "新页面名称:",
+      "default": "页面 {pageNum}"
+    },
+    "pageApp": "关联应用（可选）",
+    "noApp": "-- 无 --",
+    "pageAppHint": "当应用获得焦点时自动切换",
+    "appPath": "应用程序路径",
+    "appPathPlaceholder": "C:\\Program Files\\...\\app.exe",
+    "browse": "浏览",
+    "autoFocus": "当应用获得焦点时切换到此页面",
+    "autoFocusHint": "当应用程序获得焦点时，ESP32将自动切换到此页面"
+  },
+  "dialogs": {
+    "confirm": {
+      "defaultTitle": "确认",
+      "defaultOK": "确定"
+    },
+    "prompt": {
+      "defaultTitle": "输入值",
+      "defaultLabel": "值:"
+    },
+    "alert": {
+      "defaultTitle": "信息",
+      "defaultMessage": "消息将显示在这里。",
+      "defaultDismiss": "关闭"
+    },
+    "delete": "删除",
+    "cancel": "取消",
+    "ok": "确定",
+    "input": "输入"
+  },
+  "footer": {
+    "installFirmware": "安装固件"
+  },
+  "firmware": {
+    "title": "安装固件",
+    "selectModel": "1. 选择屏幕型号",
+    "selectPort": "2. 选择 COM 端口",
+    "scanning": "正在扫描...",
+    "loadingModels": "正在加载型号...",
+    "warning": "* 如果已连接，请先断开应用程序连接。",
+    "startBtn": "开始刷写",
+    "btnFlashing": "正在刷写... 请勿断开！",
+    "logLabel": "处理日志:",
+    "logWaiting": "等待开始...",
+    "alerts": {
+      "invalidPortTitle": "选择错误",
+      "invalidPort": "请先选择一个有效的 COM 端口。",
+      "successTitle": "成功！",
+      "success": "固件更新成功！设备将重新启动。",
+      "failedTitle": "失败",
+      "failed": "固件更新失败。请检查日志区域以获取详细信息。"
+    },
+    "logs": {
+      "autoDisconnect": "自动断开应用程序以释放端口。",
+      "successReboot": "--- 成功！设备正在重启... ---",
+      "failedCheck": "--- 失败！请检查上面的日志。 ---"
+    }
+  },
+  "update": {
+    "downloading": "下载中...",
+    "ready": "更新已就绪 (重启)",
+    "available": "新更新可用 (点击下载)"
+  },
+  "upload": {
+    "title": "上传到设备 (WiFi)",
+    "message": "此操作将把新配置上传到设备 ({host}) 并重启。\n\n旧的未使用图标将在设备重启*后*清理。\n是否继续？",
+    "confirm": "上传",
+    "generating": "正在生成文件...",
+    "uploadingConfig": "正在上传配置...",
+    "uploadingIcon": "正在上传图标 {current}/{total}...",
+    "rebooting": "正在重启设备...",
+    "success": "上传完成！已上传 {count} 个文件。设备 ({host}) 正在重启。",
+    "error": "错误：无法连接或上传到设备 ({host})。详情：{error}",
+    "generationError": "生成文件时发现错误。正在中止上传。"
+  },
+  "serialUpload": {
+    "title": "上传确认",
+    "confirm": "开始上传",
+    "noChanges": "未检测到更改。您的设备已是最新状态。\n\n是否仍要强制完整上传？",
+    "smartUpload": "智能上传准备就绪:\n- {changed} 个文件已更改/新增。\n- {skipped} 个文件未更改（跳过）。\n\n是否继续？",
+    "forceUpload": "强制完整上传（较慢）",
+    "upToDate": "已是最新。无需上传。",
+    "alreadyUploading": "上传已在进行中...",
+    "calculatingChanges": "正在计算更改...",
+    "finalizing": "正在完成...",
+    "finishing": "正在完成上传...",
+    "handshake": "正在建立连接...",
+    "noDeviceSelected": "未选择设备",
+    "selectDevice": "请先选择设备"
+  },
+  "export": {
+    "title": "导出完成",
+    "errorTitle": "导出错误",
+    "generationError": "无法生成导出数据。请检查您的配置。",
+    "noFolder": "未选择文件夹。请选择一个有效的文件夹。",
+    "success": "导出成功！\n\n配置：{configFile}\n图像：已保存 {imageCount} 个文件\n\n请将这些文件复制到SD卡的根目录。",
+    "warnings": "警告：",
+    "failed": "导出失败：{error}\n\n请重试并确保您对所选文件夹有写入权限。"
+  },
+  "weather": {
+    "clearSky": "晴朗",
+    "mainlyClear": "大部晴朗",
+    "partlyCloudy": "多云",
+    "overcast": "阴天",
+    "foggy": "有雾",
+    "drizzle": "毛毛雨",
+    "freezingDrizzle": "冻毛毛雨",
+    "rain": "下雨",
+    "freezingRain": "冻雨",
+    "snow": "下雪",
+    "snowGrains": "雪粒",
+    "rainShowers": "阵雨",
+    "snowShowers": "阵雪",
+    "thunderstorm": "雷暴",
+    "thunderstormHail": "雷暴+冰雹",
+    "unknown": "未知"
+  },
+  "icons": {
+    "loadFailed": "加载图标失败",
+    "loaded": "图标已加载",
+    "noSource": "没有可用的图标源"
+  },
+  "page": {
+    "deletePage": "删除页面",
+    "settings": "页面设置"
+  }
+}
